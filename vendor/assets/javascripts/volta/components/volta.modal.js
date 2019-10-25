@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-present, Vonage. All rights reserved.
+ * Copyright (c) 2001-present, Vonage.
  *
  * Modals (requires core)
  */

@@ -232,6 +232,7 @@ Volta.menu = function () {
 
 				if(!Volta._hasClass(activeTrigger, _class.triggerActive)) {
 					activeTrigger.classList.add(_class.triggerActive);
+					//console.log("HEY!!!");
 				}
 
 				expandedMenus.push(activeTrigger);

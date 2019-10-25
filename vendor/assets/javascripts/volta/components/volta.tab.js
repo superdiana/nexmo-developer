@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-present, Vonage. All rights reserved.
+ * Copyright (c) 2001-present, Vonage.
  *
  * Tabs (requires core)
  */
@@ -56,7 +56,11 @@ Volta.tab = function () {
 
 					link.index = index;
 					link.addEventListener('keyup', _this._keyUpEventListener.bind(_this));
+<<<<<<< HEAD
 					var handler = function() {
+=======
+					link.addEventListener('click', function () {
+>>>>>>> Upgrade Volta JS
 						_this.toggle(link);
 					};
 
@@ -89,6 +93,7 @@ Volta.tab = function () {
 					Volta.tooltip.init();
 				}
 			}
+<<<<<<< HEAD
 		},
 		_deactivateElements: function () {
 			this._links.forEach(function (link) {
@@ -99,6 +104,18 @@ Volta.tab = function () {
 				panel.setAttribute('hidden', 'hidden');
 			});
 		},
+=======
+		},
+		_deactivateElements: function () {
+			this._links.forEach(function (link) {
+				link.setAttribute('tabIndex', '-1');
+				link.setAttribute('aria-selected', 'false');
+			});
+			Array.from(this._panels).forEach(function (panel) {
+				panel.setAttribute('hidden', 'hidden');
+			});
+		},
+>>>>>>> Upgrade Volta JS
 		_setActiveElements: function (linkElement) {
 			var linkActiveClass = this.isJs ? _class.linkJsActive : _class.linkActive;
 
@@ -125,6 +142,10 @@ Volta.tab = function () {
 
 			this._activeLink.setAttribute('tabindex', '0');
 			this._activeLink.setAttribute('aria-selected', 'true');
+<<<<<<< HEAD
+=======
+			this._activeLink.focus();
+>>>>>>> Upgrade Volta JS
 			if (this._activePanel) {
 				this._activePanel.removeAttribute('hidden');
 			}
