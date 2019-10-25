@@ -18,3 +18,8 @@
 
 
  */
+
+.Vlt-btn--tertiary {
+    background: white !important;
+    color: black !important;
+}
