@@ -38,18 +38,32 @@
   </div>
 <% else %>
   <div class="masonry">
-    <% @tutorials.each_with_index do |tutorial, index| %>
-      <%
+    <% colours = {
+      'voice' => 'green',
+      'messaging/sms' => 'purple',
+      'dispatch' => 'teal',
+      'messages' => 'indigo',
+      'client-sdk' => 'orange',
+      'conversation' => 'red',
+      'number-insight' => 'grey',
+      'verify' => 'aqua',
+    } %>
+  <% @tutorials.each_with_index do |tutorial, index| %>
+    <%
         if tutorial[:external_link]
           url = tutorial[:external_link]
         else
           url = "#{@base_path}/#{tutorial[:filename]}"
         end
+        product = tutorial[:product]
+        product = tutorial[:products][0] unless product
+
+        colour = colours[product] || 'blue'
       %>
 
       <div class="item">
         <div class="Vlt-card Vlt-card--image Nxd-card--tutorials">
-          <div class="Vlt-card__image Vlt-card__image--tech Vlt-card__image--blue">
+          <div class="Vlt-card__image Vlt-card__image--tech Vlt-card__image--<%= colour %>">
         </div>
 
           <a href="<%= url %>">
