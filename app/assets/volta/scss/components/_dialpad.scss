@@ -1,22 +1,10 @@
 .Vlt-dialpad {
-	background: $aqua-dark;
-	border-radius: $unit0;
-	box-shadow: 0 5px 10px 0 rgba($black, 0.5);
+	background: $black;
+	border-radius: $unit1;
+	box-shadow: 0 5px 10px 0 rgba($black, 0.25);
 	margin: $unit1 auto;
 	max-width: 100%;
 	width: 300px;
-
-	&--nobg {
-		background: transparent;
-	}
-
-	&--noshadow {
-		box-shadow: none;
-	}
-
-	&--border {
-		border: 1px solid $teal-light;
-	}
 
 	&__keypad {
 		display: flex;
@@ -27,7 +15,7 @@
 	&__key {
 		@extend .reset-button;
 		align-items: center;
-		border-radius: 3px;
+		border-radius: 8px;
 		cursor: pointer;
 		display: flex;
 		flex: 0 0 33%;
@@ -42,14 +30,15 @@
 			color: $white;
 			flex: 0 0 100%;
 			font-size: 3rem;
-			font-weight: 600;
+			font-weight: 800;
 			padding-bottom: 2px;
 			padding-top: 10px;
 			text-align: center;
 		}
 
 		&__sub {
-			color: $aqua-light;
+			align-self: flex-start;
+			color: $grey-dark;
 			flex: 0 0 100%;
 			font-size: 1.2rem;
 			font-weight: 600;
@@ -57,8 +46,17 @@
 			text-transform: uppercase;
 		}
 
+		&__sub-plus {
+			font-size: 2rem;
+			font-weight: 800;
+		}
+
 		&:hover {
-			background: rgba($aqua, 0.25);
+			background: rgba($white, 0.15);
+		}
+
+		&:active {
+			background: rgba($white, 0.25);
 		}
 
 		svg {
@@ -68,6 +66,11 @@
 
 		.Vlt-btn {
 			margin: 0;
+
+			svg {
+				height: 24px;
+				width: 24px;
+			}
 		}
 
 		&--nohover {
@@ -78,7 +81,7 @@
 	}
 
 	&__header {
-		color: $blue-lighter;
+		color: $white;
 		font-size: 1.2rem;
 		padding: 12px 32px;
 		position: relative;
@@ -109,7 +112,7 @@
 
 	&__strip {
 		align-items: center;
-		background: rgba($aqua, 0.25);
+		background: rgba($white, 0.0625);
 		display: flex;
 		height: 52px;
 		padding: $unit1 $unit2;
@@ -140,7 +143,7 @@
 				color: $white;
 				direction: rtl;
 				font-size: 2.1rem;
-				font-weight: 600;
+				font-weight: 800;
   				overflow: hidden;
   				text-align: center;
   				text-overflow: ellipsis;
@@ -157,21 +160,30 @@
 
 	&--light {
 		background: $white;
-		border: 1px solid $grey-light;
-		box-shadow: none;
+		border: 0;
 
 		.Vlt-dialpad {
 			&__key {
 				&__main {
-					color: $grey-darker;
+					color: $black;
 				}
 
 				&__sub {
-					color: $aqua;
+					color: $grey-dark;
 				}
 
 				&:hover {
-					background: rgba($aqua-light, 0.25);
+					background: $grey-lighter;
+				}
+
+				&:active {
+					background: $grey-light;
+				}
+
+				&--nohover {
+					&:hover {
+						background: transparent;
+					}
 				}
 			}
 
@@ -186,7 +198,7 @@
 			}
 
 			&__strip {
-				background: rgba($aqua-lighter, 0.5);
+				background: $grey-lighter;
 
 				&__number {
 					input {

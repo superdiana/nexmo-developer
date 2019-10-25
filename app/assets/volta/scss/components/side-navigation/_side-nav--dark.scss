@@ -1,6 +1,6 @@
 .Vlt-sidenav {
 	&__mobile--dark {
-		background: $blue-dark;
+		background: $black;
 
 		button {
 			svg {
@@ -10,11 +10,11 @@
 	}
 
 	&--dark {
-		background: linear-gradient(to bottom, darken($blue-dark, 5), $blue-darker);
+		background: $black;
 
 		.Vlt-sidenav__scroll {
 			.Vlt-sidemenu {
-				background: linear-gradient(0deg, $blue-darker 10px, transparent 10px), linear-gradient(0deg, transparent calc(100% - 10px), darken($blue-dark, 6) calc(100% - 10px)) 100% 0;
+				background: $black;
 			}
 		}
 
@@ -31,52 +31,43 @@
 		}
 
 		.Vlt-sidemenu {
-
 			&__link,
 			&__trigger {
-				color: $white;
+				color: $grey;
 
-				&:hover {
-					background: rgba($white, 0.05);
+				&:before {
+					background: $black;
 				}
 
 				svg {
-					fill: $blue;
-					opacity: 0.8;
-				}
-
-				.Vlt-sidemenu__label {
-					opacity: 0.8;
+					fill: $grey;
 				}
 
 				&_active {
-					svg,
-					.Vlt-sidemenu__label {
-						opacity: 1;
-					}
-				}
-			}
-
-			&__link {
-				&_active {
-					background: $blue-dark;
+					color: $white;
 
 					svg {
 						fill: $white !important;
 					}
+				}
 
-					&:hover {
-						background: $blue-dark;
+				&--disabled {
+					color: $grey-darker;
+
+					svg {
+						fill: $grey-darker;
 					}
 				}
 			}
 
 			&__trigger {
-				&:after {
-					background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23FFF%22%20fill-rule%3D%22evenodd%22%20d%3D%22M10%2013.524L4.692%208.136a.667.667%200%201%201%20.951-.937L10%2011.62l4.357-4.422a.668.668%200%200%201%20.95.937L10%2013.524z%22%20opacity%3D%22.4%22%2F%3E%0A%3C%2Fsvg%3E%0A');
-					background-position: center center;
-					background-repeat: no-repeat;
-					background-size: contain;
+				span:last-of-type:not(.Vlt-badge) {
+					&:after {
+						background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23FFF%22%20fill-rule%3D%22evenodd%22%20d%3D%22M10%2013.524L4.692%208.136a.667.667%200%201%201%20.951-.937L10%2011.62l4.357-4.422a.668.668%200%200%201%20.95.937L10%2013.524z%22%20opacity%3D%22.4%22%2F%3E%0A%3C%2Fsvg%3E%0A');
+						background-position: center center;
+						background-repeat: no-repeat;
+						background-size: contain;
+					}
 				}
 
 				&_current {
@@ -87,10 +78,10 @@
 			}
 
 			&__title {
-				color: rgba($blue-lighter, 0.8);
+				color: $grey-dark;
 
 				&--border {
-					border-top: 1px solid rgba($blue-lighter, 0.1);
+					border-top: 1px solid rgba($white, 0.1);
 				}
 			}
 		}
@@ -108,27 +99,27 @@
 			.Vlt-js-tabs__link {
 
 				svg {
-					fill: $blue-dark !important;
+					fill: $grey !important;
 				}
 
 				&:hover {
 					&:after {
-						background: $blue-dark;
+						background: $grey;
 					}
 
 					svg {
-						fill: $blue-light !important;
+						fill: $white !important;
 					}
 				}
 
 				&_active,
 				&:active {
 					&:after {
-						background: $blue;
+						background: $white;
 					}
 
 					svg {
-						fill: $blue-light !important;
+						fill: $white !important;
 					}
 				}
 			}
@@ -147,7 +138,7 @@
 
 				.Vlt-sidenav__collapse {
 					svg {
-						fill: $blue;
+						fill: $grey;
 					}
 				}
 			}
@@ -163,7 +154,7 @@
 					li {
 						.Vlt-sidemenu__link_active {
 							svg {
-								fill: $grey-dark !important;
+								fill: $white !important;
 							}
 						}
 					}

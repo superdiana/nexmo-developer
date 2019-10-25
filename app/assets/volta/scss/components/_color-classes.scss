@@ -104,4 +104,68 @@ $colors: (
 	&--teal {
 		background: linear-gradient(to right, lighten($teal, 5), darken($teal, 10)) !important;
 	}
+
+	&--blue-to-pink {
+		background: linear-gradient(to right, $gradient-blue, $gradient-pink) !important;
+	}
+
+	&--blue-to-purple {
+		background: linear-gradient(to right, $gradient-blue, $gradient-purple) !important;
+	}
+
+	&--pink-to-peach {
+		background: linear-gradient(to right, $gradient-pink, $gradient-peach) !important;
+	}
+
+	&--purple-to-peach {
+		background: linear-gradient(to right, $gradient-purple, $gradient-peach) !important;
+	}
+
+	&--gumdrops1 {
+		background: $gumdrops1 !important;
+	}
+
+	&--gumdrops2 {
+		background: $gumdrops2 !important;
+	}
+
+	&--gumdrops3 {
+		background: $gumdrops3 !important;
+	}
+
+	&--lovehearts1 {
+		background: $lovehearts1 !important;
+	}
+
+	&--lovehearts2 {
+		background: $lovehearts2 !important;
+	}
+
+	&--lovehearts3 {
+		background: $lovehearts3 !important;
+	}
+
+	&--skittles1 {
+		background: $skittles1 !important;
+	}
+
+	&--skittles2 {
+		background: $skittles2 !important;
+	}
+
+	&--skittles3 {
+		background: $skittles3 !important;
+	}
+
+	&--twizzlers1 {
+		background: $twizzlers1 !important;
+	}
+
+	&--twizzlers2 {
+		background: $twizzlers2 !important;
+	}
+
+	&--twizzlers3 {
+		background: $twizzlers3 !important;
+	}
 }

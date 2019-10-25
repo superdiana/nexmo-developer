@@ -161,6 +161,10 @@ $sidenav-titles-color: rgba($aqua-lighter, 0.8);
 						}
 					}
 				}
+
+				.Vlt-sidemenu__trigger_active {
+					background: $aqua-dark;
+				}
 			}
 		}
 	}

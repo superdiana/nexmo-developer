@@ -17,7 +17,8 @@
 		&--logo {
 			.Vlt-sidenav__collapse {
 				cursor: pointer;
-				flex: 0 0 20px;
+				flex: 0 0 24px;
+				height: 24px;
 				margin-left: 20px;
 				transition: opacity 0.2s;
 
@@ -26,8 +27,8 @@
 				}
 
 				svg {
-					height: 20px;
-					width: 20px;
+					height: 24px;
+					width: 24px;
 				}
 
 				.Vlt-sidenav--collapsed & {
@@ -87,8 +88,8 @@
 
 					&:before,
 					&:after {
-						left: 10px;
-						width: calc(100% - 20px);
+						left: 14px;
+						width: 40px;
 					}
 
 					& + .Vlt-sidenav__block {
@@ -109,20 +110,20 @@
 
 					&--logo {
 						flex-flow: column;
-						padding: 10px;
+						padding: 10px 10px 15px;
 
 						.Vlt-sidenav__collapse {
 							order: 1;
 						}
 
 						.Vlt-sidenav__logo {
-							flex: 0 0 35px;
+							flex: 0 0 24px;
 							order: 2;
 
 							img,
 							svg {
-								height: 35px;
-								width: 35px;
+								height: 24px;
+								width: 27px;
 							}
 						}
 					}
@@ -140,11 +141,11 @@
 					border-radius: 4px;
 					display: inline-flex;
 					flex-flow: column;
-					margin: 0 12px;
 					opacity: 1;
 					padding: 8px 10px;
-					position: static;
+					position: relative;
 
+					// will only work if parent if position static
 					.Vlt-badge {
 						// Small badge (copied because you can't extend within a mediaquery)
 						font-size: 0.9rem;
@@ -164,12 +165,7 @@
 
 					&--disabled {
 						cursor: default;
-						opacity: 0.3;
 						pointer-events: none;
-					}
-
-					&:after {
-						display: none;
 					}
 
 					&:hover {
@@ -186,7 +182,7 @@
 
 					.Vlt-sidemenu__label {
 						@include tooltip-content;
-						display: none;
+						display: none !important; // labels won't work with new design
 						left: 100%;
 						margin-left: 10px;
 						margin-top: -8px;
@@ -209,14 +205,10 @@
 				}
 
 				&__trigger {
-
-					&:after {
-						display: none;
-					}
-
 					& + ul {
 						border-radius: 8px;
-						left: 60px;
+						left: 72px;
+						margin-top: -36px;
 						position: absolute;
 						width: 240px;
 						z-index: $z-index-sidenav;
@@ -227,32 +219,35 @@
 
 						.Vlt-sidemenu__link,
 						.Vlt-sidemenu__trigger {
-							border-radius: 0;
+							border-radius: 0px;
 							justify-content: flex-start;
+							margin-left: 0px;
 							padding-left: 20px;
 							padding-right: 20px;
+
+							&:before,
+							&:after {
+								content: none;
+							}
+
+							svg,
+							span {
+								transform: none !important;
+							}
 						}
 
 						ul {
-							left: 230px;
+							left: 244px;
+							margin-top: -40px;
 						}
 
 						li {
 							margin-left: 0 !important;
-
-							&:first-child > .Vlt-sidemenu__link,
-							&:first-child > .Vlt-sidemenu__trigger {
-								border-top-left-radius: 8px;
-								border-top-right-radius: 8px;
-								padding-top: 10px;
-							}
+							padding-top: 0;
 
 							&:last-child > .Vlt-sidemenu__link,
 							&:last-child > .Vlt-sidemenu__trigger {
-								border-bottom-left-radius: 8px;
-								border-bottom-right-radius: 8px;
 								margin-bottom: 0;
-								padding-bottom: 10px;
 							}
 						}
 
@@ -260,19 +255,26 @@
 
 					&_active {
 						& + ul {
-							box-shadow: inset 0 0 0 1px $grey-light, 0 1px 10px rgba($black, 0.1);
+							box-shadow: 0 2px 4px 0 rgba($black, 0.15);
 							overflow: visible;
+						}
+					}
+
+					span {
+						&:after {
+							content: none !important; // hide chevron
 						}
 					}
 				}
 
 				&__title {
+					border-top: 0;
 					height: 1px;
-					margin: 5px 10px;
+					margin: 0px auto;
 					overflow: hidden;
 					padding: 0;
 					text-indent: -9999px;
-					width: calc(100% - 20px);
+					width: 40px;
 				}
 			}
 
@@ -322,22 +324,41 @@
 
 			.Vlt-sidemenu__trigger + ul {
 				background: $white;
+				padding: 5px 0 8px;
 
 				.Vlt-sidemenu__trigger,
 				.Vlt-sidemenu__link {
-					color: $black;
+					color: $grey-darker;
 
 					svg {
 						&,
 						&[class*='Vlt-'] {
-							fill: $grey-dark !important;
+							fill: $grey-darker !important;
 						}
 					}
 
 					&:hover,
 					&_active {
-						background: $grey-light;
+						background: $grey-lighter;
 						color: $black;
+
+						svg {
+							&,
+							&[class*='Vlt-'] {
+								fill: $black !important;
+							}
+						}
+					}
+
+					&--disabled {
+						color: $grey;
+
+						svg {
+							&,
+							&[class*='Vlt-'] {
+								fill: $grey !important;
+							}
+						}
 					}
 				}
 

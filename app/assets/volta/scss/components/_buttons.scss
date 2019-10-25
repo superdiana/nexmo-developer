@@ -1,9 +1,9 @@
 $shadow-standard: 0 1px 0px rgba($black, 0.15);
 $shadow-active: inset 0 2px 3px rgba($black, 0.2);
-$shadow-tertiary: inset 0 0 0px 1px $grey;
+$shadow-tertiary: inset 0 0 0px 1px $black;
 
 @mixin btn-app-radius {
-	border-radius: 4px;
+	border-radius: 8px;
 }
 
 %Vlt-btn {
@@ -11,11 +11,10 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 	appearance: none;
 	border: 0;
 	border-radius: 36px;
-	box-shadow: $shadow-standard;
 	cursor: pointer;
 	display: inline-block; // can't be inline-flex because of Safari
 	font-size: 1.4rem;
-	font-weight: 600;
+	font-weight: 400;
 	justify-content: center;
 	line-height: 1.9rem; // needed for Safari
 	margin: $unit1 0;
@@ -23,7 +22,7 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 	outline: none;
 	padding: $unit1 $unit2; // both paddings added for IE alignment
 	text-align: center;
-	transition: transform 0.1s, background 0.1s;
+	transition: all 0.3s;
 	vertical-align: middle;
 	white-space: nowrap;
 
@@ -31,26 +30,19 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 		outline: none;
 	}
 
-	&:hover {
-		transform: scale(1.05);
-	}
-
 	&:active {
-		border: 0;
-		box-shadow: inset 0 2px 3px rgba($black, 0.12);
 		outline: none;
-		transform: scale(0.99);
 	}
 
 	svg {
 		display: inline-block;
 		fill: $white;
-		height: 20px;
+		height: 18px;
 		margin-left: -5px;
 		margin-right: 6px;
 		margin-top: -3px;
 		vertical-align: middle;
-		width: 20px;
+		width: 18px;
 	}
 }
 
@@ -111,27 +103,29 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 }
 
 %Vlt-btn--small {
+	font-size: 1.3rem;
 	line-height: 1.5rem; //needed for Safari
 	min-height: 30px;
 	padding: 7px 14px;
 
 	svg {
-		height: 16px;
-		width: 16px;
+		height: 14px;
+		width: 14px;
 	}
 }
 
 %Vlt-btn--large {
-	font-size: 1.6rem;
+	font-size: 1.5rem;
+	font-weight: 600;
 	line-height: 2.2rem; //needed for Safari
 	margin: $unit1 0 $unit2;
 	min-height: 50px;
 	padding: 13px 25px;
 
 	svg {
-		height: 24px;
+		height: 20px;
 		margin-top: -4px;
-		width: 24px;
+		width: 20px;
 
 		&  span {
 			margin-left: $unit1;
@@ -161,76 +155,73 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 }
 
 %Vlt-btn--primary {
-	background: $orange;
+	background: $purple-dark;
 	color: $white;
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
-		background: darken($orange, 5);
+		background: darken($purple-dark, 10);
 		color: $white;
 	}
 
 	&:active,
 	&.Vlt-btn_active {
-		background: darken($orange, 7);
-		box-shadow: $shadow-active, 0 0 0 rgba($black, 0);
+		background: darken($purple-dark, 15);
 		color: $white;
 	}
 
 	&:disabled,
-	&.Vlt-btn--disabled {
+	&.Vlt-btn--disabled,
+	&.Vlt-btn_disabled {
 		@extend %disabled-btn-style
 	}
 }
 
 %Vlt-btn--secondary {
-	background: $blue;
+	background: $black;
 	color: $white;
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
-		background: darken($blue, 5);
+		background: lighten($black, 20);
 		color: $white;
 	}
 
 	&:active,
 	&.Vlt-btn_active {
-		background: darken($blue, 7);
-		box-shadow: $shadow-active;
+		background: lighten($black, 30);
 		color: $white;
 	}
 
 	&:disabled,
-	&.Vlt-btn--disabled {
+	&.Vlt-btn--disabled,
+	&.Vlt-btn_disabled {
 		@extend %disabled-btn-style
 	}
 }
 
 %Vlt-btn--tertiary {
-	background: $grey-lighter;
-	box-shadow: $shadow-tertiary, $shadow-standard;
+	background: transparent;
+	border: 1px solid $black;
 	color: $black;
-	font-weight: 400;
 
 	svg {
-		fill: $grey-darker;
+		fill: $black;
 	}
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
-		background: darken($grey-lighter, 3);
-		color: $black;
+		background: rgba($black, 0.1);
 	}
 
 	&:active,
 	&.Vlt-btn_active {
-		background: $grey-light;
-		box-shadow: $shadow-active, $shadow-tertiary;
-		color: $black;
+		background: rgba($black, 0.2);
 	}
 
 	&:disabled,
-	&.Vlt-btn--disabled {
+	&.Vlt-btn--disabled,
+	&.Vlt-btn_disabled {
 		@extend %disabled-btn-style
 	}
 }
@@ -241,19 +232,19 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
-		background: darken($red, 5);
+		background: darken($red, 10);
 		color: $white;
 	}
 
 	&:active,
 	&.Vlt-btn_active {
-		background: darken($red, 20);
-		box-shadow: $shadow-active;
+		background: darken($red, 15);
 		color: $white;
 	}
 
 	&:disabled,
-	&.Vlt-btn--disabled {
+	&.Vlt-btn--disabled,
+	&.Vlt-btn_disabled {
 		@extend %disabled-btn-style
 	}
 }
@@ -264,20 +255,52 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
-		background: darken($green, 5);
+		background: darken($green, 6);
 		color: $white;
 	}
 
 	&:active,
 	&.Vlt-btn_active {
-		background: darken($green, 7);
-		box-shadow: $shadow-active;
+		background: darken($green, 10);
 		color: $white;
 	}
 
 	&:disabled,
-	&.Vlt-btn--disabled {
+	&.Vlt-btn--disabled,
+	&.Vlt-btn_disabled {
 		@extend %disabled-btn-style
+	}
+}
+
+.Vlt-text-btn,
+.Vlt-btn--link,
+%Vlt-text-btn {
+	@extend %Vlt-text-link;
+	@extend .reset-button;
+	border-radius: 0;
+	box-shadow: none;
+	cursor: pointer;
+	font-size: 1.5rem;
+	padding: 0;
+	white-space: nowrap;
+
+	svg {
+		fill: $blue-dark;
+	}
+
+	&:hover {
+		transform: none;
+	}
+
+	&:active {
+		box-shadow: none;
+	}
+
+	&:disabled,
+	&.Vlt-btn--disabled,
+	&.Vlt-btn_disabled {
+		@extend %disabled-btn-style;
+		background: none !important;
 	}
 }
 
@@ -294,41 +317,13 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 
 		&:not(:first-child) {
 			border-bottom-left-radius: 0;
+			border-left: 0;
 			border-top-left-radius: 0;
 		}
 
 		&:not(:last-child) {
 			border-bottom-right-radius: 0;
 			border-top-right-radius: 0;
-		}
-
-		&--primary,
-		&--secondary,
-		&--quaternary,
-		&--destructive {
-			&:not(:first-child) {
-				box-shadow: $shadow-standard, inset 1px 0 0 0 rgba($white, 0.3);
-			}
-
-			&.Vlt-btn_active {
-				&:not(:first-child):not(:last-child) {
-					box-shadow: $shadow-active, $shadow-standard, inset 1px 0 0 0 rgba($white, 0.5);
-				}
-			}
-		}
-
-		&--tertiary {
-			&:not(:first-child) {
-				// outer, bottom, top, right (aka, no left)
-				box-shadow: $shadow-standard, inset 0 1px 0px 0 $grey, inset 0 -1px 0px 0 $grey, inset -1px 0 0 0 $grey;
-			}
-
-			&:active,
-			&.Vlt-btn_active {
-				&:not(:first-child) {
-					box-shadow: $shadow-active, $shadow-standard, inset 0 1px 0px 0 $grey, inset 0 -1px 0px 0 $grey, inset -1px 0 0 0 $grey;
-				}
-			}
 		}
 
 		&:not(.Vlt-btn--no-focus):focus {
@@ -339,13 +334,13 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 	&--app {
 		.Vlt-btn {
 			&:first-child {
-				border-bottom-left-radius: 4px;
-				border-top-left-radius: 4px;
+				border-bottom-left-radius: 8px;
+				border-top-left-radius: 8px;
 			}
 
 			&:last-child {
-				border-bottom-right-radius: 4px;
-				border-top-right-radius: 4px;
+				border-bottom-right-radius: 8px;
+				border-top-right-radius: 8px;
 			}
 		}
 	}
@@ -450,38 +445,27 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 	}
 }
 
-.Vlt-text-btn,
-%Vlt-text-btn {
-	@extend %Vlt-text-link;
-	@extend .reset-button;
-	border-radius: 0;
-	cursor: pointer;
-	font-size: 1.5rem;
-	padding: 0;
-	white-space: nowrap;
-}
-
 .Vlt-text-link,
 %Vlt-text-link {
-	color: $blue-dark;
+	color: $purple-dark;
 	cursor: pointer;
 	font-size: inherit;
 	font-weight: inherit;
 	line-height: inherit;
 
 	&:hover {
-		color: $blue-darker;
+		color: $purple-darker;
 	}
 
 	&:active {
-		color: $blue-darker;
+		color: $purple-darker;
 	}
 
 	&:visited {
-		color: $blue-dark;
+		color: $purple-dark;
 
 		&:hover {
-			color: $blue-darker;
+			color: $purple-darker;
 		}
 	}
 }
@@ -496,9 +480,9 @@ $shadow-tertiary: inset 0 0 0px 1px $grey;
 
 %disabled-btn-style {
 	background: $grey-light;
+	border: 0;
 	box-shadow: none;
 	color: $grey-dark;
-	font-weight: 400;
 	pointer-events: none;
 
 	svg {

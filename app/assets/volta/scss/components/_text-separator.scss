@@ -1,13 +1,13 @@
 .Vlt-text-separator {
 	display: block;
-	line-height: 1.4rem;
+	line-height: 1.6rem;
 	margin: $unit2 0;
 	overflow: hidden;
 	text-align: center;
 
 	span {
-		color: $grey-darker;
-		font-size: 1.4rem;
+		color: $black;
+		font-size: 1.2rem;
 		font-weight: 600;
 		padding: 0 $unit1;
 		position: relative;
@@ -35,6 +35,7 @@
 	&--red {
 		span {
 			color: $red;
+			font-weight: 600;
 
 			&:before,
 			&:after {
@@ -44,10 +45,11 @@
 	}
 
 	&--big {
-		line-height: 1.7rem;
+		line-height: 2.1rem;
 
 		span {
-			font-size: 1.7rem;
+			font-size: 1.4rem;
+			font-weight: 600;
 		}
 	}
 }

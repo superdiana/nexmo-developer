@@ -254,8 +254,8 @@ div.code-toolbar {
 		top: 0;
 
 		.toolbar-item a {
-			@extend %Vlt-btn, .Vlt-btn--tertiary, .Vlt-btn--small, .Vlt-btn--app;
-			font-family: 'lato', sans-serif;
+			@extend %Vlt-btn, %Vlt-btn--tertiary, %Vlt-btn--small, %Vlt-btn--app;
+			font-family: 'spezia', sans-serif;
 			margin: 4px;
 
 			&:before {

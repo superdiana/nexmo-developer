@@ -45,7 +45,6 @@
 		width: 0px;
 
 		&:focus,
-		&:focus,
 		&:active {
 			-webkit-tap-highlight-color: transparent;
 			box-shadow: none;
@@ -53,7 +52,7 @@
 		}
 
 		&:checked ~ .Vlt-switch__slider {
-			background-color: $blue;
+			background-color: $green;
 
 			&:before {
 				left: 21px;

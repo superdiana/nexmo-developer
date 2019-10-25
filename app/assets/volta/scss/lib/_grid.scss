@@ -145,6 +145,10 @@
 	padding-right: $unit2;
 	position: relative;
 
+	@media print {
+		display: inline-block;
+	}
+
 	@media #{$M-less} {
 		&:not([class*='Vlt-col--A']):not([class*='Vlt-col--M']),
 		&:not([class*='Vlt-col--A']):not([class*='Vlt-col--S']) {

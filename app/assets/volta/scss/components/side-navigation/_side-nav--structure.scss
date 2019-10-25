@@ -1,3 +1,7 @@
+
+$hover-blue: #649abc;
+$hover-pink: #a4237a;
+
 .Vlt-sidenav {
 	display: flex;
 	flex: 0 0 270px;
@@ -9,6 +13,7 @@
 
 	@media #{$S-only} {
 		height: 100vh;
+		left: 0;
 		padding-top: 5px;
 		position: fixed;
 		top: 0;
@@ -81,10 +86,6 @@
 				svg {
 					width: 100%; // For IE
 				}
-
-				img {
-					height: 40px;
-				}
 			}
 		}
 
@@ -113,7 +114,7 @@
 		flex: auto; // not flex: 1 because IE11 needs flex-basis: auto
 		height: 100%; // needed for shadowing, won't be 100% it will adjust to flex
 		overflow-y: auto;
-		position: relative;
+		position: static; // never give this position relative for any reason, it will prevent tooltips and dropdowns
 
 		@media #{$S-only} {
 			-webkit-overflow-scrolling: touch;
@@ -125,7 +126,7 @@
 		list-style: none;
 		margin: 0;
 		min-height: 100%; // not height, for shadowing
-		padding: 0 0 10px; // space to allow for the browser url notice
+		padding: 0 12px 10px; // space to allow for the browser url notice
 
 		ul {
 			list-style: none;
@@ -137,17 +138,18 @@
 
 		.Vlt-sidemenu__title {
 			margin-bottom: 0;
-			margin-left: 10px;
+			margin-left: 2px;
 		}
 
 		li {
 			margin: 0;
 			padding: 0;
+			padding-top: 4px;
 
 			.Vlt-sidemenu__link,
 			.Vlt-sidemenu__trigger {
-				font-size: 1.5rem;
-				padding-left: 24px;
+				font-size: 1.4rem;
+				padding-left: 12px;
 				padding-right: 20px;
 
 				@media #{$S-only} {
@@ -158,8 +160,8 @@
 			li {
 				.Vlt-sidemenu__link,
 				.Vlt-sidemenu__trigger {
-					font-size: 1.5rem;
-					padding-left: 53px;
+					font-size: 1.4rem;
+					margin-left: 15px;
 
 					@media #{$S-only} {
 						font-size: 1.7rem;
@@ -167,14 +169,14 @@
 				}
 
 				.Vlt-sidemenu__title {
-					margin-left: 43px;
+					margin-left: 17px;
 				}
 
 				li {
 					.Vlt-sidemenu__link,
 					.Vlt-sidemenu__trigger {
-						font-size: 1.5rem;
-						padding-left: 81px;
+						font-size: 1.4rem;
+						margin-left: 30px;
 
 						@media #{$S-only} {
 							font-size: 1.7rem;
@@ -182,35 +184,93 @@
 					}
 
 					.Vlt-sidemenu__title {
-						margin-left: 81px;
+						margin-left: 32px;
 					}
 				}
 			}
 		}
 
 		// Dropdown arrow
-
+		&__link,
 		&__trigger {
-			&:after {
-				content: '';
-				display: inline-block;
-				height: 20px;
-				position: absolute;
-			    right: 15px;
-			    top: 8px;
-			    transition: transform 0.2s;
-			    width: 20px;
-			    z-index: 1;
+			margin-bottom: $unit0;
+			position: relative;
+			z-index: 1;
+			$transition: all .3s;
+
+			svg,
+			span {
+				transform: translate(0, 0);
+				transition: $transition;
 			}
 
-			&_active {
+			&:before {
+				border-radius: 6px;
+				content: '';
+				height: 100%;
+				left: 3px;
+				position: absolute;
+				top: 1px;
+				transition: $transition;
+				width: 100%;
+				z-index: -1;
+			}
+
+			&:after {
+				background-image: linear-gradient(to right, $gradient-blue, $gradient-pink);
+				border-radius: $unit1;
+				content: '';
+				height: 100%;
+				left: 3px;
+				position: absolute;
+				top: 1px;
+				width: 100%;
+				z-index: -2;
+			}
+
+			&:hover {
 				&:after {
-					transform: rotate(180deg);
+					background-image: linear-gradient(to right, $hover-blue, $hover-pink);
+				}
+			}
+
+			&_active,
+			&:hover {
+				&:before {
+					left: 0;
+					top: -2px;
+				}
+
+				svg,
+				span {
+					transform: translate(-3px, -3px);
 				}
 			}
 		}
 
-		// Styling links and triggers
+		&__trigger {
+			span:last-of-type:not(.Vlt-badge) {
+				&:after {
+					content: '';
+					display: inline-block;
+					height: 20px;
+					position: absolute;
+					right: -11px;
+					top: 0;
+					transition: transform 0.2s;
+					width: 20px;
+					z-index: 1;
+				}
+			}
+
+			&_active {
+				span:last-of-type:not(.Vlt-badge) {
+					&:after {
+						transform: rotate(180deg);
+					}
+				}
+			}
+		}
 
 		&__link,
 		&__trigger {
@@ -235,23 +295,22 @@
 
 			&--disabled {
 				cursor: default;
-				opacity: 0.3;
 				pointer-events: none;
 			}
 
 			svg {
-				flex: 0 0 20px;
-				height: 20px;
+				flex: 0 0 18px;
+				height: 18px;
 				margin-bottom: -3px;
-				margin-right: 10px;
+				margin-right: 12px;
 				opacity: 0.8;
 				vertical-align: middle;
-				width: 20px;
+				width: 18px;
 
 				@media #{$S-only} {
-					flex: 0 0 23px;
-					height: 23px;
-					width: 23px;
+					flex: 0 0 20px;
+					height: 20px;
+					width: 20px;
 				}
 			}
 
@@ -333,7 +392,8 @@
 			}
 
 			.Vlt-sidemenu__label {
-				max-width: calc(100% - 25px);
+				max-width: 100%;
+				padding-right: 25px;
 			}
 		}
 

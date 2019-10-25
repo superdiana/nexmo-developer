@@ -2,13 +2,14 @@
 	display: inline-block;
 	position: relative;
 
-	&__header {
-		background: $blue;
+	&__header,
+	&__title {
+		background: $purple-dark;
 		border-top-left-radius: $unit1;
 		border-top-right-radius: $unit1;
 		color: $white;
 		font-size: 1.5rem;
-		font-weight: 900;
+		font-weight: 400;
 		padding: $unit1 $unit3;
 		text-align: left;
 	}
@@ -121,6 +122,59 @@
 	}
 }
 
+.Vlt-dropdown__trigger {
+	// New wrapper for the dropdown button
+	display: inline-block;
+
+	&--btn {
+		.Vlt-btn {
+			&:hover {
+				transform: none;
+			}
+
+			&:after {
+				background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpath%20style%3D%22fill%3A%23ffffff%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0D%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: contain;
+				content: '';
+				display: inline-block;
+				float: right;
+				height: 20px;
+				margin-bottom: -1px;
+				margin-left: 5px;
+				vertical-align: middle;
+				width: 20px;
+			}
+
+			&.Vlt-btn--tertiary {
+				&:after {
+					background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpath%20style%3D%22fill%3A%239B9B9B%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0D%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
+				}
+			}
+
+			&.Vlt-btn--link {
+				&:after {
+					background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpath%20style%3D%22fill%3A%23117bb8%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0D%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
+				}
+			}
+		}
+
+		& + .Vlt-dropdown__panel {
+			margin-top: -8px
+		}
+	}
+
+	&--block {
+		width: 100%;
+
+		.Vlt-btn {
+			text-align: left;
+			width: 100%;
+		}
+	}
+}
+
 .Vlt-dropdown__btn {
 	@extend %Vlt-btn;
 	margin-bottom: 0;
@@ -150,14 +204,14 @@
 	}
 
 	&:not(&--primary):not(&--secondary):not(&--tertiary):not(&--quaternary):not(&--destructive) {
-		@extend %Vlt-btn--tertiary;
+		@extend %Vlt-btn--secondary;
 
 		&:after {
 			background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpath%20style%3D%22fill%3A%239B9B9B%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0D%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
 		}
 
 		.Vlt-composite & {
-			box-shadow: $shadow-tertiary;
+			box-shadow: $shadow-standard;
 		}
 	}
 
@@ -211,7 +265,7 @@
 	width: fit-content;
 
 	select {
-		@extend %Vlt-btn, .Vlt-btn--tertiary;
+		@extend %Vlt-btn, .Vlt-btn--secondary;
 		margin-bottom: 0;
 		margin-top: 0;
 		padding-right: 38px;
@@ -230,7 +284,7 @@
 	}
 
 	&:after {
-		background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%3C!--%20Generator%3A%20Adobe%20Illustrator%2022.0.1%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200)%20%20--%3E%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20style%3D%22fill%3A%239B9B9B%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
+		background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20style%3D%22fill%3A%239B9B9B%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: contain;

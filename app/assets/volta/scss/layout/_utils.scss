@@ -10,6 +10,10 @@
 	text-align: left !important;
 }
 
+.Vlt-nowrap {
+	white-space: nowrap !important;
+}
+
 .Vlt-truncate {
 	display: block;
 	max-width: 100%;
@@ -81,6 +85,10 @@ hr {
 		height: 48px;
 		width: 48px;
 	}
+}
+
+.Vlt-container {
+	max-width: 1200px;
 }
 
 $devices: (

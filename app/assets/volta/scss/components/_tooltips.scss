@@ -63,25 +63,25 @@ span.Vlt-tooltip {
 }
 
 .arrow-bottom-mixin {
-	border-color: transparent transparent $black;
+	border-color: transparent transparent $grey-darker;
 	border-width: 0 6px 6px;
 	top: 3px;
 }
 
 .arrow-top-mixin {
-	border-color: $black transparent transparent;
+	border-color: $grey-darker transparent transparent;
 	border-width: 6px 6px 0px;
 	bottom: 3px;
 }
 
 .arrow-right-mixin {
-	border-color: transparent $black transparent transparent;
+	border-color: transparent $grey-darker transparent transparent;
 	border-width: 6px 6px 6px 0;
 	left: 3px;
 }
 
 .arrow-left-mixin {
-	border-color: transparent transparent transparent $black;
+	border-color: transparent transparent transparent $grey-darker;
 	border-width: 6px 0px 6px 6px;
 	right: 3px;
 }
@@ -107,8 +107,8 @@ span.Vlt-tooltip {
 }
 
 @mixin tooltip-content {
-	background: $black;
-	border-radius: 4px;
+	background: $grey-darker;
+	border-radius: 6px;
 	color: $white;
 	cursor: default;
 	font-size: 1.4rem;

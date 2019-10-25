@@ -8,8 +8,8 @@
   &:before,
   &:after {
     animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border: 6px solid $teal;
-    border-color: $teal transparent transparent;
+    border: 6px solid $orange-light;
+    border-color: $orange-light transparent transparent;
     border-radius: 50%;
     box-sizing: border-box;
     content: '';
