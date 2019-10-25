@@ -38,24 +38,6 @@
         color: $red-dark;
       }
     }
-
-    &__product {
-      &--SMS {
-        background: $purple;
-      }
-
-      &--Voice {
-        background: $green;
-      }
-
-      &--Verify {
-        background: $indigo;
-      }
-
-      &--Number {
-        background: $orange;
-      }
-    }
   }
 }
 

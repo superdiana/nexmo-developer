@@ -6,11 +6,22 @@
     </div>
   </div>
   <% else %>
-<div class="masonry">
+    <div class="masonry">
+      <% colours = {
+        'Voice' => 'green',
+        'SMS' => 'purple',
+        'Dispatch' => 'teal',
+        'Messages' => 'indigo',
+        'Client SDK' => 'orange',
+        'Conversation' => 'red',
+        'Number Insight' => 'grey',
+        'Verify' => 'aqua',
+      } %>
   <% @use_cases.each_with_index do |use_case, index| %>
+    <% colour = colours[use_case.subtitle] || 'blue' %>
     <div class="item">
       <div class="Vlt-card Vlt-card--image Nxd-card--tutorials">
-        <div class="Vlt-card__image Vlt-card__image--tech Vlt-card__image--blue">
+        <div class="Vlt-card__image Vlt-card__image--tech Vlt-card__image--<%= colour %>">
           <a href="/<%= use_case.products.join("") %>/use-cases/<%= @language %>" class="Vlt-badge Vlt-badge--large Nxd-tutorials__product Nxd-tutorials__product--<%= use_case.subtitle %>"><%= use_case.subtitle %></a>
         </div>
 
