@@ -1,0 +1,42 @@
+title: In-app call
+description: This tutorial shows you how to make an app to app call.
+products:
+  - client-sdk
+
+introduction:
+  title: Introduction to this 
+  description: This tutorial shows you how to make an app to app call using the JavaScript Client SDK.
+  content: |
+    # Introduction
+    In this task, you will learn how to create and configure a Client SDK Application and then code a web app that enables two users to make an in-app call to each other.
+
+    First, you will create a Conversation and two Users. Then, you will authenticate these Users and add them to the Conversation as Members.
+
+    Finally, you will implement the call functionality in your application, including the ability to answer and hang up the call.
+
+
+prerequisites:
+  - create-nexmo-account
+  - install-nodejs
+  - install-nexmo-cli-beta
+  - install-node-client-sdk
+  - install-local-web-server
+
+tasks:
+  - client-sdk/create-application-rtc
+  - client-sdk/create-conversation
+  - client-sdk/create-users
+  - client-sdk/add-users-to-conversation
+  - client-sdk/generate-jwts
+  
+conclusion:
+  title: What's next?
+  description: What else can you do with the Client SDK?
+  content: |
+
+    # What's next?
+    You can do a lot more with the Client SDK.
+
+    We want to hear what ideas you have in mind? Contact us at <a href="mailto:devrel@nexmo.com">devrel@nexmo.com</a>
+
+    See [Client SDK documentation](/client-sdk/overview).
