@@ -6,13 +6,18 @@ class Sidenav
     @request_path  = request_path
     @navigation    = navigation
     @product       = product
-    @language      = language
+    @language      = I18n.locale
+    @locale_param  = language
     @code_language = code_language
     @namespace     = namespace
 
     after_initialize!
   end
   # rubocop:enable Metrics/ParameterLists
+
+  def enforce_locale?
+    !!@locale_param
+  end
 
   def nav_items
     @nav_items ||= items.map do |item|

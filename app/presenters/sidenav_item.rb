@@ -1,6 +1,6 @@
 class SidenavItem
   delegate :request_path, :navigation, :product, :documentation?,
-           :namespace, :code_language, to: :@sidenav
+           :namespace, :code_language, :enforce_locale?, to: :@sidenav
 
   def initialize(folder:, sidenav:)
     @folder  = folder
@@ -43,7 +43,11 @@ class SidenavItem
   end
 
   def link_url
-    "/product-lifecycle/#{label.downcase.tr(' ', '-')}"
+    if enforce_locale?
+      "/#{I18n.locale}/product-lifecycle/#{label.downcase.tr(' ', '-')}"
+    else
+      "/product-lifecycle/#{label.downcase.tr(' ', '-')}"
+    end
   end
 
   def normalized_title

@@ -33,10 +33,10 @@ Rails.application.routes.draw do
   get '/stats', to: 'dashboard#stats'
   get '/stats/summary', to: 'dashboard#stats_summary'
 
-  get '/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint
-  get '/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint
+  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint
+  get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint
 
-  get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
+  get '(/:locale)/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
     products = DocumentationConstraint.product_with_parent_list
 
     # If there's no language in the URL it's an implicit match
@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     products.include?(request['product']) && includes_language
   }
 
-  get '/documentation', to: 'static#documentation'
+  get '(/:locale)/documentation', to: 'static#documentation'
 
   get '/migrate/tropo/(/*guide)', to: 'static#migrate_details'
 
@@ -86,21 +86,27 @@ Rails.application.routes.draw do
 
   resources :careers, only: [:index]
 
-  get '/task/(*tutorial_step)', to: 'tutorial#single'
-  get '/(:product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
-  get '/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
-  get '/(:product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation
-  get '/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint
+  get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single'
+  get '(/:locale)/(:product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
+  get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
+  get '(/:locale)/(:product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation
+  get '(/:locale)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint
 
-  get '/*product/api-reference', to: 'markdown#api'
-
-  scope '(:namespace)', namespace: 'product-lifecycle' do
-    get '/product-lifecycle/*document', to: 'markdown#show'
+  scope '(/:locale)' do
+    get '/*product/api-reference', to: 'markdown#api'
   end
 
-  scope '(:namespace)', namespace: /contribute/, defaults: { namespace: '' } do
+  get '(/:locale)/product-lifecycle/*document', to: 'markdown#show', defaults: { namespace: 'product-lifecycle' }
+
+  scope 'contribute' do
     get '/(:product)/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
   end
+
+  scope '/:locale', constraints: { locale: /[a-z]{2}/ } do
+    get '/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
+  end
+
+  get '(/:locale)/:product/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
 
   get '*unmatched_route', to: 'application#not_found'
 

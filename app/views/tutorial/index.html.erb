@@ -7,12 +7,22 @@
     <div class="Vlt-grid">
       <div class="Vlt-col">
         <% if @tutorial.previous_step %>
-          <a class="Vlt-btn Vlt-btn--secondary" href="<%= "/#{@tutorial.current_product}/tutorials/#{@tutorial.name}/#{@tutorial.previous_step['path']}" %>"> &laquo; Previous</a>
+          <a
+            class="Vlt-btn Vlt-btn--secondary"
+            href="<%= url_for(product: @tutorial.current_product, tutorial_name: @tutorial.name, tutorial_step: @tutorial.previous_step['path'], only_path: true, controller: 'tutorial', action: :index) %>"
+          >
+            &laquo; Previous
+          </a>
         <% end %>
       </div>
       <div class="Vlt-col Vlt-right">
         <% if @tutorial.next_step %>
-          <a class="Vlt-btn Vlt-btn--secondary" href="<%= "/#{@tutorial.current_product}/tutorials/#{@tutorial.name}/#{@tutorial.next_step['path']}" %>">Next &raquo;</a>
+          <a
+            class="Vlt-btn Vlt-btn--secondary"
+            href="<%= url_for(product: @tutorial.current_product, tutorial_name: @tutorial.name, tutorial_step: @tutorial.next_step['path'], only_path: true, controller: 'tutorial', action: :index) %>"
+          >
+            Next &raquo;
+          </a>
         <% end %>
       </div>
      </div>

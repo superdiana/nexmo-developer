@@ -84,7 +84,7 @@ class TutorialController < ApplicationController
   def set_sidenav
     @sidenav = Sidenav.new(
       namespace: params[:namespace],
-      language: @language,
+      language: params[:locale],
       request_path: request.path,
       navigation: @navigation,
       code_language: params[:code_language],
