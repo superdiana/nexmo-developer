@@ -20,11 +20,7 @@ module ApplicationHelper
 
   def active_sidenav_item
     if params[:tutorial_name]
-      if params[:locale]
-        "/#{I18n.locale}/#{params[:product]}/tutorials/#{params[:tutorial_name]}"
-      else
-        "/#{params[:product]}/tutorials/#{params[:tutorial_name]}"
-      end
+      url_for(controller: :tutorial, action: :index, product: params[:product], tutorial_name: params[:tutorial_name])
     else
       request.path.chomp("/#{params[:code_language]}")
     end
