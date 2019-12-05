@@ -89,9 +89,9 @@ Rails.application.routes.draw do
   resources :careers, only: [:index]
 
   get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single'
-  get '(/:locale)/(:product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
+  get '(/:locale)/(*product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
   get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
-  get '(/:locale)/(:product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
+  get '(/:locale)/(*product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
   get '(/:locale)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint
 
   scope '(/:locale)', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
