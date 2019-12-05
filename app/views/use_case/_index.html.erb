@@ -19,7 +19,7 @@
           </a>
         </div>
 
-        <a href="<%= url_for(controller: 'use_case', action: :show, document: use_case.path, only_path: true) %>">
+        <a href="<%= url_for(controller: 'use_case', action: :show, document: use_case.relative_path, only_path: true) %>">
           <div class="Vlt-card__content">
             <h2>
               <span><%= use_case.title %></span>
@@ -38,7 +38,7 @@
           <% end %>
 
           <div class="Vlt-card__cta">
-            <a href="<%= url_for(controller: 'use_case', action: :show, document: use_case.path, only_path: true) %>" class="Vlt-btn Vlt-btn--secondary">
+            <a href="<%= url_for(controller: 'use_case', action: :show, document: use_case.relative_path, only_path: true) %>" class="Vlt-btn Vlt-btn--secondary">
             Read more
             </a>
           </div>

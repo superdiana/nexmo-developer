@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe UseCaseListFilter do
+  before do
+    described_class.include Rails.application.routes.url_helpers
+  end
+
   it 'returns an instance of Tutorial with matching input' do
     allow(UseCase).to receive(:all).and_return([mock_tutorial])
 
@@ -12,7 +16,7 @@ RSpec.describe UseCaseListFilter do
 
     output = described_class.call(input)
 
-    expected_output = "FREEZESTARTPHVsIGNsYXNzPSJWbHQtbGlzdCBWbHQtbGlzdC0tc2ltcGxlIj4KICAKICAgIDxsaT48YSBocmVmPSIvcGF0aC90by90ZXN0LXR1dG9yaWFsIj5UZXN0IFR1dG9yaWFsPC9hPjwvbGk-CiAgCjwvdWw-Cg==FREEZEEND\n"
+    expected_output = "FREEZESTARTPHVsIGNsYXNzPSJWbHQtbGlzdCBWbHQtbGlzdC0tc2ltcGxlIj4KICAKICAgIDxsaT48YSBocmVmPSIvdXNlLWNhc2VzL3BhdGgvdG8vdGVzdC10dXRvcmlhbCI-VGVzdCBUdXRvcmlhbDwvYT48L2xpPgogIAo8L3VsPgo=FREEZEEND\n"
 
     expect(output).to eq(expected_output)
   end
@@ -58,7 +62,7 @@ RSpec.describe UseCaseListFilter do
       title: 'Test Tutorial',
       products: 'messaging/sms',
       description: 'This is a demo tutorial',
-      document_path: '/path/to/test-tutorial.md',
+      document_path: Pathname.new("#{Rails.root}/_use_cases/path/to/test-tutorial.md"),
       external_link: '/path/to/test-tutorial',
       languages: 'en'
     )
