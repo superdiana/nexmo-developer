@@ -19,30 +19,30 @@ class SidenavSubitem < SidenavItem
 
   def build_url
     if @folder[:root] == 'config/tutorials'
-      params = {
+      url_for(
         tutorial_name: Navigation.new(@folder).path_to_url,
         controller: :tutorial,
         action: :index,
         product: @folder[:product],
-        only_path: true
-      }
-      params.merge!(locale: I18n.locale) if enforce_locale?
-      url_for(params)
+        only_path: true,
+        locale: locale
+      )
     elsif @folder[:root] == '_use_cases'
-      params = {
+      url_for(
         document: Navigation.new(@folder).path_to_url,
         controller: controller,
         action: :show,
-        only_path: true
-      }
-      params.merge!(locale: I18n.locale) if enforce_locale?
-      url_for(params)
+        only_path: true,
+        locale: locale
+      )
     else
-      if enforce_locale?
-        "/#{I18n.locale}/#{Navigation.new(@folder).path_to_url}"
-      else
-        "/#{Navigation.new(@folder).path_to_url}"
-      end
+      url_for(
+        controller: :markdown,
+        action: :show,
+        document: Navigation.new(@folder).path_to_url,
+        only_path: true,
+        locale: locale
+      )
     end
   end
 

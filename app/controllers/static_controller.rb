@@ -72,7 +72,7 @@ class StaticController < ApplicationController
       request_path: request.path,
       navigation: @navigation,
       product: @product,
-      language: params[:locale]
+      locale: params[:locale]
     )
 
     render layout: 'documentation'

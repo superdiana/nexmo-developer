@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Sidenav do
   let(:request_path) { '/en/documentation' }
   let(:product)      { nil }
-  let(:language)     { 'en' }
+  let(:locale)       { 'en' }
   let(:navigation)   { :documentation }
   let(:namespace)    { nil }
 
@@ -11,7 +11,7 @@ RSpec.describe Sidenav do
     @sidenav = described_class.new(
       request_path: request_path,
       product: product,
-      language: language,
+      locale: locale,
       navigation: navigation,
       namespace: namespace
     )

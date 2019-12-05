@@ -98,13 +98,13 @@ Rails.application.routes.draw do
     get '/*product/api-reference', to: 'markdown#api'
   end
 
-  get '(/:locale)/product-lifecycle/*document', to: 'markdown#show', defaults: { namespace: 'product-lifecycle' }
+  get '(/:locale)/:namespace/*document', to: 'markdown#show', constraints: { namespace: 'product-lifecycle' }
 
-  scope 'contribute' do
-    get '/(:product)/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
+  scope '(/:locale)' do
+    get '/:namespace/(:product)/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation.merge(namespace: 'contribute')
   end
 
-  scope '/:locale', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
+  scope '(/:locale)', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
     get '/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
   end
 

@@ -12,7 +12,7 @@ RSpec.describe SidenavItem do
   subject do
     described_class.new(
       folder: folder,
-      sidenav: instance_double(Sidenav)
+      sidenav: instance_double(Sidenav, locale: nil)
     )
   end
 

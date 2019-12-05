@@ -1,6 +1,8 @@
 class SidenavItem
+  include Rails.application.routes.url_helpers
+
   delegate :request_path, :navigation, :product, :documentation?,
-           :namespace, :code_language, :enforce_locale?, to: :@sidenav
+           :namespace, :code_language, :locale, to: :@sidenav
 
   def initialize(folder:, sidenav:)
     @folder  = folder
@@ -43,11 +45,14 @@ class SidenavItem
   end
 
   def link_url
-    if enforce_locale?
-      "/#{I18n.locale}/product-lifecycle/#{label.downcase.tr(' ', '-')}"
-    else
-      "/product-lifecycle/#{label.downcase.tr(' ', '-')}"
-    end
+    url_for(
+      controller: :markdown,
+      action: :show,
+      namespace: 'product-lifecycle',
+      document: label.downcase.tr(' ', '-'),
+      only_path: true,
+      locale: locale
+    )
   end
 
   def normalized_title

@@ -11,7 +11,8 @@ RSpec.describe SidenavSubitem do
       navigation: :documentation,
       request_path: '/concepts/overview',
       documentation?: true,
-      code_language: nil
+      code_language: nil,
+      locale: nil
     )
   end
 
@@ -47,7 +48,8 @@ RSpec.describe SidenavSubitem do
           Sidenav,
           navigation: :documentation,
           request_path: '/product-lifecycle/dev-preview',
-          documentation?: false
+          documentation?: false,
+          locale: nil
         )
       end
 

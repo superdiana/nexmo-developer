@@ -1,23 +1,18 @@
 class Sidenav
-  attr_reader :request_path, :navigation, :product, :code_language
+  attr_reader :request_path, :navigation, :product, :code_language, :locale
 
   # rubocop:disable Metrics/ParameterLists
-  def initialize(request_path:, navigation:, product:, language:, code_language: nil, namespace: nil)
+  def initialize(request_path:, navigation:, product:, locale: nil, code_language: nil, namespace: nil)
     @request_path  = request_path
     @navigation    = navigation
     @product       = product
-    @language      = I18n.locale
-    @locale_param  = language
+    @locale        = locale
     @code_language = code_language
     @namespace     = namespace
 
     after_initialize!
   end
   # rubocop:enable Metrics/ParameterLists
-
-  def enforce_locale?
-    !!@locale_param
-  end
 
   def nav_items
     @nav_items ||= items.map do |item|
@@ -63,7 +58,7 @@ class Sidenav
     @resolver ||= SidenavResolver.new(
       path: @path,
       namespace: @namespace,
-      language: @language
+      language: I18n.locale
     )
   end
 end
