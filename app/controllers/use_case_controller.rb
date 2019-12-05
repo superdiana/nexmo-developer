@@ -12,13 +12,6 @@ class UseCaseController < ApplicationController
 
     @document_title = 'Use Cases'
 
-    @base_path = request.original_fullpath.chomp('/')
-
-    # We have to strip the last section off if it matches any code languages. Hacky, but it works
-    CodeLanguage.linkable.map(&:key).map(&:downcase).each do |lang|
-      @base_path.gsub!(%r{/#{lang}$}, '')
-    end
-
     excluded_languages = ['csharp', 'javascript', 'kotlin', 'android', 'swift', 'objective_c']
     @languages = CodeLanguage.languages.reject { |l| excluded_languages.include?(l.key) }
 

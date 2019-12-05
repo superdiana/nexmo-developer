@@ -33,23 +33,25 @@ Rails.application.routes.draw do
   get '/stats', to: 'dashboard#stats'
   get '/stats/summary', to: 'dashboard#stats_summary'
 
-  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint
-  get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint
+  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint.merge(locale: /#{I18n.available_locales.join('|')}/)
+  get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint.merge(locale: /#{I18n.available_locales.join('|')}/)
 
-  get '(/:locale)/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
-    products = DocumentationConstraint.product_with_parent_list
+  scope '(/:locale)', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
+    get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
+      products = DocumentationConstraint.product_with_parent_list
 
-    # If there's no language in the URL it's an implicit match
-    includes_language = true
+      # If there's no language in the URL it's an implicit match
+      includes_language = true
 
-    # If there's a language in the URL, match on that too
-    if request['code_language']
-      language = CodeLanguage.linkable.map(&:key).map(&:downcase)
-      includes_language = language.include?(request['code_language'])
-    end
+      # If there's a language in the URL, match on that too
+      if request['code_language']
+        language = CodeLanguage.linkable.map(&:key).map(&:downcase)
+        includes_language = language.include?(request['code_language'])
+      end
 
-    products.include?(request['product']) && includes_language
-  }
+      products.include?(request['product']) && includes_language
+    }
+  end
 
   get '(/:locale)/documentation', to: 'static#documentation'
 
@@ -87,12 +89,12 @@ Rails.application.routes.draw do
   resources :careers, only: [:index]
 
   get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single'
-  get '(/:locale)/(:product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
-  get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
-  get '(/:locale)/(:product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation
+  get '(/:locale)/(:product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
+  get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
+  get '(/:locale)/(:product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
   get '(/:locale)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint
 
-  scope '(/:locale)' do
+  scope '(/:locale)', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
     get '/*product/api-reference', to: 'markdown#api'
   end
 
@@ -102,7 +104,7 @@ Rails.application.routes.draw do
     get '/(:product)/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
   end
 
-  scope '/:locale', constraints: { locale: /[a-z]{2}/ } do
+  scope '/:locale', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
     get '/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
   end
 
