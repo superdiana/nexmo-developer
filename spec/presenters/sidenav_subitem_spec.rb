@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SidenavSubitem do
+  let(:locale) { nil }
   let(:folder) do
     { title: 'overview.md', path: '_documentation/en/concepts/overview.md', is_file?: true }
   end
@@ -12,7 +13,7 @@ RSpec.describe SidenavSubitem do
       request_path: '/concepts/overview',
       documentation?: true,
       code_language: nil,
-      locale: nil
+      locale: locale
     )
   end
 
@@ -54,6 +55,64 @@ RSpec.describe SidenavSubitem do
       end
 
       it { expect(subject.url).to eq('/product-lifecycle/beta') }
+    end
+  end
+
+  describe '#buid_url' do
+    context 'for a tutorial' do
+      let(:folder) do
+        {
+          root: 'config/tutorials',
+          path: 'config/tutorials/en/phone-to-app.yml',
+          filename: 'phone-to-app',
+          external_link: nil,
+          title: 'Receiving an in-app voice call',
+          description: 'Your web app receives an inbound phone call.',
+          products: ['client-sdk'],
+          is_file?: true,
+          is_task?: true,
+          product: 'client-sdk',
+        }
+      end
+
+      it { expect(subject.build_url).to eq('/client-sdk/tutorials/phone-to-app') }
+
+      context 'specifying a locale' do
+        let(:locale) { :en }
+
+        it { expect(subject.build_url).to eq('/en/client-sdk/tutorials/phone-to-app') }
+      end
+    end
+
+    context 'for a use-case' do
+      let(:folder) do
+        {
+          root: '_use_cases',
+          path: '_use_cases/en/sending-whatsapp-messages-with-messages-api.md',
+          title: 'Click to Call',
+          product: 'messages',
+          is_file?: true,
+          is_tutorial?: true,
+        }
+      end
+
+      it { expect(subject.build_url).to eq('/use-cases/sending-whatsapp-messages-with-messages-api') }
+
+      context 'specifying a locale' do
+        let(:locale) { :en }
+
+        it { expect(subject.build_url).to eq('/en/use-cases/sending-whatsapp-messages-with-messages-api') }
+      end
+    end
+
+    context 'otherwise' do
+      it { expect(subject.build_url).to eq('/concepts/overview') }
+
+      context 'specifying a locale' do
+        let(:locale) { :en }
+
+        it { expect(subject.build_url).to eq('/en/concepts/overview') }
+      end
     end
   end
 end

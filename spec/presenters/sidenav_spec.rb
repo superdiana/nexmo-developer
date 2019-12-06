@@ -32,4 +32,14 @@ RSpec.describe Sidenav do
       @sidenav.nav_items.each { |item| expect(item).to be_an_instance_of(SidenavItem) }
     end
   end
+
+  describe '#locale' do
+    it { expect(@sidenav.locale).to eq('en') }
+
+    context 'without specifying a locale' do
+      let(:locale) { nil }
+
+      it { expect(@sidenav.locale).to be_nil }
+    end
+  end
 end

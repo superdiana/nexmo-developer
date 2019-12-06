@@ -1,4 +1,6 @@
 class UseCaseListFilter < Banzai::Filter
+  include Rails.application.routes.url_helpers
+
   def call(input)
     input.gsub(/```use_cases(.+?)```/m) do |_s|
       config = YAML.safe_load($1)

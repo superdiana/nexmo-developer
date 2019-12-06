@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SidenavItem do
+  let(:locale) { nil }
   let(:folder) do
     {
       children: [{ title: 'overview.md', path: '_documentation/en/dispatch/overview.md', is_file?: true }],
@@ -12,7 +13,7 @@ RSpec.describe SidenavItem do
   subject do
     described_class.new(
       folder: folder,
-      sidenav: instance_double(Sidenav, locale: nil)
+      sidenav: instance_double(Sidenav, locale: locale)
     )
   end
 
@@ -55,6 +56,12 @@ RSpec.describe SidenavItem do
   describe 'link_url' do
     it 'returns the url of the label' do
       expect(subject.link_url).to eq('/product-lifecycle/beta')
+    end
+
+    context 'when a locale is specified' do
+      let(:locale) { :en }
+
+      it { expect(subject.link_url).to eq('/en/product-lifecycle/beta') }
     end
   end
 

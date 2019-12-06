@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UseCaseListFilter do
-  before do
-    described_class.include Rails.application.routes.url_helpers
-  end
-
   it 'returns an instance of Tutorial with matching input' do
     allow(UseCase).to receive(:all).and_return([mock_tutorial])
 

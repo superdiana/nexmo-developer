@@ -24,4 +24,14 @@ RSpec.describe Redirector do
       expect(described_class.find(request)).to eq(false)
     end
   end
+
+  context '.strip_locale_from_path' do
+    it 'strips the locale from path if present' do
+      expect(described_class.strip_locale_from_path('/en/path')).to eq('/path')
+    end
+
+    it 'strips the locale from path if present' do
+      expect(described_class.strip_locale_from_path('/path/to')).to eq('/path/to')
+    end
+  end
 end
