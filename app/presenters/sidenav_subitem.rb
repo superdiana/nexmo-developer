@@ -35,11 +35,23 @@ class SidenavSubitem < SidenavItem
         only_path: true,
         locale: locale
       )
-    else
+    elsif @folder[:path].starts_with?('app/views')
+      navigation = Navigation.new(@folder)
       url_for(
         controller: :markdown,
         action: :show,
-        document: Navigation.new(@folder).path_to_url,
+        document: navigation.document,
+        namespace: navigation.product,
+        only_path: true,
+        locale: locale
+      )
+    else
+      navigation = Navigation.new(@folder)
+      url_for(
+        controller: :markdown,
+        action: :show,
+        document: navigation.document,
+        product: navigation.product,
         only_path: true,
         locale: locale
       )

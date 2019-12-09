@@ -22,4 +22,12 @@ class Navigation
       @folder[:path].sub(%r{^\w+\/\w+\/}, '').chomp('.md')
     end
   end
+
+  def product
+    path_to_url.split('/').first
+  end
+
+  def document
+    path_to_url.split('/').drop(1).join('/')
+  end
 end

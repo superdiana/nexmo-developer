@@ -33,10 +33,10 @@ Rails.application.routes.draw do
   get '/stats', to: 'dashboard#stats'
   get '/stats/summary', to: 'dashboard#stats_summary'
 
-  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint.merge(locale: /#{I18n.available_locales.join('|')}/)
-  get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint.merge(locale: /#{I18n.available_locales.join('|')}/)
+  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
+  get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
 
-  scope '(/:locale)', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
+  scope '(/:locale)', constraints: LocaleConstraint.new do
     get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
       products = DocumentationConstraint.product_with_parent_list
 
@@ -53,22 +53,22 @@ Rails.application.routes.draw do
     }
   end
 
-  get '(/:locale)/documentation', to: 'static#documentation'
+  get '(/:locale)/documentation', to: 'static#documentation', constraints: LocaleConstraint.new
 
   get '/migrate/tropo/(/*guide)', to: 'static#migrate_details'
 
   get '/legacy', to: 'static#legacy'
-  get '/team', to: 'static#team'
+  get '(/:locale)/team', to: 'static#team', constraints: LocaleConstraint.new
 
   get '/community/slack', to: 'slack#join'
   post '/community/slack', to: 'slack#invite'
 
-  get '/tools', to: 'static#tools'
+  get '(/:locale)/tools', to: 'static#tools', constraints: LocaleConstraint.new
   get '/community/past-events', to: 'static#past_events'
 
   get '/feeds/events', to: 'feeds#events'
 
-  get '/extend', to: 'extend#index'
+  get '(/:locale)/extend', to: 'extend#index', constraints: LocaleConstraint.new
   get '/extend/:title', to: 'extend#show'
 
   get '/event_search', to: 'static#event_search'
@@ -88,27 +88,25 @@ Rails.application.routes.draw do
 
   resources :careers, only: [:index]
 
-  get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single'
-  get '(/:locale)/(*product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
-  get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
-  get '(/:locale)/(*product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation.merge(locale: /#{I18n.available_locales.join('|')}/)
-  get '(/:locale)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint
+  get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single', constraints: LocaleConstraint.new
+  get '(/:locale)/(*product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
+  get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
+  get '(/:locale)/(*product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
+  get '(/:locale)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
 
-  scope '(/:locale)', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
+  scope '(/:locale)', constraints: LocaleConstraint.new do
     get '/*product/api-reference', to: 'markdown#api'
   end
 
-  get '(/:locale)/:namespace/*document', to: 'markdown#show', constraints: { namespace: 'product-lifecycle' }
+  get '(/:locale)/:namespace/*document', to: 'markdown#show', constraints: { namespace: 'product-lifecycle', locale: LocaleConstraint.available_locales }
 
-  scope '(/:locale)' do
+  scope '(/:locale)', constraints: LocaleConstraint.new do
     get '/:namespace/(:product)/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation.merge(namespace: 'contribute')
   end
 
-  scope '(/:locale)', constraints: { locale: /#{I18n.available_locales.join('|')}/ } do
-    get '/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
+  scope '(/:locale)', constraints: LocaleConstraint.new do
+    get '/:product/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
   end
-
-  get '(/:locale)/:product/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
 
   get '*unmatched_route', to: 'application#not_found'
 
