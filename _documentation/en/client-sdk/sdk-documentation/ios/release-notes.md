@@ -6,6 +6,86 @@ navigation_weight: 0
 
 # Release Notes
 
+## 1.2.1 - 2019-12-05
+### Added
+Configuration for ICE server:
+
+```
+NXMClientConfig *config = [[NXMClientConfig alloc] initWithApiUrl:restUrl
+                                                     websocketUrl:wsUrl
+                                                           ipsUrl:ipsUrl
+                                                    iceServerUrls:iceUrls];
+[NXMClient setConfiguration:config]
+```
+
+This configuration is optional and a default will be set if not specified.
+
+Note: `setConfiguration` should be used before accessing `NXMClient.shared`.
+
+### Fixed
+Corrected nil values for `fromMember` for `NXMConversation` events.
+
+---
+
+## 1.2.0 - 2019-12-03
+
+### Added
+`NXMClient`'s `getConversationsPageWithSize:order:completionHandler:` method to get conversations with paging.
+
+`NXMConversationsPage`, which represents the retrieved page, provides the following instance methods
+
+- `hasNextPage` / `hasPreviousPage` to check if forward/backward page retrieval is possible and
+- `nextPage:` / `previousPage:` to asynchronously retrieve the next/previous page.
+
+### Changed
+`NXMClient`'s `getConversationWithUUid:completionHandler:` method's name typo (now called `getConversationWithUuid:completionHandler:`).
+
+---
+
+## 1.1.1 - 2019-11-21
+
+### Added
+
+`NXMClientConfig` object in order to change data center configuration. How to use:
+
+```
+[NXMClient setConfiguration:NXMClientConfig.DC]
+```
+
+`NXMClient setConfiguration` is optional, configuration will set to a default value.
+Note: you most call `setConfiguration` method before using `NXMClient.shared`.
+
+---
+
+## 1.1.0 - 2019-11-14
+
+### Fixed
+
+- iOS 13 push notifications support
+- Start server call stability
+- Receiving a DTMF event in call and conversation
+
+### Added
+
+`NXMConversationDelegate` did receive DTMF event method:
+
+```
+- (void)conversation:(nonnull NXMConversation *)conversation didReceiveDTMFEvent:(nullable NXMDTMFEvent *)event;
+```
+
+### Changed
+
+`NXMClient` - client enable push notifications method changed.
+`param pushKitToken` - only for VoIP push (incoming calls).
+`param userNotificationToken` - all push types:
+
+```
+- (void)enablePushNotificationsWithPushKitToken:(nullable NSData *)pushKitToken
+                          userNotificationToken:(nullable NSData *)userNotificationToken
+                                      isSandbox:(BOOL)isSandbox
+                              completionHandler:(void(^_Nullable)(NSError * _Nullable error))completionHandler;
+```
+
 ## Version 1.0.0 - 2019-09-05
 
 ### Fixed
@@ -49,7 +129,7 @@ leftStateInitiator.userId;
 leftStateInitiator.memberId;
 leftStateInitiator.time;
 ```
-​
+
 Added `NXMConversationUpdateDelegate` to notify on member updates like media,leg, and state.
 Added `updatesDelegate` property to `NXMConversation`:
 
@@ -232,7 +312,6 @@ NXMClient myClient
 @property (nonatomic, readonly, nullable) NXMDirection *to;
 
 @end
-
 ```
 
 ```objective-c

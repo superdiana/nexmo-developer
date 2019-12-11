@@ -13,7 +13,7 @@ gem 'webpacker'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -105,7 +105,7 @@ gem 'octokit', require: false
 gem 'woothee'
 
 # Create beautiful JavaScript charts with one line of Ruby
-gem 'chartkick', '3.2.0'
+gem 'chartkick', '3.3.0'
 
 # The simplest way to group temporal data
 gem 'groupdate', '3.2.0'
