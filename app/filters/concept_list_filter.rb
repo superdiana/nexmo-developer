@@ -8,9 +8,9 @@ class ConceptListFilter < Banzai::Filter
 
       if config['product']
         @product = config['product']
-        @concepts = Concept.by_product(@product, @options[:language])
+        @concepts = Concept.by_product(@product, I18n.locale)
       elsif config['concepts']
-        @concepts = Concept.by_name(config['concepts'], @options[:language])
+        @concepts = Concept.by_name(config['concepts'], I18n.locale)
       end
 
       @concepts.reject!(&:ignore_in_list)

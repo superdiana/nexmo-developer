@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'renders the corresponding layout' do |config, matches|
+RSpec.shared_examples 'renders the corresponding layout' do |matches|
   it do
     get '/default_landing'
 
@@ -20,7 +20,6 @@ end
 
 RSpec.describe StaticController, type: :request do
   describe 'GET default_landing' do
-
     before do
       Rails.application.routes.draw do
         get '/:landing_page' => 'static#default_landing'
@@ -55,7 +54,7 @@ RSpec.describe StaticController, type: :request do
           ],
         }
       end
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col']]
     end
 
     context 'renders two columns with 50% width each' do
@@ -93,7 +92,7 @@ RSpec.describe StaticController, type: :request do
         }
       end
 
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col--1of2', 'Vlt-col--1of2']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col--1of2', 'Vlt-col--1of2']]
     end
 
     context 'renders three columns, no width specified' do
@@ -140,7 +139,7 @@ RSpec.describe StaticController, type: :request do
         }
       end
 
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col', 'Vlt-col', 'Vlt-col']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col', 'Vlt-col', 'Vlt-col']]
     end
 
     context 'renders two columns in three-column grid (1:2 and 1:1)' do
@@ -178,7 +177,7 @@ RSpec.describe StaticController, type: :request do
         }
       end
 
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col--2of3', 'Vlt-col--1of3']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col--2of3', 'Vlt-col--1of3']]
     end
 
     context 'renders two columns in three-column grid (1:1 and 1:2)' do
@@ -216,7 +215,7 @@ RSpec.describe StaticController, type: :request do
         }
       end
 
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col--1of3', 'Vlt-col--2of3']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col--1of3', 'Vlt-col--2of3']]
     end
 
     context 'renders two rows, one with two columns (1:1) and one with three (1:1:1)' do
@@ -255,7 +254,7 @@ RSpec.describe StaticController, type: :request do
         }
       end
 
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col--1of2', 'Vlt-col--1of2'], ['Vlt-col--1of3', 'Vlt-col--1of3', 'Vlt-col--1of3']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col--1of2', 'Vlt-col--1of2'], ['Vlt-col--1of3', 'Vlt-col--1of3', 'Vlt-col--1of3']]
     end
 
     context 'renders the correct grid size when the last item in the grid has no explicit width' do
@@ -277,7 +276,7 @@ RSpec.describe StaticController, type: :request do
         }
       end
 
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col--1of2', 'Vlt-col--1of2']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col--1of2', 'Vlt-col--1of2']]
     end
 
     context 'renders the correct grid size when the first item in the grid has no explicit width' do
@@ -299,7 +298,7 @@ RSpec.describe StaticController, type: :request do
         }
       end
 
-      it_behaves_like 'renders the corresponding layout', config, [['Vlt-col--1of2', 'Vlt-col--1of2']]
+      it_behaves_like 'renders the corresponding layout', [['Vlt-col--1of2', 'Vlt-col--1of2']]
     end
   end
 end

@@ -64,7 +64,7 @@ class StaticController < ApplicationController
 
     @document_title = @frontmatter['title']
 
-    @content = MarkdownPipeline.new.call(document)
+    @content = MarkdownPipeline.new(locale: params[:locale]).call(document)
 
     @navigation = :documentation
 
