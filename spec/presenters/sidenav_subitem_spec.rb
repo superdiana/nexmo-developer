@@ -48,6 +48,7 @@ RSpec.describe SidenavSubitem do
         instance_double(
           Sidenav,
           navigation: :documentation,
+          namespace: 'product-lifecycle',
           request_path: '/product-lifecycle/dev-preview',
           documentation?: false,
           locale: nil

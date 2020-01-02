@@ -43,8 +43,12 @@ class DocFinder
       build_key(root: root, product: product, document: document, format: format),
     ].select { |k| dictionary.key?(k) }.first
 
-    available_language = dictionary.fetch(key).fetch(language, I18n.default_locale.to_s)
-    build_doc_path(root, key, available_language)
+    if root.starts_with?('app/views')
+      dictionary.fetch(key) && key
+    else
+      available_language = dictionary.fetch(key).fetch(language, I18n.default_locale.to_s)
+      build_doc_path(root, key, available_language)
+    end
   end
 
   def self.non_linkable(root:, language:, document:, product: nil, format: nil)

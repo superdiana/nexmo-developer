@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   scope '(/:locale)', constraints: LocaleConstraint.new do
     get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
-      products = DocumentationConstraint.product_with_parent_list
+      products = DocumentationConstraint.product_list
 
       # If there's no language in the URL it's an implicit match
       includes_language = true
@@ -89,24 +89,20 @@ Rails.application.routes.draw do
   resources :careers, only: [:index]
 
   get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single', constraints: LocaleConstraint.new
-  get '(/:locale)/(*product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
+  get '(/:locale)/*product/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
   get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
-  get '(/:locale)/(*product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
+  get '(/:locale)/(*product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.product.merge(locale: LocaleConstraint.available_locales)
   get '(/:locale)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
 
   scope '(/:locale)', constraints: LocaleConstraint.new do
     get '/*product/api-reference', to: 'markdown#api'
   end
 
-  get '(/:locale)/:namespace/*document', to: 'markdown#show', constraints: { namespace: 'product-lifecycle', locale: LocaleConstraint.available_locales }
+  get '(/:locale)/:namespace/*document', to: 'markdown#show', constraints: { namespace: 'product-lifecycle', locale: LocaleConstraint.available_locales }, as: 'product_lifecycle'
 
-  scope '(/:locale)', constraints: LocaleConstraint.new do
-    get '/:namespace/(:product)/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation.merge(namespace: 'contribute')
-  end
+  get '(/:locale)/:namespace/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation.merge(namespace: 'contribute', locale: LocaleConstraint.available_locales)
 
-  scope '(/:locale)', constraints: LocaleConstraint.new do
-    get '/:product/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation
-  end
+  get '(/:locale)/*product/*document(/:code_language)', to: 'markdown#show', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
 
   get '*unmatched_route', to: 'application#not_found'
 

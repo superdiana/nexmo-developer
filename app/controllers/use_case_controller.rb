@@ -46,7 +46,10 @@ class UseCaseController < ApplicationController
     @document_title = @frontmatter['title']
     @product = @frontmatter['products']
 
-    @content = MarkdownPipeline.new({ code_language: @code_language }).call(@document)
+    @content = MarkdownPipeline.new(
+      code_language: @code_language,
+      locale: params[:locale]
+    ).call(@document)
 
     @sidenav = Sidenav.new(
       namespace: params[:namespace],

@@ -15,19 +15,29 @@ class Navigation
   end
 
   def path_to_url
-    if @folder[:is_task?]
-      path = @folder[:path].sub(@folder[:root], '')
-      path.sub(%r{^/\w+\/}, '').chomp('.yml')
-    else
-      @folder[:path].sub(%r{^\w+\/\w+\/}, '').chomp('.md')
+    @path_to_url ||= begin
+      if @folder[:is_task?]
+        path = @folder[:path].sub(@folder[:root], '')
+        path.sub(%r{^/\w+\/}, '').chomp('.yml')
+      else
+        @folder[:path].sub(%r{^\w+\/\w+\/}, '').chomp('.md')
+      end
     end
   end
 
   def product
-    path_to_url.split('/').first
+    @product ||= begin
+                   if @folder[:path].starts_with?('app/views')
+                     path_to_url.split('/').first
+                   else
+                     DocumentationConstraint.products_for_routes.find do |p|
+                       path_to_url.starts_with? p
+                     end
+                   end
+                 end
   end
 
   def document
-    path_to_url.split('/').drop(1).join('/')
+    @document ||= path_to_url.sub("#{product}/", '')
   end
 end

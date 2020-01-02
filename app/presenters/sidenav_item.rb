@@ -45,12 +45,9 @@ class SidenavItem
   end
 
   def link_url
-    url_for(
-      controller: :markdown,
-      action: :show,
+    product_lifecycle_path(
       namespace: 'product-lifecycle',
       document: label.downcase.tr(' ', '-'),
-      only_path: true,
       locale: locale
     )
   end

@@ -32,19 +32,21 @@ RSpec.describe 'markdown routes', type: :routing do
         .to route_to(controller: 'markdown', action: 'show', document: 'code-snippets/sample-code-snippet', namespace: 'contribute', code_language: 'ruby', locale: 'en')
     end
 
-    it '/verify/overview' do
-      expect(get('/verify/overview'))
-        .to route_to(controller: 'markdown', action: 'show', product: 'verify', document: 'overview')
-    end
+    DocumentationConstraint.products_for_routes.each do |path|
+      it "/#{path}/overview" do
+        expect(get("/#{path}/overview"))
+          .to route_to(controller: 'markdown', action: 'show', product: path, document: 'overview')
+      end
 
-    it '/en/verify/overview' do
-      expect(get('/en/verify/overview'))
-        .to route_to(controller: 'markdown', action: 'show', product: 'verify', document: 'overview', locale: 'en')
-    end
+      it "/en/#{path}/overview" do
+        expect(get("/en/#{path}/overview"))
+          .to route_to(controller: 'markdown', action: 'show', product: path, document: 'overview', locale: 'en')
+      end
 
-    it '/en/verify/overview/ruby' do
-      expect(get('/en/verify/overview/ruby'))
-        .to route_to(controller: 'markdown', action: 'show', product: 'verify', document: 'overview', locale: 'en', code_language: 'ruby')
+      it "/en/#{path}/overview/ruby" do
+        expect(get("/en/#{path}/overview/ruby"))
+          .to route_to(controller: 'markdown', action: 'show', product: path, document: 'overview', locale: 'en', code_language: 'ruby')
+      end
     end
   end
 end
