@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Redirector do
   it 'returns a redirected path' do
-    request = OpenStruct.new(path: '/sms')
+    request = OpenStruct.new(path: '/sms', params: {})
     expect(described_class.find(request)).to eq('/messaging/sms/overview')
   end
 
@@ -17,11 +17,11 @@ RSpec.describe Redirector do
     end
 
     it 'returns a redirected path' do
-      request = OpenStruct.new(path: '/foo/bar')
+      request = OpenStruct.new(path: '/foo/bar', params: {})
       expect(described_class.find(request)).to eq('https://google.com')
 
-      request = OpenStruct.new(path: '/baz/foo/bar')
-      expect(described_class.find(request)).to eq(false)
+      request = OpenStruct.new(path: '/baz/foo/bar', params: {})
+      expect(described_class.find(request)).to be_falsey
     end
   end
 

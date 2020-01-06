@@ -9,8 +9,14 @@ ENVIRONMENT_REDIRECTS = YAML.safe_load(ENV['ENVIRONMENT_REDIRECTS'] || '')
 class Redirector
   def self.find(request)
     url = find_by_config(request) || find_by_environment_redirect(request) # rubocop:disable Rails/DynamicFindBy
-    Redirect.where(url: strip_locale_from_path(request.path)).first_or_create.increment!('uses') if url # rubocop:disable Rails/SkipsModelValidations
-    url
+    return unless url
+    Redirect.where(url: strip_locale_from_path(request.path)).first_or_create.increment!('uses') # rubocop:disable Rails/SkipsModelValidations
+
+    if request.params['locale']
+      "/#{request.params['locale']}#{url}"
+    else
+      url
+    end
   end
 
   def self.find_by_config(request)
