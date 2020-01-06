@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get '/robots.txt', to: 'static#robots'
   get '/jwt', to: 'static#jwt'
 
-  get '/*landing_page', to: 'static#default_landing', constraints: LandingPageConstraint.matches?
+  get '(/:locale)/*landing_page', to: 'static#default_landing', constraints: LandingPageConstraint.matches?.merge(locale: LocaleConstraint.available_locales), as: :static
 
   get 'markdown/show'
 
@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   get '/stats', to: 'dashboard#stats'
   get '/stats/summary', to: 'dashboard#stats_summary'
 
-  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
+  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales), as: :use_cases
   get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
 
   get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: DocumentationConstraint.documentation
@@ -53,7 +53,7 @@ Rails.application.routes.draw do
     products.include?(request['product']) && LocaleConstraint.new.matches?(request) && includes_language
   }
 
-  get '(/:locale)/documentation', to: 'static#documentation', constraints: LocaleConstraint.new
+  get '(/:locale)/documentation', to: 'static#documentation', constraints: LocaleConstraint.new, as: :documentation
 
   get '/migrate/tropo/(/*guide)', to: 'static#migrate_details'
 
@@ -63,13 +63,13 @@ Rails.application.routes.draw do
   get '/community/slack', to: 'slack#join'
   post '/community/slack', to: 'slack#invite'
 
-  get '(/:locale)/tools', to: 'static#tools', constraints: LocaleConstraint.new
+  get '(/:locale)/tools', to: 'static#tools', constraints: LocaleConstraint.new, as: :tools
   get '/community/past-events', to: 'static#past_events'
 
   get '/feeds/events', to: 'feeds#events'
 
-  get '(/:locale)/extend', to: 'extend#index', constraints: LocaleConstraint.new
-  get '/extend/:title', to: 'extend#show'
+  get '(/:locale)/extend', to: 'extend#index', constraints: LocaleConstraint.new, as: :extend
+  get '(/:locale)/extend/:title', to: 'extend#show', constraints: LocaleConstraint.new
 
   get '/event_search', to: 'static#event_search'
   match '/search', to: 'search#results', via: %i[get post]
@@ -79,14 +79,19 @@ Rails.application.routes.draw do
   get '/api-errors/:definition(/*subapi)', to: 'api_errors#index_scoped', as: 'api_errors_scoped', constraints: OpenApiConstraint.errors_available
   get '/api-errors/*definition/:id', to: 'api_errors#show', constraints: OpenApiConstraint.errors_available
 
-  get '/api', to: 'api#index'
+  get '(/:locale)/api', to: 'api#index', as: :api
 
-  mount ::Nexmo::OAS::Renderer::API, at: '/api'
+  scope '(/:locale)', constraints: LocaleConstraint.new do
+    mount ::Nexmo::OAS::Renderer::API, at: '/api'
+  end
+
   authenticated(:user) do
     mount Split::Dashboard, at: 'split' if ENV['REDIS_URL']
   end
 
-  resources :careers, only: [:index]
+  scope '(/:locale)', constraints: LocaleConstraint.new do
+    resources :careers, only: [:index]
+  end
 
   get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single', constraints: LocaleConstraint.new
   get '(/:locale)/*product/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
