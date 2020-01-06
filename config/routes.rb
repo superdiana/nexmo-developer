@@ -36,22 +36,22 @@ Rails.application.routes.draw do
   get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
   get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
 
-  scope '(/:locale)', constraints: LocaleConstraint.new do
-    get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
-      products = DocumentationConstraint.product_list
+  get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: DocumentationConstraint.documentation
 
-      # If there's no language in the URL it's an implicit match
-      includes_language = true
+  get '/:locale/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
+    products = Product.all.map { |p| p['path'] }
 
-      # If there's a language in the URL, match on that too
-      if request['code_language']
-        language = CodeLanguage.linkable.map(&:key).map(&:downcase)
-        includes_language = language.include?(request['code_language'])
-      end
+    # If there's no language in the URL it's an implicit match
+    includes_language = true
 
-      products.include?(request['product']) && includes_language
-    }
-  end
+    # If there's a language in the URL, match on that too
+    if request['code_language']
+      language = CodeLanguage.linkable.map(&:key).map(&:downcase)
+      includes_language = language.include?(request['code_language'])
+    end
+
+    products.include?(request['product']) && LocaleConstraint.new.matches?(request) && includes_language
+  }
 
   get '(/:locale)/documentation', to: 'static#documentation', constraints: LocaleConstraint.new
 

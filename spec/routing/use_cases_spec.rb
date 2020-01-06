@@ -20,24 +20,26 @@ RSpec.describe 'use-cases routes', type: :routing do
     end
 
     context 'specifying a product' do
-      it 'routes /client-sdk/use-cases' do
-        expect(get('/client-sdk/use-cases'))
-          .to route_to(controller: 'use_case', action: 'index', product: 'client-sdk')
-      end
+      Product.all.each do |product|
+        it "routes /#{product['path']}/use-cases" do
+          expect(get("/#{product['path']}/use-cases"))
+            .to route_to(controller: 'use_case', action: 'index', product: product['path'])
+        end
 
-      it 'routes /en/client-sdk/use-cases' do
-        expect(get('/en/client-sdk/use-cases'))
-          .to route_to(controller: 'use_case', action: 'index', product: 'client-sdk', locale: 'en')
-      end
+        it "routes /en/#{product['path']}/use-cases" do
+          expect(get("/en/#{product['path']}/use-cases"))
+            .to route_to(controller: 'use_case', action: 'index', product: product['path'], locale: 'en')
+        end
 
-      it 'routes /client-sdk/use-cases/node' do
-        expect(get('/client-sdk/use-cases/node'))
-          .to route_to(controller: 'use_case', action: 'index', product: 'client-sdk', code_language: 'node')
-      end
+        it "routes /#{product['path']}/use-cases/node" do
+          expect(get("/#{product['path']}/use-cases/node"))
+            .to route_to(controller: 'use_case', action: 'index', product: product['path'], code_language: 'node')
+        end
 
-      it 'routes /en/client-sdk/use-cases/node' do
-        expect(get('/en/client-sdk/use-cases/node'))
-          .to route_to(controller: 'use_case', action: 'index', product: 'client-sdk', locale: 'en', code_language: 'node')
+        it "routes /en/#{product['path']}/use-cases/node" do
+          expect(get("/en/#{product['path']}/use-cases/node"))
+            .to route_to(controller: 'use_case', action: 'index', product: product['path'], locale: 'en', code_language: 'node')
+        end
       end
     end
   end
