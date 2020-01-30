@@ -1,3 +1,7 @@
+//
+// Copyright (c) 2018-present, Vonage. All rights reserved.
+//
+
 .Vlt-sidenav {
 	&__mobile--light {
 		background: $white;
@@ -40,25 +44,26 @@
 		}
 
 		.Vlt-sidemenu {
-			padding-right: $unit0;
-
 			&__link,
 			&__trigger {
-				border-radius: 7px;
 				color: $black;
 
-				&:before {
-					background: $white;
+				&:hover {
+					background: $grey-light;
+				}
+
+				&_active:not(.Vlt-sidemenu__trigger_active) {
+					background: $black;
+					color: $white;
+					font-weight: 600;
+
+					svg {
+						fill: $white;
+					}
 				}
 
 				svg {
-					fill: $grey-dark;
-				}
-
-				&_active {
-					svg {
-						fill: $black;
-					}
+					fill: $black;
 				}
 
 				&--disabled {
@@ -71,10 +76,14 @@
 			}
 
 			&__trigger {
+				+ ul {
+					border-left: 1px solid $grey-light;
+				}
+
 				span:last-of-type:not(.Vlt-badge) {
 					&:after {
-						$fill-color: encode-hex-code($grey);
-						background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22#{$fill-color}%22%20fill-rule%3D%22evenodd%22%20d%3D%22M10%2013.524L4.692%208.136a.667.667%200%201%201%20.951-.937L10%2011.62l4.357-4.422a.668.668%200%200%201%20.95.937L10%2013.524z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
+						$fill-color: encode-hex-code($grey-dark);
+						background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M3.38326%207.96544C3.58628%207.68629%203.97717%207.62457%204.25632%207.82759L9.99983%2012.0047L15.7433%207.82759C16.0225%207.62457%2016.4134%207.68629%2016.6164%207.96544C16.8194%208.2446%2016.7577%208.63549%2016.4785%208.83851L10.3674%2013.283C10.1483%2013.4423%209.85138%2013.4423%209.63222%2013.283L3.52111%208.83851C3.24195%208.63549%203.18023%208.2446%203.38326%207.96544Z%22%20fill%3D%22#{$fill-color}%22%2F%3E%0A%3C%2Fsvg%3E');
 						background-position: center center;
 						background-repeat: no-repeat;
 						background-size: contain;
@@ -158,13 +167,13 @@
 					border-bottom: 1px solid $grey-light;
 				}
 
-				li {
-					.Vlt-sidemenu__link_active {
-						svg {
-							fill: $black !important;
-						}
-					}
-				}
+				// li {
+				// 	.Vlt-sidemenu__link_active {
+				// 		svg {
+				// 			fill: $black !important;
+				// 		}
+				// 	}
+				// }
 			}
 		}
 	}

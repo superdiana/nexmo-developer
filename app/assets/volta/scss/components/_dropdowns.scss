@@ -1,3 +1,7 @@
+//
+// Copyright (c) 2018-present, Vonage. All rights reserved.
+//
+
 .Vlt-dropdown {
 	display: inline-block;
 	position: relative;
@@ -9,8 +13,9 @@
 		border-top-right-radius: $unit1;
 		color: $white;
 		font-size: 1.5rem;
-		font-weight: 400;
-		padding: $unit1 $unit3;
+		font-weight: 600;
+		margin-top: -8px;
+		padding: 5px $unit2;
 		text-align: left;
 	}
 
@@ -18,20 +23,20 @@
 	&__block {
 		color: $black;
 		overflow: hidden;
-		padding: 12px 20px;
+		padding: 5px 16px;
 		position: relative;
 		text-align: left;
 
-		&:before {
-			background: $grey-light;
-			content: '';
-			display: block;
-			height: 1px;
-			left: 20px;
-			position: absolute;
-			top: 0;
-			width: calc(100% - 40px);
-		}
+		// &:before {
+		// 	background: $grey-light;
+		// 	content: '';
+		// 	display: block;
+		// 	height: 1px;
+		// 	left: 20px;
+		// 	position: absolute;
+		// 	top: 0;
+		// 	width: calc(100% - 40px);
+		// }
 
 		&--noborder {
 			// Fixes the spacing without changing the proportion of the element
@@ -67,6 +72,7 @@
 	&__link {
 		cursor: pointer;
 		display: flex;
+		font-size: 1.4rem;
 		justify-content: space-between;
 		white-space: nowrap;
 
@@ -86,18 +92,20 @@
 
 		&--selected,
 		&_selected {
-			font-weight: 800;
+			font-size: 1.5rem;
+			font-weight: 600;
 			padding-right: 40px;
 
 			&:after {
-				background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23919eab%22%20fill-rule%3D%22nonzero%22%20d%3D%22M2.904%2012.11L1.5%2013.52%207.958%2020%2022.5%205.409%2021.096%204%207.958%2017.182z%22%2F%3E%3C%2Fsvg%3E') no-repeat right center;
+				$fill-color: encode-hex-code($black);
+				background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22#{$fill-color}%22%20fill-rule%3D%22nonzero%22%20d%3D%22M2.904%2012.11L1.5%2013.52%207.958%2020%2022.5%205.409%2021.096%204%207.958%2017.182z%22%2F%3E%3C%2Fsvg%3E') no-repeat right center;
 				background-size: contain;
 				content: '';
-				height: 14px;
+				height: 16px;
 				position: absolute;
-				right: 18px;
-				top: 16px;
-				width: 14px;
+				right: 16px;
+				top: 9px;
+				width: 16px;
 			}
 		}
 	}
@@ -133,7 +141,8 @@
 			}
 
 			&:after {
-				background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpath%20style%3D%22fill%3A%23ffffff%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0D%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
+				$fill-color: encode-hex-code($white);
+				background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20viewBox%3D%220%200%2016%2016%22%20style%3D%22enable-background%3Anew%200%200%2016%2016%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20style%3D%22fill%3A#{$fill-color}%3B%22%20d%3D%22M0.8%2C5.1C0.5%2C4.9%2C0.2%2C5%2C0.1%2C5.2C-0.1%2C5.5%2C0%2C5.8%2C0.2%2C5.9l7.5%2C5c0.2%2C0.1%2C0.4%2C0.1%2C0.6%2C0l7.5-5%0A%09c0.2-0.2%2C0.3-0.5%2C0.1-0.7c-0.2-0.2-0.5-0.3-0.7-0.1L8%2C9.9L0.8%2C5.1z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
 				background-position: center center;
 				background-repeat: no-repeat;
 				background-size: contain;
@@ -141,15 +150,15 @@
 				display: inline-block;
 				float: right;
 				height: 20px;
-				margin-bottom: -1px;
-				margin-left: 5px;
+				margin-left: 8px;
 				vertical-align: middle;
-				width: 20px;
+				width: 11px;
 			}
 
 			&.Vlt-btn--tertiary {
 				&:after {
-					background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpath%20style%3D%22fill%3A%239B9B9B%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0D%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
+					$fill-color: encode-hex-code($black);
+					background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20viewBox%3D%220%200%2016%2016%22%20style%3D%22enable-background%3Anew%200%200%2016%2016%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20style%3D%22fill%3A#{$fill-color}%3B%22%20d%3D%22M0.8%2C5.1C0.5%2C4.9%2C0.2%2C5%2C0.1%2C5.2C-0.1%2C5.5%2C0%2C5.8%2C0.2%2C5.9l7.5%2C5c0.2%2C0.1%2C0.4%2C0.1%2C0.6%2C0l7.5-5%0A%09c0.2-0.2%2C0.3-0.5%2C0.1-0.7c-0.2-0.2-0.5-0.3-0.7-0.1L8%2C9.9L0.8%2C5.1z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
 				}
 			}
 
@@ -161,7 +170,7 @@
 		}
 
 		& + .Vlt-dropdown__panel {
-			margin-top: -8px
+			margin-top: -4px
 		}
 	}
 
@@ -204,14 +213,10 @@
 	}
 
 	&:not(&--primary):not(&--secondary):not(&--tertiary):not(&--quaternary):not(&--destructive) {
-		@extend %Vlt-btn--secondary;
+		@extend %Vlt-btn--tertiary;
 
 		&:after {
 			background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20viewBox%3D%220%200%2020%2020%22%20style%3D%22enable-background%3Anew%200%200%2020%2020%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpath%20style%3D%22fill%3A%239B9B9B%3B%22%20d%3D%22M7%2C7.8C6.7%2C7.5%2C6.2%2C7.6%2C5.9%2C7.9S5.7%2C8.7%2C6%2C9l4%2C3.4l4-3.4c0.3-0.3%2C0.3-0.8%2C0-1.1%0D%0A%09c-0.3-0.3-0.7-0.3-1-0.1l-3%2C2.6L7%2C7.8L7%2C7.8z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
-		}
-
-		.Vlt-composite & {
-			box-shadow: $shadow-standard;
 		}
 	}
 
@@ -332,10 +337,8 @@
 	}
 }
 
-.Vlt-dropdown__selection {
-	color: $red;
-	margin-left: 5px;
-}
+// .Vlt-dropdown__selection {
+// }
 
 .Vlt-dropdown__panel {
 	max-height: 0;
@@ -348,27 +351,14 @@
 	&__content {
 		background: $white;
 		border-radius: $unit1;
-		box-shadow: inset 0 0 0 1px $grey-light, 0 1px 10px rgba($black, 0.1);
+		box-shadow: inset 0 0 0 1px $grey-light, 0 2px 5px rgba($black, 0.15);
 		font-size: 1.5rem;
 		margin-bottom: 4px;
+		padding: $unit1 0;
 
 		@media #{$M-less}  {
 			-webkit-overflow-scrolling: touch;
 			overflow-y: scroll;
-		}
-
-		> *:first-child {
-			border-top-left-radius: $unit1;
-			border-top-right-radius: $unit1;
-
-				&:before {
-					display: none;
-				}
-			}
-
-		> *:last-child {
-			border-bottom-left-radius: $unit1;
-			border-bottom-right-radius: $unit1;
 		}
 
 		li:not([class]) {

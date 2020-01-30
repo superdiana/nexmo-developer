@@ -1,3 +1,7 @@
+//
+// Copyright (c) 2018-present, Vonage. All rights reserved.
+//
+
 %tabs-panel {
 	// We use display and not visibility to prevent problems with nested tabs
 	display: none;
@@ -101,7 +105,7 @@
 %tabs-link-active {
 	background: none;
 	color: $black;
-	font-weight: 400;
+	font-weight: 600;
 
 	&:after {
 		background: $black;
@@ -234,8 +238,7 @@
 			fill: $black;
 		}
 
-		&_active,
-		&:active {
+		&_active {
 			@extend %tabs-link-active
 		}
 
@@ -253,9 +256,9 @@
 				display: none;
 			}
 
-			svg {
-				fill: $grey;
-			}
+			// svg {
+			// 	fill: $grey;
+			// }
 		}
 	}
 

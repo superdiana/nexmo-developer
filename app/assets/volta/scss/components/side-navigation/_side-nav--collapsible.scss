@@ -1,3 +1,7 @@
+//
+// Copyright (c) 2018-present, Vonage. All rights reserved.
+//
+
 // The sidenav can collapse only in M-plus
 
 .Vlt-sidenav {
@@ -20,6 +24,7 @@
 				flex: 0 0 24px;
 				height: 24px;
 				margin-left: 20px;
+				text-align: center;
 				transition: opacity 0.2s;
 
 				&:hover {
@@ -28,7 +33,7 @@
 
 				svg {
 					height: 24px;
-					width: 24px;
+					width: 16px;
 				}
 
 				.Vlt-sidenav--collapsed & {
@@ -118,6 +123,7 @@
 
 						.Vlt-sidenav__logo {
 							flex: 0 0 24px;
+							margin: 0px;
 							order: 2;
 
 							img,
@@ -169,7 +175,7 @@
 					}
 
 					&:hover {
-						.Vlt-sidemenu__label {
+						& + .Vlt-sidemenu__tooltip {
 							display: block;
 						}
 					}
@@ -180,19 +186,19 @@
 						}
 					}
 
-					.Vlt-sidemenu__label {
+					& + .Vlt-sidemenu__tooltip {
 						@include tooltip-content;
-						display: none !important; // labels won't work with new design
+						display: none;
 						left: 100%;
 						margin-left: 10px;
-						margin-top: -8px;
+						margin-top: -34px;
 						position: absolute;
 						text-align: left;
 						white-space: nowrap;
 						width: auto;
 
 						&:before {
-							border-color: transparent $black transparent transparent;
+							border-color: transparent $grey-darker transparent transparent;
 							border-style: solid;
 							border-width: 6px 6px 6px 0;
 						    content: '';
@@ -202,11 +208,15 @@
 							top: 50%;
 						}
 					}
+
+					& .Vlt-sidemenu__label {
+						display: none;
+					}
 				}
 
 				&__trigger {
 					& + ul {
-						border-radius: 8px;
+						border-radius: 6px;
 						left: 72px;
 						margin-top: -36px;
 						position: absolute;
@@ -256,6 +266,7 @@
 					&_active {
 						& + ul {
 							box-shadow: 0 2px 4px 0 rgba($black, 0.15);
+							margin-left: 0;
 							overflow: visible;
 						}
 					}

@@ -1,3 +1,7 @@
+//
+// Copyright (c) 2018-present, Vonage. All rights reserved.
+//
+
 @font-face {
     font-family: 'Spezia';
     font-style: normal;
@@ -127,6 +131,7 @@ p {
 	display: flex;
 
 	svg {
+		fill: $black;
 		margin-right: $unit1;
 	}
 
@@ -231,10 +236,10 @@ h3 {
 	}
 
 	&.Vlt-title--icon svg {
-		flex: 0 0 16px;
-		height: 16px;
-		margin-top: 3px;
-		width: 16px;
+		flex: 0 0 21px;
+		height: 21px;
+		margin-top: 2px;
+		width: 21px;
 
 		@media #{$L-plus} {
 			flex: 0 0 21px;

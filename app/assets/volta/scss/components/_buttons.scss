@@ -1,9 +1,21 @@
+//
+// Copyright (c) 2018-present, Vonage. All rights reserved.
+//
+
 $shadow-standard: 0 1px 0px rgba($black, 0.15);
 $shadow-active: inset 0 2px 3px rgba($black, 0.2);
 $shadow-tertiary: inset 0 0 0px 1px $black;
 
 @mixin btn-app-radius {
-	border-radius: 8px;
+	border-radius: 6px;
+
+	&.Vlt-btn--small {
+		border-radius: 5px;
+	}
+
+	&.Vlt-btn--large {
+		border-radius: 7px;
+	}
 }
 
 %Vlt-btn {
@@ -14,13 +26,14 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	cursor: pointer;
 	display: inline-block; // can't be inline-flex because of Safari
 	font-size: 1.4rem;
-	font-weight: 400;
+	font-weight: 600;
 	justify-content: center;
-	line-height: 1.9rem; // needed for Safari
+	line-height: 2rem; // needed for Safari
 	margin: $unit1 0;
 	min-height: 36px;
+	min-width: 36px;
 	outline: none;
-	padding: $unit1 $unit2; // both paddings added for IE alignment
+	padding: $unit1 14px; // both paddings added for IE alignment
 	text-align: center;
 	transition: all 0.3s;
 	vertical-align: middle;
@@ -38,11 +51,14 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 		display: inline-block;
 		fill: $white;
 		height: 18px;
-		margin-left: -5px;
-		margin-right: 6px;
-		margin-top: -3px;
+		margin-right: 8px;
+		margin-top: -2px;
 		vertical-align: middle;
 		width: 18px;
+
+		.vlt-btn--large & {
+			margin-right: 10px;
+		}
 	}
 }
 
@@ -103,29 +119,31 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 }
 
 %Vlt-btn--small {
-	font-size: 1.3rem;
-	line-height: 1.5rem; //needed for Safari
+	font-size: 1.2rem;
+	line-height: 1.6rem; //needed for Safari
 	min-height: 30px;
-	padding: 7px 14px;
+	min-width: 30px;
+	padding: 7px 12px;
 
 	svg {
-		height: 14px;
-		width: 14px;
+		height: 16px;
+		width: 16px;
 	}
 }
 
 %Vlt-btn--large {
 	font-size: 1.5rem;
-	font-weight: 600;
-	line-height: 2.2rem; //needed for Safari
+	line-height: 2rem; //needed for Safari
 	margin: $unit1 0 $unit2;
 	min-height: 50px;
-	padding: 13px 25px;
+	min-width: 50px;
+	padding: 15px 22px;
 
 	svg {
-		height: 20px;
+		height: 22px;
+		margin-right: 10px;
 		margin-top: -4px;
-		width: 20px;
+		width: 22px;
 
 		&  span {
 			margin-left: $unit1;
@@ -158,6 +176,10 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	background: $purple-dark;
 	color: $white;
 
+	svg {
+		fill: $white;
+	}
+
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
 		background: darken($purple-dark, 10);
@@ -181,6 +203,10 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	background: $black;
 	color: $white;
 
+	svg {
+		fill: $white;
+	}
+
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
 		background: lighten($black, 20);
@@ -201,8 +227,7 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 }
 
 %Vlt-btn--tertiary {
-	background: transparent;
-	border: 1px solid $black;
+	background: $grey-light;
 	color: $black;
 
 	svg {
@@ -211,12 +236,12 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
-		background: rgba($black, 0.1);
+		background: darken($grey-light, 6);
 	}
 
 	&:active,
 	&.Vlt-btn_active {
-		background: rgba($black, 0.2);
+		background: $grey;
 	}
 
 	&:disabled,
@@ -229,6 +254,10 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 %Vlt-btn--destructive {
 	background: $red;
 	color: $white;
+
+	svg {
+		fill: $white;
+	}
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
@@ -252,6 +281,10 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 %Vlt-btn--quaternary {
 	background: $green;
 	color: $white;
+
+	svg {
+		fill: $white;
+	}
 
 	&:hover,
 	&:not(.Vlt-btn--no-focus):focus {
@@ -289,6 +322,7 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	}
 
 	&:hover {
+		text-decoration: underline;
 		transform: none;
 	}
 
@@ -308,11 +342,36 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	display: flex;
 
 	.Vlt-btn {
+		@extend %Vlt-btn--tertiary;
 		margin-left: 0;
 		margin-right: 0;
+		min-width: 40px;
+		padding: 10px;
 
-		&:hover {
-			transform: scale(1);
+		&.Vlt-btn--primary {
+			@extend %Vlt-btn--primary;
+		}
+
+		&.Vlt-btn--secondary {
+			@extend %Vlt-btn--secondary;
+		}
+
+		&.Vlt-btn--quaternary {
+			@extend %Vlt-btn--quaternary;
+		}
+
+		&.Vlt-btn--destructive {
+			@extend %Vlt-btn--destructive;
+		}
+
+		&:first-child {
+			min-width: 44px;
+			padding-left: 14px;
+		}
+
+		&:last-child {
+			min-width: 44px;
+			padding-right: 14px;
 		}
 
 		&:not(:first-child) {
@@ -334,25 +393,13 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	&--app {
 		.Vlt-btn {
 			&:first-child {
-				border-bottom-left-radius: 8px;
-				border-top-left-radius: 8px;
+				border-bottom-left-radius: 6px;
+				border-top-left-radius: 6px;
 			}
 
 			&:last-child {
-				border-bottom-right-radius: 8px;
-				border-top-right-radius: 8px;
-			}
-		}
-	}
-
-	&:not(.Vlt-btn-group--app) {
-		.Vlt-btn {
-			&:first-child {
-				padding-left: 20px;
-			}
-
-			&:last-child {
-				padding-right: 20px;
+				border-bottom-right-radius: 6px;
+				border-top-right-radius: 6px;
 			}
 		}
 	}
@@ -360,17 +407,27 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	&--small {
 		.Vlt-btn {
 			@extend %Vlt-btn--small;
-		}
+			min-width: 30px;
+			padding: 7px 5px;
 
-		&:not(.Vlt-btn-group--app) {
-			.Vlt-btn {
-				&:last-child {
-					padding-right: 18px;
-				}
+			&:first-child {
+				min-width: 34px;
+				padding-left: 9px;
+			}
 
-				&:first-child {
-					padding-left: 18px;
-				}
+			&:last-child {
+				min-width: 34px;
+				padding-right: 9px;
+			}
+
+			&:nth-child(2) {
+				border-bottom-left-radius: 5px;
+				border-top-left-radius: 5px;
+			}
+
+			&:nth-last-child(2) {
+				border-bottom-right-radius: 5px;
+				border-top-right-radius: 5px;
 			}
 		}
 	}
@@ -378,17 +435,18 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 	&--large {
 		.Vlt-btn {
 			@extend %Vlt-btn--large;
-		}
+			min-width: 54px;
+			padding-bottom: 15px;
+			padding-top: 15px;
 
-		&:not(.Vlt-btn-group--app) {
-			.Vlt-btn {
-				&:last-child {
-					padding-right: 30px;
-				}
+			&:first-child {
+				min-width: 58px;
+				padding-left: 18px;
+			}
 
-				&:first-child {
-					padding-left: 30px;
-				}
+			&:last-child {
+				min-width: 58px;
+				padding-right: 18px;
 			}
 		}
 	}
@@ -455,6 +513,7 @@ $shadow-tertiary: inset 0 0 0px 1px $black;
 
 	&:hover {
 		color: $purple-darker;
+		text-decoration: underline;
 	}
 
 	&:active {
