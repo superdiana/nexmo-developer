@@ -97,7 +97,17 @@ curl -X POST \
 }'
 ```
 
-## WhatsApp deterministic language policy
+## Localization
+
+Localization of Message Templates is [supported](https://developers.facebook.com/docs/whatsapp/message-templates/localization/) in WhatsApp Message Templates by default. Message Templates support the idea of Localizable Parameters, which are parameters that are displayed differently depending on the locale specified in the message. Examples of Localizable Parameters include:
+
+* Currency
+* Date
+* Time
+
+See [WhatsApp documentation](https://developers.facebook.com/docs/whatsapp/message-templates/localization/) for more details.
+
+### WhatsApp deterministic language policy
 
 > **NOTE:** From January 2020 the *deterministic* language policy will be the default and the *fallback* language policy will be deprecated.
 
@@ -112,6 +122,7 @@ Further information is available in the [WhatsApp documentation](https://develop
 WhatsApp developer documentation:
 
 * [WhatsApp Developer documentation](https://developers.facebook.com/docs/whatsapp)
+* [WhatsApp localization documentation for MTM](https://developers.facebook.com/docs/whatsapp/message-templates/localization/)
 * [Text Message](https://developers.facebook.com/docs/whatsapp/api/messages/text)
 * [Media Message](https://developers.facebook.com/docs/whatsapp/api/messages/media)
 * [Message Template](https://developers.facebook.com/docs/whatsapp/api/messages/message-templates)
