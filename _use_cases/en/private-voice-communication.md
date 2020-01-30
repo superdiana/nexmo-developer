@@ -8,18 +8,23 @@ languages:
 
 # Private voice communication
 
-For marketplace scenarios such as food delivery or taxi and passenger communications, it is useful for users to be able to communicate with one another without exposing their phone numbers. By implementing private communication with Nexmo's Voice API you ensure that your users cannot bypass the required or preferred communication workflows and audits.
+Sometimes you want two parties to be able to call each other without revealing their actual phone numbers. 
 
+For example, if you are operating a ride sharing service, then you want your users to be able to speak to each other to coordinate pick-up times and locations. But you don't want to give out your customers' phone numbers - after all, you have an obligation to protect their privacy. And you don't want them to be able to arrange ride shares directly without using your service because that means lost revenue for your business.
 
-This tutorial is based on the [Private Voice Communication](https://www.nexmo.com/use-cases/private-voice-communication/) use case. You can download the code from <https://github.com/Nexmo/node-voice-proxy>.
+Using Nexmo's APIs, you can provide each participant in a call with a temporary number that masks their real number. Each caller sees only the temporary number for the duration of the call. When there is no further need for them to communicate, the temporary number is revoked.
+
+You can download the source code from <https://github.com/Nexmo/node-voice-proxy>.
 
 
 ## In this tutorial
 
-You see how to build an Voice proxy for private communication system using [Nexmo CLI](https://github.com/nexmo/nexmo-cli) and [Nexmo Node.JS](https://github.com/Nexmo/nexmo-node)
+This tutorial is based on the [Private Voice Communication use case](https://www.nexmo.com/use-cases/private-voice-communication/). It teaches you how to build a voice proxy using Nexmo's [Node.js REST API client library](https://github.com/Nexmo/nexmo-node), using virtual numbers to hide the real phone numbers of the participants.
 
-* [Create a Voice application](#create-a-voice-application) - create and configure an application using [Nexmo CLI](https://github.com/nexmo/nexmo-cli), then configure the webhook endpoints to provide NCCOs and handle changes in Call status
-* [Provision virtual numbers](#provision-virtual-voice-numbers) - rent and configure the voice enabled virtual numbers to mask real numbers
+To build the application, you perform the following steps:
+
+* [Create a Voice API application](#create-a-voice-api-application) - create and configure a Voice API application
+* [Provision virtual numbers](#provision-virtual-voice-numbers) - rent virtual numbers to mask your callers' real numbers
 * [Create a Call](#create-a-call) - create a Call between two users, validate their phone numbers and determine the country the phone number is registered in using Number Insight
 * [Handle inbound calls](#handle-inbound-calls) - configure your webhook endpoint to handle incoming voice calls, find the phone number it is associated with and return the NCCO to control the Call
 * [Proxy the Call](#proxy-the-call) - instruct Nexmo to make a private Call to a phone number
@@ -31,23 +36,25 @@ In order to work through this tutorial you need:
 * A [Nexmo account](https://dashboard.nexmo.com/sign-up)
 * The [Nexmo CLI](https://github.com/nexmo/nexmo-cli) installed and configured
 
-## Create an application
+## Create a Voice API application
 
-A Nexmo application contains the security and configuration information you need to connect to Nexmo endpoints and easily use our products. You make requests to Nexmo endpoints using the security information in the application. When you make a Call, Nexmo sends and retrieves call management information with your webhook endpoints.
+A Voice API Application is a Nexmo construct and shouldn’t be confused with the application you are going to write. Instead, it’s a “container” for the authentication and configuration settings you need to work with the API.
 
-You first use Nexmo CLI to create an application for Voice API:
+You can create a Voice API Application with the Nexmo CLI. You must provide a name for the application and the URLs of two webhook endpoints: the first is the one that Nexmo’s APIs will make a request to when you receive an inbound call on your virtual number and the second is where the API can post event data.
+
+Replace the domain name in the following Nexmo CLI command with your ngrok domain name and run it in your project’s root directory:
+
 ```sh
-› nexmo app:create voice-proxy https://example.com/proxy-call https://example.com/event
+› nexmo app:create voice-proxy https://example.com/proxy-call https://example.com/event --private.key
 ```
-This command returns the UUID (Universally Unique Identifier) that identifies your application.
+This command downloads a file called `private.key` that contains authentication information and returns a unique application ID. Make a note of this ID because you’ll need it in subsequent steps.
 
-The parameters are:
 
-* voice-proxy - the name you give to this application
-* `https://example.com/proxy-call` - when you receive an inbound call to your virtual number, Nexmo makes a GET request and retrieves the NCCO that controls the call flow from this webhook endpoint
-* `https://example.com/event` - as the call status changes, Nexmo sends status updates to this webhook endpoint
+## Create the basic web application
 
-Then start your Web server:
+This application uses the [Express](https://expressjs.com/) framework for routing and the [Nexmo Node.js REST API client library](https://github.com/Nexmo/nexmo-node) for working with the Voice API. We use `dotenv` so that we can configure the application in a `.env` text file.
+
+In `server.js` we initialize the application's dependencies and start the web server. We provide a route handler for the application's home page (`/`) so that you can test that the server is running by running `node server.js` and visiting `http://localhost:5000` in your browser.
 
 ```js
 "use strict";
@@ -69,7 +76,28 @@ app.listen(app.get('port'), function() {
 });
 ```
 
-If you're developing behind a firewall or a NAT, use [ngrok](https://ngrok.com/) to tunnel access to your Web server.
+Note that we are instantiating an object of the `VoiceProxy` class to handle the routing of messages sent to your virtual number to the intended recipient's real number. We cover the actual proxying process in [proxy the call](#proxy-the-call), but for now just be aware that this class initializes the `nexmo` REST API client library using the API key and secret that you will configure in the next step. This enables your application to make and receive voice calls:
+
+```javascript
+var VoiceProxy = function(config) {
+  this.config = config;
+  
+  this.nexmo = new Nexmo({
+      apiKey: this.config.NEXMO_API_KEY, 
+      apiSecret: this.config.NEXMO_API_SECRET
+    },{
+      debug: this.config.NEXMO_DEBUG
+    });
+  
+  // Virtual Numbers to be assigned to UserA and UserB
+  this.provisionedNumbers = [].concat(this.config.PROVISIONED_NUMBERS);
+  
+  // In progress conversations
+  this.conversations = [];
+};
+```
+
+<!--If you're developing behind a firewall or a NAT, use [ngrok](https://ngrok.com/) to tunnel access to your Web server.-->
 
 ## Provision virtual numbers
 
