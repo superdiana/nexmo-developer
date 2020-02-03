@@ -112,4 +112,9 @@ class DocFinder
   def self.strip_root_and_language(root:, language:, document:)
     document.sub(%r{#{root}\/}, '').sub(%r{#{language}\/}, '')
   end
+
+  def self.code_languages_for_tutorial(path:)
+    key = strip_root_and_language(root: '/', document: path, language: I18n.default_locale)
+    dictionary.keys.select { |k| k.include?(key) }
+  end
 end
