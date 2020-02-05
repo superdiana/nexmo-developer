@@ -1,8 +1,10 @@
 class Tutorial
   include ActiveModel::Model
+
   attr_accessor :raw, :name, :current_step, :current_product,
                 :title, :description, :products, :subtasks,
-                :prerequisites, :code_language, :available_languages
+                :prerequisites, :code_language, :available_languages,
+                :metadata
 
   def content_for(step_name)
     if ['introduction', 'conclusion'].include? step_name
@@ -45,14 +47,14 @@ class Tutorial
   end
 
   def self.available_code_languages(path)
-    DocFinder.code_languages_for_tutorial(path: path.sub('.yml', '/')).map do |path|
-      File.basename(Pathname.new(path).basename, '.yml')
+    DocFinder.code_languages_for_tutorial(path: path.sub('.yml', '/')).map do |file_path|
+      File.basename(Pathname.new(file_path).basename, '.yml')
     end
   end
 
-  def self.load(name, current_step, current_product = nil, code_language)
+  def self.load(name, current_step, current_product = nil, code_language = nil)
     metadata_path = DocFinder.find(
-      root: 'config/tutorials',
+      root: tutorials_path,
       document: name,
       language: I18n.default_locale,
       format: 'yml'
@@ -60,14 +62,11 @@ class Tutorial
     metadata = YAML.safe_load(File.read(metadata_path))
     current_product ||= metadata['products'].first
 
-    unless code_language
-      code_language = available_code_languages(metadata_path)
-        .sort_by { |k| CodeLanguage.languages.map(&:key).index(k) }
-        .first
-    end
+    code_language ||= available_code_languages(metadata_path)
+                      .min_by { |k| CodeLanguage.languages.map(&:key).index(k) }
 
     document_path = DocFinder.find(
-      root: 'config/tutorials',
+      root: tutorials_path,
       document: name,
       language: I18n.default_locale,
       code_language: code_language,
@@ -76,15 +75,16 @@ class Tutorial
     config = YAML.safe_load(File.read(document_path))
 
     Tutorial.new({
+      metadata: metadata,
       available_languages: available_code_languages(metadata_path),
       raw: config,
       code_language: code_language,
       name: name,
       current_step: current_step,
       current_product: current_product,
-      title: metadata['title'],
-      description: metadata['description'],
-      products: config['products'],
+      title: config['title'] || metadata['title'],
+      description: config['description'] || metadata['description'],
+      products: config['products'] || metadata['products'],
       prerequisites: load_prerequisites(config['prerequisites'], current_step, code_language),
       subtasks: load_subtasks(config['introduction'], config['prerequisites'], config['tasks'], config['conclusion'], current_step, code_language),
     })
@@ -114,6 +114,7 @@ class Tutorial
     end
   end
 
+  # rubocop:disable Metrics/ParameterLists
   def self.load_subtasks(introduction, prerequisites, tasks, conclusion, current_step, code_language)
     tasks ||= []
 
@@ -164,8 +165,13 @@ class Tutorial
 
     tasks
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def self.task_content_path
     "#{Rails.configuration.docs_base_path}/_tutorials"
+  end
+
+  def self.tutorials_path
+    'config/tutorials'
   end
 end

@@ -15,22 +15,10 @@ class UseCase
 
   def subtitle
     normalized_products = products.map do |product|
-      normalise_product_title(product)
+      Product.normalize_title(product)
     end
 
     normalized_products.sort.to_sentence
-  end
-
-  def normalise_product_title(product)
-    return 'SMS' if product == 'messaging/sms'
-    return 'Voice' if product == 'voice/voice-api'
-    return 'Number Insight' if product == 'number-insight'
-    return 'Messages' if product == 'messages'
-    return 'Dispatch' if product == 'dispatch'
-    return 'Client SDK' if product == 'client-sdk'
-    return 'Subaccounts' if product == 'account/subaccounts'
-
-    product.camelcase
   end
 
   def self.by_product(product, use_cases = [])
