@@ -14,8 +14,7 @@ For example, if you are operating a ride sharing service, then you want your use
 
 Using Nexmo's APIs, you can provide each participant in a call with a temporary number that masks their real number. Each caller sees only the temporary number for the duration of the call. When there is no further need for them to communicate, the temporary number is revoked.
 
-You can download the source code from <https://github.com/Nexmo/node-voice-proxy>.
-
+You can download the source code from our [GitHub repo](https://github.com/Nexmo/node-voice-proxy).
 
 ## In this tutorial
 
@@ -38,25 +37,25 @@ In order to work through this tutorial you need:
 
 ## Create a Voice API application
 
-A Voice API Application is a Nexmo construct and shouldn’t be confused with the application you are going to write. Instead, it’s a “container” for the authentication and configuration settings you need to work with the API.
+A Voice API Application is a Nexmo construct and shouldn’t be confused with the application you are going to write. Instead, it's a "container" for the authentication and configuration settings you need to work with the API.
 
-You can create a Voice API Application with the Nexmo CLI. You must provide a name for the application and the URLs of two webhook endpoints: the first is the one that Nexmo’s APIs will make a request to when you receive an inbound call on your virtual number and the second is where the API can post event data.
+You can create a Voice API Application with the Nexmo CLI. You must provide a name for the application and the URLs of two webhook endpoints: the first is the one that Nexmo's APIs will make a request to when you receive an inbound call on your virtual number and the second is where the API can post event data.
 
-Replace the domain name in the following Nexmo CLI command with your ngrok domain name and run it in your project’s root directory:
+Replace the domain name in the following Nexmo CLI command with your ngrok domain name and run it in your project's root directory:
 
-```sh
-› nexmo app:create voice-proxy https://example.com/proxy-call https://example.com/event --private.key
+``` shell
+nexmo app:create "voice-proxy" --capabilities=voice --voice-answer-url=https://example.com/answer --voice-event-url=https://example.com/event --keyfile=private.key
 ```
-This command downloads a file called `private.key` that contains authentication information and returns a unique application ID. Make a note of this ID because you’ll need it in subsequent steps.
 
+This command downloads a file called `private.key` that contains authentication information and returns a unique application ID. Make a note of this ID because you'll need it in subsequent steps.
 
 ## Create the basic web application
 
-This application uses the [Express](https://expressjs.com/) framework for routing and the [Nexmo Node.js REST API client library](https://github.com/Nexmo/nexmo-node) for working with the Voice API. We use `dotenv` so that we can configure the application in a `.env` text file.
+This application uses the [Express](https://expressjs.com/) framework for routing and the [Nexmo Node.js REST API client library](https://github.com/Nexmo/nexmo-node) for working with the Voice API. `dotenv` is used so that the application can be configured using a `.env` text file.
 
-In `server.js` we initialize the application's dependencies and start the web server. We provide a route handler for the application's home page (`/`) so that you can test that the server is running by running `node server.js` and visiting `http://localhost:5000` in your browser.
+In `server.js` the code initializes the application's dependencies and starts the web server. A route handler is implemented for the application's home page (`/`) so that you can test that the server is running by running `node server.js` and visiting `http://localhost:5000` in your browser:
 
-```js
+``` javascript
 "use strict";
 
 var express = require('express');
@@ -76,9 +75,9 @@ app.listen(app.get('port'), function() {
 });
 ```
 
-Note that we are instantiating an object of the `VoiceProxy` class to handle the routing of messages sent to your virtual number to the intended recipient's real number. We cover the actual proxying process in [proxy the call](#proxy-the-call), but for now just be aware that this class initializes the `nexmo` REST API client library using the API key and secret that you will configure in the next step. This enables your application to make and receive voice calls:
+Note that the code instantiates an object of the `VoiceProxy` class to handle the routing of messages sent to your virtual number to the intended recipient's real number. The proxying process is described in [proxy the call](#proxy-the-call), but for now just be aware that this class initializes the `nexmo` REST API client library using the API key and secret that you will configure in the next step. This enables your application to make and receive voice calls:
 
-```javascript
+``` javascript
 var VoiceProxy = function(config) {
   this.config = config;
   
@@ -97,15 +96,13 @@ var VoiceProxy = function(config) {
 };
 ```
 
-<!--If you're developing behind a firewall or a NAT, use [ngrok](https://ngrok.com/) to tunnel access to your Web server.-->
-
 ## Provision virtual numbers
 
 Virtual numbers are used to hide real phone numbers from your application users.
 
 The workflow diagram below shows the process for provisioning and configuring a virtual number.
 
-```sequence_diagram
+``` sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -121,7 +118,7 @@ Nexmo-->App: Numbers Configured
 
 To provision a virtual number you search through the available numbers that meet your criteria. For example, a phone number in a specific country with voice capability:
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 2
 to_line: 47
@@ -129,7 +126,7 @@ to_line: 47
 
 Then rent the numbers you want and associate them with your application. When any even occurs relating to each number associated with an application, Nexmo sends a request to your webhook endpoint with information about the event. After configuration you store the phone number for later user.
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 48
 to_line: 79
@@ -137,13 +134,13 @@ to_line: 79
 
 You now have the virtual numbers you need to mask communication between your users.
 
-**Note**: in a production application you choose from a pool of virtual numbers. However, you should keep this functionality in place to rent additional numbers on the fly.
+**NOTE:** In a production application you choose from a pool of virtual numbers. However, you should keep this functionality in place to rent additional numbers on the fly.
 
 ## Create a Call
 
 The workflow to create a Call is:
 
-```sequence_diagram
+``` sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -164,7 +161,7 @@ The following call:
 * [Maps phone numbers to real numbers](#map-phone-numbers)
 * [Sends an confirmation SMS](#send-confirmation-sms)
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 89
 to_line: 103
@@ -174,7 +171,7 @@ to_line: 103
 
 When your application users supply their phone numbers use Number Insight to ensure that they are valid. You can also see which country the phone numbers are registered in:
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 104
 to_line: 114
@@ -184,7 +181,7 @@ to_line: 114
 
 Once you are sure that the phone numbers are valid, map each real number to a [virtual number](#provision-virtual-voice-numbers) and save the call:
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 115
 to_line: 149
@@ -196,7 +193,7 @@ In a private communication system, when one user contacts another, he or she cal
 
 Send an SMS to notify each conversation participant of the virtual number they need to call:
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 150
 to_line: 171
@@ -210,7 +207,7 @@ In this tutorial each user has received the virtual number in an SMS. In other s
 
 When Nexmo receives an inbound call to your virtual number it makes a request to the webhook endpoint you set when you [created a Voice application](#create-a-voice-application).
 
-```sequence_diagram
+``` sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -222,7 +219,7 @@ Nexmo->App:Inbound Call(from, to)
 
 Extract `to` and `from` from the inbound webhook and pass them on to the voice proxy business logic.
 
-```js
+``` javascript
 app.get('/proxy-call', function(req, res) {
   var from = req.query.from;
   var to = req.query.to;
@@ -234,7 +231,7 @@ app.get('/proxy-call', function(req, res) {
 
 ## Reverse map real phone numbers to virtual numbers
 
-```sequence_diagram
+``` sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -252,7 +249,7 @@ The call direction can be identified as:
 * The `from` number is UserA real number and the `to` number is UserB virtual number
 * The `from` number is UserB real number and the `to` number is UserA virtual number
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 172
 to_line: 206
@@ -264,7 +261,7 @@ With the number looking performed all that's left to do is proxy the call.
 
 Proxy the call to the phone number the virtual number is associated with. The `from` number is always the virtual number, the `to` is a real phone number.
 
-```sequence_diagram
+``` sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -279,7 +276,7 @@ Note over UserA,UserB:UserA has called\nUserB. But UserA\ndoes not have\n the re
 
 In order to do this, build up an NCCO (Nexmo Call Control Object). This NCCO uses a `talk` action to read out some text. When the `talk` has completed, a `connect` action forwards the Call to a real number.
 
-```code
+``` code
 source: '_code/voice_proxy.js'
 from_line: 6
 to_line: 25
@@ -289,7 +286,7 @@ to_line: 25
 
 The NCCO is returned to Nexmo by the web server.
 
-```js
+``` javascript
 app.get('/proxy-call', function(req, res) {
   var from = req.query.from;
   var to = req.query.to;
@@ -301,4 +298,4 @@ app.get('/proxy-call', function(req, res) {
 
 ## Conclusion
 
-And that's it. You have built a voice proxy for private communication. You provisioned and configured phone numbers, performed number insight, mapped real numbers to virtual numbers to ensure anonymity, handled an inbound call and proxied that call to another user.
+You have learned how to build a voice proxy for private communication. You provisioned and configured phone numbers, performed number insight, mapped real numbers to virtual numbers to ensure anonymity, handled an inbound call and proxied that call to another user.
