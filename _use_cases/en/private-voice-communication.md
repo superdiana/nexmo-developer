@@ -8,7 +8,7 @@ languages:
 
 # Private voice communication
 
-Sometimes you want two parties to be able to call each other without revealing their actual phone numbers. 
+Sometimes you want two parties to be able to call each other without revealing their actual phone numbers.
 
 For example, if you are operating a ride sharing service, then you want your users to be able to speak to each other to coordinate pick-up times and locations. But you don't want to give out your customers' phone numbers - after all, you have an obligation to protect their privacy. And you don't want them to be able to arrange ride shares directly without using your service because that means lost revenue for your business.
 
@@ -37,7 +37,7 @@ In order to work through this tutorial you need:
 
 ## Create a Voice API application
 
-A Voice API Application is a Nexmo construct and shouldn’t be confused with the application you are going to write. Instead, it's a "container" for the authentication and configuration settings you need to work with the API.
+A Voice API Application is a Nexmo construct and should not be confused with the application you are going to write. Instead, it's a "container" for the authentication and configuration settings you need to work with the API.
 
 You can create a Voice API Application with the Nexmo CLI. You must provide a name for the application and the URLs of two webhook endpoints: the first is the one that Nexmo's APIs will make a request to when you receive an inbound call on your virtual number and the second is where the API can post event data.
 
@@ -75,7 +75,7 @@ app.listen(app.get('port'), function() {
 });
 ```
 
-Note that the code instantiates an object of the `VoiceProxy` class to handle the routing of messages sent to your virtual number to the intended recipient's real number. The proxying process is described in [proxy the call](#proxy-the-call), but for now just be aware that this class initializes the `nexmo` REST API client library using the API key and secret that you will configure in the next step. This enables your application to make and receive voice calls:
+Note that the code instantiates an object of the `VoiceProxy` class to handle the routing of messages sent to your virtual number to the intended recipient's real number. The proxying process is described in [proxy the call](#proxy-the-call), but for now just be aware that this class initializes the `nexmo` Server SDK using the API key and secret that you will configure in the next step. This enables your application to make and receive voice calls:
 
 ``` javascript
 var VoiceProxy = function(config) {
