@@ -189,7 +189,7 @@ to_line: 149
 
 ### Send a confirmation SMS
 
-In a private communication system, when one user contacts another, he or she calls a virtual number from their phone.
+In a private communication system, when one user contacts another, the caller calls a virtual number from their phone.
 
 Send an SMS to notify each conversation participant of the virtual number they need to call:
 
