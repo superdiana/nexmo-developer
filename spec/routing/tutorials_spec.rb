@@ -6,11 +6,6 @@ RSpec.describe 'tutorials routes', type: :routing do
       expect(get('/task/client-sdk/generate-jwt'))
         .to route_to(controller: 'tutorial', action: 'single', tutorial_step: 'client-sdk/generate-jwt')
     end
-
-    it 'routes /en/task/client-sdk/generate-jwt' do
-      expect(get('/en/task/client-sdk/generate-jwt'))
-        .to route_to(controller: 'tutorial', action: 'single', tutorial_step: 'client-sdk/generate-jwt', locale: 'en')
-    end
   end
 
   describe 'tutorial#list' do
@@ -18,18 +13,9 @@ RSpec.describe 'tutorials routes', type: :routing do
       expect(get('/tutorials')).to route_to(controller: 'tutorial', action: 'list')
     end
 
-    it 'routes /en/tutorials' do
-      expect(get('/en/tutorials')).to route_to(controller: 'tutorial', action: 'list', locale: 'en')
-    end
-
     it 'routes /messaging/sms/tutorials' do
       expect(get('/messaging/sms/tutorials'))
         .to route_to(controller: 'tutorial', action: 'list', product: 'messaging/sms')
-    end
-
-    it 'routes /en/messaging/sms/tutorials' do
-      expect(get('/en/messaging/sms/tutorials'))
-        .to route_to(controller: 'tutorial', action: 'list', product: 'messaging/sms', locale: 'en')
     end
   end
 
@@ -45,24 +31,9 @@ RSpec.describe 'tutorials routes', type: :routing do
           .to route_to(controller: 'tutorial', action: 'index', product: 'client-sdk', tutorial_step: 'introduction', tutorial_name: 'ios-in-app-messaging', code_language: 'node')
       end
 
-      it 'routes /en/client-sdk/tutorials/ios-in-app-messaging/introduction' do
-        expect(get('/en/client-sdk/tutorials/ios-in-app-messaging/introduction'))
-          .to route_to(controller: 'tutorial', action: 'index', product: 'client-sdk', tutorial_step: 'introduction', tutorial_name: 'ios-in-app-messaging', locale: 'en')
-      end
-
-      it 'routes /en/client-sdk/tutorials/ios-in-app-messaging/introduction/node' do
-        expect(get('/en/client-sdk/tutorials/ios-in-app-messaging/introduction/node'))
-          .to route_to(controller: 'tutorial', action: 'index', product: 'client-sdk', tutorial_step: 'introduction', tutorial_name: 'ios-in-app-messaging', locale: 'en', code_language: 'node')
-      end
-
       it 'routes /client-sdk/tutorials/ios-in-app-messaging' do
         expect(get('/client-sdk/tutorials/ios-in-app-messaging'))
           .to route_to(controller: 'tutorial', action: 'index', product: 'client-sdk', tutorial_name: 'ios-in-app-messaging')
-      end
-
-      it 'routes /en/client-sdk/tutorials/ios-in-app-messaging' do
-        expect(get('/en/client-sdk/tutorials/ios-in-app-messaging'))
-          .to route_to(controller: 'tutorial', action: 'index', product: 'client-sdk', tutorial_name: 'ios-in-app-messaging', locale: 'en')
       end
     end
   end

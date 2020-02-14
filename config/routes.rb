@@ -93,11 +93,11 @@ Rails.application.routes.draw do
     resources :careers, only: [:index]
   end
 
-  get '(/:locale)/task/(*tutorial_step)', to: 'tutorial#single', constraints: LocaleConstraint.new
-  get '(/:locale)/*product/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
-  get '(/:locale)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation.merge(locale: LocaleConstraint.available_locales)
-  get '(/:locale)/(*product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.product.merge(locale: LocaleConstraint.available_locales)
-  get '(/:locale)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
+  get '/task/(*tutorial_step)', to: 'tutorial#single'
+  get '/(:product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
+  get '/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
+  get '/(:product)/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: DocumentationConstraint.documentation
+  get '/tutorials/(:tutorial_name)(/*tutorial_step)(/:code_language)', to: 'tutorial#index', constraints: CodeLanguage.route_constraint
 
   scope '(/:locale)', constraints: LocaleConstraint.new do
     get '/*product/api-reference', to: 'markdown#api'

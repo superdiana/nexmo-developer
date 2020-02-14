@@ -85,7 +85,7 @@ RSpec.describe SidenavSubitem do
       context 'specifying a locale' do
         let(:locale) { :en }
 
-        it { expect(subject.build_url).to eq('/en/client-sdk/tutorials/phone-to-app') }
+        it { expect(subject.build_url).to eq('/client-sdk/tutorials/phone-to-app') }
       end
     end
 
