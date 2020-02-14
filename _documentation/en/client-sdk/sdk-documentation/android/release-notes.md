@@ -5,9 +5,195 @@ navigation_weight: 0
 ---
 
 # Release Notes
+
+## Version 2.3.0 - February 11, 2020
+
+### Added
+
+- Add `updateAsDelivered` and `UpdateAsSeen` to `NexmoAttachmentEvent` and `NexmoTextEvent` as helper method
+to update event locally after `markAsSeen` or `markAsDelivered` has been successful.
+
+```
+  NexmoTextEvent.markAsDelivered(object: NexmoRequestListener<Any>{
+       override fun onSuccess(result: Any?) {
+       Log.d(TAG, TAG + "onTextEvent.markAsDelivered():onSuccess with: " + result.toString())
+
+            NexmoTextEvent.updateAsDelivered(my_member_id, Date.now())
+
+       }
+   })
+```
+
+### Fixed
+
+- fix `markAsSeen` and `markAsDelivered` for `NexmoTextEvent` and `NexmoAttachmentEvent`
+
+### Changed
+
+- upgrade dependency libraries please add to your build Gradle
+
+```groovy
+android {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+``` 
+
+## Version 2.2.0 - January 31, 2020
+
+### Added
+
+- Add support for Custom Push Notifications, using `processNexmoPush()` (`processPushNotification()` is deprecated)
+
+```
+if (NexmoClient.isNexmoPushNotification(message!!.data)) {
+    val pushListener = object : NexmoPushEventListener {
+            override fun onIncomingCall(nexmoCall: NexmoCall?) {
+                Log.d(TestAppMessagingService.TAG, "$TAG:TestAppMessagingService:onIncomingCall() with: $nexmoCall")
+            }
+            override fun onError(nexmoError: NexmoApiError?) {
+                Log.d(TestAppMessagingService.TAG, "$TAG:TestAppMessagingService:onError() with: $nexmoError")
+            }
+            override fun onNewEvent(event: NexmoEvent?) {
+                Log.d(TestAppMessagingService.TAG, "$TAG:TestAppMessagingService:onNewEvent() with: $event")
+            }
+        }
+    NexmoPushPayload nexmoPushPayload = nexmoClient.processNexmoPush(message!!.data, pushListener)
+    when(nexmoPushPayload.pushTemplate){
+        Default ->
+            // you can use nexmoPushPayload.eventData if needed
+        Custom ->
+            // got nexmo custom push. 😀
+            // you should parse nexmoPushEvent.customData your backend had defined.
+    }
+}
+
+```
+
+- Add `markAsDelivered` method to `NexmoTextEvent` and `NexmoAttachmentEvent`
+
+```
+  NexmoTextEvent.markAsDelivered(object: NexmoRequestListener<Any>{
+       override fun onSuccess(result: Any?) {
+       Log.d(TAG, TAG + "onTextEvent.markAsDelivered():onSuccess with: " + result.toString())
+       }
+       override fun onError(error: NexmoApiError) {
+       Log.d(TAG, TAG + "onTextEvent.markAsDelivered():onError with: " + error)
+        }
+   })
+   ```
+   
+ - add `markAsSeen` method to `NexmoTextEvent` and `NexmoAttachmentEvent`
+ 
+ ```
+  NexmoAttachmentEvent.markAsSeen(object: NexmoRequestListener<Any>{
+       override fun onSuccess(result: Any?) {
+       Log.d(TAG, TAG + "onAttachmentEvent.markAsSeen():onSuccess with: " + result.toString())
+       }
+       override fun onError(error: NexmoApiError) {
+       Log.d(TAG, TAG + "onAttachmentEvent.markAsSeen():onError with: " + error)
+        }
+   })
+   ```
+   
+## Version 2.2.0 - January 31, 2020
+
+### Added
+
+- Add support for Custom Push Notifications, using `processNexmoPush()` (`processPushNotification()` is deprecated)
+
+```
+if (NexmoClient.isNexmoPushNotification(message!!.data)) {
+    val pushListener = object : NexmoPushEventListener {
+            override fun onIncomingCall(nexmoCall: NexmoCall?) {
+                Log.d(TestAppMessagingService.TAG, "$TAG:TestAppMessagingService:onIncomingCall() with: $nexmoCall")
+            }
+            override fun onError(nexmoError: NexmoApiError?) {
+                Log.d(TestAppMessagingService.TAG, "$TAG:TestAppMessagingService:onError() with: $nexmoError")
+            }
+            override fun onNewEvent(event: NexmoEvent?) {
+                Log.d(TestAppMessagingService.TAG, "$TAG:TestAppMessagingService:onNewEvent() with: $event")
+            }
+        }
+    NexmoPushPayload nexmoPushPayload = nexmoClient.processNexmoPush(message!!.data, pushListener)
+    when(nexmoPushPayload.pushTemplate){
+        Default ->
+            // you can use nexmoPushPayload.eventData if needed
+        Custom ->
+            // got nexmo custom push. 😀
+            // you should parse nexmoPushEvent.customData your backend had defined.
+    }
+}
+```
+
+- Add `markAsDelivered()` method to `NexmoTextEvent` and `NexmoAttachmentEvent`
+
+```
+  NexmoTextEvent.markAsDelivered(object: NexmoRequestListener<Any>{
+       override fun onSuccess(result: Any?) {
+       Log.d(TAG, TAG + "onTextEvent.markAsDelivered():onSuccess with: " + result.toString())
+       }
+       override fun onError(error: NexmoApiError) {
+       Log.d(TAG, TAG + "onTextEvent.markAsDelivered():onError with: " + error)
+        }
+   })
+```
+   
+ - Add `markAsSeen()` method to `NexmoTextEvent` and `NexmoAttachmentEvent`
+ 
+ ```
+  NexmoAttachmentEvent.markAsSeen(object: NexmoRequestListener<Any>{
+       override fun onSuccess(result: Any?) {
+       Log.d(TAG, TAG + "onAttachmentEvent.markAsSeen():onSuccess with: " + result.toString())
+       }
+       override fun onError(error: NexmoApiError) {
+       Log.d(TAG, TAG + "onAttachmentEvent.markAsSeen():onError with: " + error)
+        }
+   })
+```
+
+## Version 2.1.2 - January 12, 2020
+
+### Added
+- add annotation of `PermissionRequired` for function that start media: `NexmoClient.call` , `NexmoCall.answer` , `NexmoConvesation.enableMedia`
+
+```
+    class MyActivity MakeCallActivity extends Activity {
+        @Override public void onCreate(Bundle savedInstanceState){
+            //Call requires permission which may be rejected by user: 
+            //code should explicitly check to see if permission is available (with 'checkPermission') 
+            //or explicitly handle a potential 'SecurityException'
+            NexmoClient.get().call("1234567890", NexmoCallHandler.SERVER, new NexmoRequestListener<NexmoCall>(){
+                @Override 
+                void onError(NexmoApiError error) {
+                    Log.d("NexmoCallListener", "onError call:" + error.toString())
+                }
+                
+                @Override 
+                void onSuccess(NexmoCall call) {
+                    Log.d("NexmoCallListener", "onSuccess call:" + cal.toString())
+        
+                }
+            });
+        }
+    }
+```
+
+### Removed
+- remove require for permission `PROCESS_OUTGOING_CALLS` 
+- remove require for permission `READ_PHONE_STATE`
+
+---
+
 ## Version 2.1.0 - January 01, 2020
 
 ### Added
+
 - Add `clearNexmoEventsListeners` method in `NexmoConversation` to clear all listeners
 
 ```

@@ -41,3 +41,6 @@ class MarkdownPipeline < Banzai::Pipeline
     )
   end
 end
+
+# XXX: Workaround until we extract the pipeline into a gem.
+Nexmo::OAS::Renderer::MarkdownPipeline = MarkdownPipeline

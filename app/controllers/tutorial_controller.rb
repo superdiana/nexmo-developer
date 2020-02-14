@@ -47,7 +47,7 @@ class TutorialController < ApplicationController
   end
 
   def single
-    path = "#{Rails.root}/_tutorials/#{I18n.default_locale}/#{params[:tutorial_step]}.md"
+    path = "#{Rails.configuration.docs_base_path}/_tutorials/#{I18n.default_locale}/#{params[:tutorial_step]}.md"
     @content = File.read(path)
     @content = MarkdownPipeline.new({
                                       code_language: @code_language,
@@ -81,17 +81,19 @@ class TutorialController < ApplicationController
 
   def set_tutorial_step
     return unless params[:tutorial_step]
+
     @tutorial_step = params[:tutorial_step]
   end
 
   def check_tutorial_step
     # If we don't have a current tutorial step, redirect to the first available page
     return if @tutorial_step
+
     redirect_to url_for(
       controller: :tutorial,
       action: action_name,
       product: @tutorial.current_product,
-      tutorial_name: @tutorial_name,
+      tutorial_name: @tutorial.name,
       tutorial_step: @tutorial.first_step
     )
   end

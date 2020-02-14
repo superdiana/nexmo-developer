@@ -16,13 +16,14 @@ class Navigation
 
   def path_to_url
     @path_to_url ||= begin
-      if @folder[:is_task?]
-        path = @folder[:path].sub(@folder[:root], '')
-        path.sub(%r{^/\w+\/}, '').chomp('.yml')
-      else
-        @folder[:path].sub(%r{^\w+\/\w+\/}, '').chomp('.md')
-      end
-    end
+                       if @folder[:is_task?]
+                         path = @folder[:path].sub(@folder[:root], '')
+                         path.sub(%r{^/\w+\/}, '').chomp('.yml')
+                       else
+                         path = @folder[:path].gsub("#{Rails.configuration.docs_base_path}/", '')
+                         path.sub(%r{^\w+\/\w+\/}, '').chomp('.md')
+                       end
+                     end
   end
 
   def product
