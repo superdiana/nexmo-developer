@@ -106,7 +106,7 @@ RSpec.describe SidenavSubitem do
       context 'specifying a locale' do
         let(:locale) { :en }
 
-        it { expect(subject.build_url).to eq('/en/use-cases/sending-whatsapp-messages-with-messages-api') }
+        it { expect(subject.build_url).to eq('/use-cases/sending-whatsapp-messages-with-messages-api') }
       end
     end
 

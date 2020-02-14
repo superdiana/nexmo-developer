@@ -33,7 +33,6 @@ class SidenavSubitem < SidenavItem
         controller: controller,
         action: :show,
         only_path: true,
-        locale: locale
       )
     elsif @folder[:path].starts_with?('app/views')
       navigation = Navigation.new(@folder)

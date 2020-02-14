@@ -33,12 +33,12 @@ Rails.application.routes.draw do
   get '/stats', to: 'dashboard#stats'
   get '/stats/summary', to: 'dashboard#stats_summary'
 
-  get '(/:locale)/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales), as: :use_cases
-  get '(/:locale)/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint.merge(locale: LocaleConstraint.available_locales)
+  get '/use-cases/(:code_language)', to: 'use_case#index', constraints: CodeLanguage.route_constraint, as: :use_cases
+  get '/use-cases/*document(/:code_language)', to: 'use_case#show', constraints: CodeLanguage.route_constraint
 
   get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: DocumentationConstraint.documentation
 
-  get '/:locale/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
+  get '/*product/use-cases(/:code_language)', to: 'use_case#index', constraints: lambda { |request|
     products = Product.all.map { |p| p['path'] }
 
     # If there's no language in the URL it's an implicit match
@@ -50,7 +50,7 @@ Rails.application.routes.draw do
       includes_language = language.include?(request['code_language'])
     end
 
-    products.include?(request['product']) && LocaleConstraint.new.matches?(request) && includes_language
+    products.include?(request['product']) && includes_language
   }
 
   get '(/:locale)/documentation', to: 'static#documentation', constraints: LocaleConstraint.new, as: :documentation
