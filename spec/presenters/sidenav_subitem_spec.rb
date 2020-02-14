@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe SidenavSubitem do
   let(:locale) { nil }
   let(:folder) do
-    { title: 'overview.md', path: '_documentation/en/concepts/overview.md', is_file?: true }
+    {
+      title: 'overview.md',
+      path: "#{Rails.configuration.docs_base_path}/_documentation/en/concepts/overview.md",
+      is_file?: true,
+    }
   end
 
   let(:sidenav) do
@@ -88,8 +92,8 @@ RSpec.describe SidenavSubitem do
     context 'for a use-case' do
       let(:folder) do
         {
-          root: '_use_cases',
-          path: '_use_cases/en/sending-whatsapp-messages-with-messages-api.md',
+          root: "#{Rails.configuration.docs_base_path}/_use_cases",
+          path: "#{Rails.configuration.docs_base_path}/_use_cases/en/sending-whatsapp-messages-with-messages-api.md",
           title: 'Click to Call',
           product: 'messages',
           is_file?: true,
