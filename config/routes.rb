@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get '/robots.txt', to: 'static#robots'
   get '/jwt', to: 'static#jwt'
 
-  get '(/:locale)/*landing_page', to: 'static#default_landing', constraints: LandingPageConstraint.matches?.merge(locale: LocaleConstraint.available_locales), as: :static
+  get '/*landing_page', to: 'static#default_landing', constraints: LandingPageConstraint.matches?, as: :static
 
   get 'markdown/show'
 
@@ -63,13 +63,13 @@ Rails.application.routes.draw do
   get '/community/slack', to: 'slack#join'
   post '/community/slack', to: 'slack#invite'
 
-  get '(/:locale)/tools', to: 'static#tools', constraints: LocaleConstraint.new, as: :tools
+  get '/tools', to: 'static#tools'
   get '/community/past-events', to: 'static#past_events'
 
   get '/feeds/events', to: 'feeds#events'
 
-  get '(/:locale)/extend', to: 'extend#index', constraints: LocaleConstraint.new, as: :extend
-  get '(/:locale)/extend/:title', to: 'extend#show', constraints: LocaleConstraint.new
+  get '/extend', to: 'extend#index', as: :extend
+  get '/extend/:title', to: 'extend#show'
 
   get '/event_search', to: 'static#event_search'
   match '/search', to: 'search#results', via: %i[get post]
