@@ -23,12 +23,12 @@ RSpec.describe StaticController, type: :request do
     before do
       Rails.application.routes.draw do
         get '(/:locale)/documentation', to: 'static#documentation', as: :documentation
-        get '(/:locale)/use-cases', to: 'use_case#index', as: :use_cases
-        get '(/:locale)/careers', to: 'careers#index', as: :careers
+        get '/use-cases', to: 'use_case#index', as: :use_cases
+        get '/careers', to: 'careers#index', as: :careers
         get '(/:locale)/api', to: 'api#index', as: :api
-        get '(/:locale)/extend', to: 'extend#index', as: :extend
-        get '(/:locale)/tools', to: 'static#tools', as: :tools
-        get '(/:locale)/:landing_page' => 'static#default_landing', as: :static
+        get '/extend', to: 'extend#index', as: :extend
+        get '/tools', to: 'static#tools', as: :tools
+        get '/:landing_page' => 'static#default_landing', as: :static
       end
 
       expect(YAML).to receive(:load_file).with("#{Rails.root}/config/landing_pages/default_landing.yml").and_return(config)

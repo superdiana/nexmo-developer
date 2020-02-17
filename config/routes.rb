@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   get '/migrate/tropo/(/*guide)', to: 'static#migrate_details'
 
   get '/legacy', to: 'static#legacy'
-  get '(/:locale)/team', to: 'static#team', constraints: LocaleConstraint.new
+  get '/team', to: 'static#team'
 
   get '/community/slack', to: 'slack#join'
   post '/community/slack', to: 'slack#invite'
@@ -89,9 +89,7 @@ Rails.application.routes.draw do
     mount Split::Dashboard, at: 'split' if ENV['REDIS_URL']
   end
 
-  scope '(/:locale)', constraints: LocaleConstraint.new do
-    resources :careers, only: [:index]
-  end
+  resources :careers, only: [:index]
 
   get '/task/(*tutorial_step)', to: 'tutorial#single'
   get '/(:product)/tutorials', to: 'tutorial#list', constraints: DocumentationConstraint.documentation
