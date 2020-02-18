@@ -53,7 +53,7 @@ RSpec.describe Tutorial, type: :model do
       }
       expect(DocFinder).to receive(:find)
         .with(root: 'config/tutorials', document: 'example-tutorial', language: :en, format: 'yml')
-        .and_return(path)
+        .and_return(DocFinder::Doc.new(path: path, available_languages: ['en']))
       expect(File).to receive(:read).with(path).and_return(config.to_yaml)
 
       tutorial = described_class.load('example-tutorial', 'introduction')
@@ -224,7 +224,7 @@ def create_example_config(intro = false, conclusion = false)
   )
   allow(DocFinder).to receive(:find)
     .with(root: 'config/tutorials', document: 'example-tutorial', language: :en, format: 'yml')
-    .and_return(path)
+    .and_return(DocFinder::Doc.new(path: path, available_languages: ['en']))
 
   create_application_content
   create_outbound_call_content
@@ -273,7 +273,7 @@ def create_application_content
   )
   allow(DocFinder).to receive(:find)
     .with(root: "#{Rails.configuration.docs_base_path}/_tutorials", document: 'application/create-voice', language: :en)
-    .and_return(path)
+    .and_return(DocFinder::Doc.new(path: path, available_languages: ['en']))
 end
 
 def create_outbound_call_content
@@ -289,7 +289,7 @@ def create_outbound_call_content
   )
   allow(DocFinder).to receive(:find)
     .with(root: "#{Rails.configuration.docs_base_path}/_tutorials", document: 'voice/make-outbound-call', language: :en)
-    .and_return(path)
+    .and_return(DocFinder::Doc.new(path: path, available_languages: ['en']))
 end
 
 def stub_task_content(path:, title:, description:, content:)

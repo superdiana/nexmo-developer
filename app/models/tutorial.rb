@@ -13,7 +13,7 @@ class Tutorial
       root: self.class.task_content_path,
       document: step_name,
       language: I18n.locale
-    )
+    ).path
 
     File.read(path)
   end
@@ -47,7 +47,7 @@ class Tutorial
       document: name,
       language: I18n.default_locale,
       format: 'yml'
-    )
+    ).path
     config = YAML.safe_load(File.read(document_path))
     current_product ||= config['products'].first
 
@@ -72,7 +72,7 @@ class Tutorial
         root: task_content_path,
         document: t,
         language: I18n.locale
-      )
+      ).path
       raise "Prerequisite not found: #{t}" unless File.exist? t_path
 
       content = File.read(t_path)
@@ -95,7 +95,7 @@ class Tutorial
         root: task_content_path,
         document: t,
         language: I18n.locale
-      )
+      ).path
       raise "Subtask not found: #{t}" unless File.exist? t_path
 
       subtask_config = YAML.safe_load(File.read(t_path))

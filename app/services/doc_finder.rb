@@ -17,7 +17,7 @@ class DocFinder
       if code_language.present?
         linkable_code_language(
           root: root,
-          language: language,
+          language: language.to_s,
           product: product,
           document: document,
           code_language: code_language,
@@ -26,7 +26,7 @@ class DocFinder
       else
         non_linkable(
           root: root,
-          language: language,
+          language: language.to_s,
           product: product,
           document: document,
           format: format
@@ -43,24 +43,26 @@ class DocFinder
       build_key(root: root, product: product, document: document, format: format),
     ].select { |k| dictionary.key?(k) }.first
 
-    if root.starts_with?('app/views')
-      dictionary.fetch(key) && key
-    else
-      available_language = dictionary.fetch(key).fetch(language, I18n.default_locale.to_s)
-      build_doc_path(root, key, available_language)
-    end
+    build_doc(root: root, language: language, key: key)
   end
 
   def self.non_linkable(root:, language:, document:, product: nil, format: nil)
     key = build_key(root: root, product: product, document: document, format: format)
-    if root.starts_with?('app/views')
-      dictionary.fetch(key) && key
-    else
-      available_language = dictionary.fetch(key).fetch(language.to_s, I18n.default_locale.to_s)
-      build_doc_path(root, key, available_language)
-    end
+
+    build_doc(root: root, language: language, key: key)
   end
   # rubocop:enable Metrics/ParameterLists
+
+  def self.build_doc(root:, language:, key:)
+    if root.starts_with?('app/views')
+      Doc.new(path: dictionary.fetch(key) && key, available_languages: ['en'])
+    else
+      available_languages = dictionary.fetch(key)
+      available_language = available_languages.fetch(language, I18n.default_locale.to_s)
+
+      Doc.new(path: build_doc_path(root, key, available_language), available_languages: available_languages.keys)
+    end
+  end
 
   def self.build_key(root:, document:, product: nil, format: nil)
     path = if Pathname.new(document).extname.blank?

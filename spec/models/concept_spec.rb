@@ -51,8 +51,12 @@ RSpec.describe Concept, type: :model do
       stub_const("#{described_class}::ORIGIN", "#{Rails.configuration.docs_base_path}/path/to/_documentation")
       stub_const("#{described_class}::FILES", ['guide', 'concept'])
 
-      expect(DocFinder).to receive(:find).with(root: described_class::ORIGIN, document: 'guide', language: language).and_return('guide')
-      expect(DocFinder).to receive(:find).with(root: described_class::ORIGIN, document: 'concept', language: language).and_return('concept')
+      expect(DocFinder).to receive(:find)
+        .with(root: described_class::ORIGIN, document: 'guide', language: language)
+        .and_return(DocFinder::Doc.new(path: 'guide', available_languages: ['en']))
+      expect(DocFinder).to receive(:find)
+        .with(root: described_class::ORIGIN, document: 'concept', language: language)
+        .and_return(DocFinder::Doc.new(path: 'concept', available_languages: ['en']))
 
       expect(described_class.files(language)).to eq(['guide', 'concept'])
     end

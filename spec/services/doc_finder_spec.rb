@@ -45,8 +45,10 @@ RSpec.describe DocFinder do
       let(:document)      { 'numbers/code-snippets/list-owned' }
       let(:code_language) { 'ruby' }
 
-      it 'returns the path to the doc' do
-        expect(subject).to eq("#{Rails.configuration.docs_base_path}/_documentation/en/numbers/code-snippets/list-owned.md")
+      it 'returns an instance of Doc' do
+        expect(subject).to be_an_instance_of(described_class::Doc)
+        expect(subject.path).to eq("#{Rails.configuration.docs_base_path}/_documentation/en/numbers/code-snippets/list-owned.md")
+        expect(subject.available_languages).to eq(['en'])
       end
     end
 
@@ -55,8 +57,10 @@ RSpec.describe DocFinder do
       let(:document)      { 'dev-preview' }
       let(:code_language) { nil }
 
-      it 'returns the path to the doc' do
-        expect(subject).to eq('app/views/product-lifecycle/dev-preview.md')
+      it 'returns an instance of Doc' do
+        expect(subject).to be_an_instance_of(described_class::Doc)
+        expect(subject.path).to eq('app/views/product-lifecycle/dev-preview.md')
+        expect(subject.available_languages).to eq(['en'])
       end
     end
   end
@@ -79,7 +83,9 @@ RSpec.describe DocFinder do
       let(:language) { 'de' }
 
       it 'defaults to english' do
-        expect(subject).to eq("#{Rails.configuration.docs_base_path}/_documentation/en/numbers/code-snippets/list-owned.md")
+        expect(subject).to be_an_instance_of(described_class::Doc)
+        expect(subject.path).to eq("#{Rails.configuration.docs_base_path}/_documentation/en/numbers/code-snippets/list-owned.md")
+        expect(subject.available_languages).to eq(['en'])
       end
     end
   end
@@ -102,7 +108,8 @@ RSpec.describe DocFinder do
       let(:document) { 'dev-preview' }
 
       it 'returns the path to the file' do
-        expect(subject).to eq('app/views/product-lifecycle/dev-preview.md')
+        expect(subject.path).to eq('app/views/product-lifecycle/dev-preview.md')
+        expect(subject.available_languages).to eq(['en'])
       end
     end
 
@@ -114,7 +121,9 @@ RSpec.describe DocFinder do
         let(:language) { 'de' }
 
         it 'returns the path to the file in the default language' do
-          expect(subject).to eq("#{Rails.configuration.docs_base_path}/_documentation/en/messages/external-accounts/overview.md")
+          expect(subject).to be_an_instance_of(described_class::Doc)
+          expect(subject.path).to eq("#{Rails.configuration.docs_base_path}/_documentation/en/messages/external-accounts/overview.md")
+          expect(subject.available_languages).to eq(['en'])
         end
       end
     end

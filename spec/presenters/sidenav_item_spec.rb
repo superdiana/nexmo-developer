@@ -57,12 +57,6 @@ RSpec.describe SidenavItem do
     it 'returns the url of the label' do
       expect(subject.link_url).to eq('/product-lifecycle/beta')
     end
-
-    context 'when a locale is specified' do
-      let(:locale) { :en }
-
-      it { expect(subject.link_url).to eq('/en/product-lifecycle/beta') }
-    end
   end
 
   describe '#normalized_title' do

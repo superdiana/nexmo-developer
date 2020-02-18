@@ -45,11 +45,7 @@ class SidenavItem
   end
 
   def link_url
-    product_lifecycle_path(
-      namespace: 'product-lifecycle',
-      document: label.downcase.tr(' ', '-'),
-      locale: locale
-    )
+    "/product-lifecycle/#{label.downcase.tr(' ', '-')}"
   end
 
   def normalized_title

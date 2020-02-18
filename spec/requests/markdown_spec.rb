@@ -29,6 +29,18 @@ RSpec.describe 'Markdown', type: :request do
         expect(response).to redirect_to('/sdk/stitch/ios/')
       end
     end
+
+    context 'requesting a document in a language it is not available' do
+      it 'redirects to the english version' do
+        expect(DocFinder).to receive(:find).and_raise(DocFinder::MissingDoc)
+        expect(DocFinder).to receive(:find)
+          .and_return(DocFinder::Doc.new(path: 'path/to/doc', available_languages: ['en']))
+
+        get '/cn/messaging/sms/overview'
+
+        expect(response).to redirect_to('/en/messaging/sms/overview')
+      end
+    end
   end
 
   describe '#api' do

@@ -10,6 +10,9 @@ class MarkdownController < ApplicationController
     if path_is_folder?
       @frontmatter, @content = content_from_folder
     else
+      redirect_to_default_locale! && return
+
+      @document_path = document.path
       @frontmatter, @content = content_from_file
     end
 
@@ -53,18 +56,14 @@ class MarkdownController < ApplicationController
     helpers.dashboard_cookie(params[:product])
   end
 
-  def document_path
-    @document_path ||= DocFinder.find(
+  def document
+    @document ||= DocFinder.find(
       root: root_folder,
       document: params[:document],
       language: I18n.locale,
       product: params[:product],
       code_language: params[:code_language]
     )
-  end
-
-  def document
-    @document ||= File.read(document_path)
   end
 
   def root_folder
@@ -82,13 +81,13 @@ class MarkdownController < ApplicationController
   end
 
   def folder_config_path
-    DocFinder.find(
+    @folder_config_path ||= DocFinder.find(
       root: root_folder,
       document: "#{params[:document]}/.config.yml",
       language: I18n.locale,
       product: params[:product],
       code_language: params[:code_language]
-    )
+    ).path
   end
 
   def content_from_folder
@@ -113,7 +112,8 @@ class MarkdownController < ApplicationController
   end
 
   def content_from_file
-    frontmatter = YAML.safe_load(document)
+    content = File.read(document.path)
+    frontmatter = YAML.safe_load(content)
 
     raise Errno::ENOENT if frontmatter['redirect']
 
@@ -121,8 +121,21 @@ class MarkdownController < ApplicationController
       code_language: @code_language,
       current_user: current_user,
       locale: params[:locale],
-    }).call(document)
+    }).call(content)
 
     [frontmatter, content]
+  end
+
+  def redirect_to_default_locale!
+    return if params[:namespace] || !params[:locale] || document.available_languages.include?(params[:locale])
+
+    redirect_to url_for(
+      controller: :markdown,
+      action: :show,
+      only_path: true,
+      locale: I18n.default_locale,
+      document: params[:document],
+      product: params[:product]
+    )
   end
 end

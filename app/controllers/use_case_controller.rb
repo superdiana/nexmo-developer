@@ -25,7 +25,7 @@ class UseCaseController < ApplicationController
       document: params[:document],
       language: I18n.locale,
       code_language: params[:code_language]
-    )
+    ).path
     @document = File.read(@document_path)
 
     # Parse frontmatter
