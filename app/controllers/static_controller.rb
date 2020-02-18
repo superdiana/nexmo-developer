@@ -1,4 +1,6 @@
 class StaticController < ApplicationController
+  before_action :canonical_redirect, only: :documentation
+
   def default_landing
     yaml_name = request[:landing_page]
 
@@ -224,5 +226,13 @@ class StaticController < ApplicationController
     @careers = Greenhouse.devrel_careers
 
     render layout: 'page'
+  end
+
+  private
+
+  def canonical_redirect
+    return if params[:locale] != I18n.default_locale.to_s
+
+    redirect_to documentation_path(locale: nil)
   end
 end

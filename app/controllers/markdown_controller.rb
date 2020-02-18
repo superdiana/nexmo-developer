@@ -2,11 +2,10 @@ class MarkdownController < ApplicationController
   before_action :set_navigation
   before_action :set_product
   before_action :set_tracking_cookie
+  before_action :check_redirects, only: :show
+  before_action :canonical_redirect, only: :show
 
   def show
-    redirect = Redirector.find(request)
-    return redirect_to redirect if redirect
-
     if path_is_folder?
       @frontmatter, @content = content_from_folder
     else
@@ -134,6 +133,28 @@ class MarkdownController < ApplicationController
       action: :show,
       only_path: true,
       locale: I18n.default_locale,
+      document: params[:document],
+      product: params[:product]
+    )
+  end
+
+  def check_redirects
+    redirect = Redirector.find(request)
+    return redirect_to redirect if redirect
+  end
+
+  def canonical_redirect
+    return if params[:namespace] || !params[:locale]
+
+    # TODO: change this to use the locale from the domain
+    # once we add support for that.
+    return if params[:locale] != I18n.default_locale.to_s
+
+    redirect_to url_for(
+      controller: :markdown,
+      action: :show,
+      only_path: true,
+      locale: nil,
       document: params[:document],
       product: params[:product]
     )

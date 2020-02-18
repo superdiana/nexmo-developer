@@ -41,6 +41,14 @@ RSpec.describe 'Markdown', type: :request do
         expect(response).to redirect_to('/en/messaging/sms/overview')
       end
     end
+
+    context 'requesting a document in the default locale' do
+      it 'redirects to the canonical version' do
+        get '/en/messaging/sms/overview'
+
+        expect(response).to redirect_to('/messaging/sms/overview')
+      end
+    end
   end
 
   describe '#api' do
