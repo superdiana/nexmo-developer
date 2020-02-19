@@ -46,7 +46,7 @@ You can create a Voice API Application with the Nexmo CLI. You must provide a na
 Replace the domain name in the following Nexmo CLI command with your ngrok domain name and run it in your project's root directory:
 
 ``` shell
-nexmo app:create "voice-proxy" --capabilities=voice --voice-answer-url=https://example.com/answer --voice-event-url=https://example.com/event --keyfile=private.key
+nexmo app:create "voice-proxy" --capabilities=voice --voice-answer-url=https://example.com/webhooks/answer --voice-event-url=https://example.com/webhooks/event --keyfile=private.key
 ```
 
 This command downloads a file called `private.key` that contains authentication information and returns a unique application ID. Make a note of this ID because you'll need it in subsequent steps.
@@ -102,9 +102,9 @@ var VoiceProxy = function(config) {
 
 Virtual numbers are used to hide real phone numbers from your application users.
 
-The workflow diagram below shows the process for provisioning and configuring a virtual number.
+The following workflow diagram shows the process for provisioning and configuring a virtual number:
 
-``` sequence_diagram
+```sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -120,7 +120,7 @@ Nexmo-->App: Numbers Configured
 
 To provision a virtual number you search through the available numbers that meet your criteria. For example, a phone number in a specific country with voice capability:
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 2
 to_line: 47
@@ -128,7 +128,7 @@ to_line: 47
 
 Then rent the numbers you want and associate them with your application. When any even occurs relating to each number associated with an application, Nexmo sends a request to your webhook endpoint with information about the event. After configuration you store the phone number for later user.
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 48
 to_line: 79
@@ -142,7 +142,7 @@ You now have the virtual numbers you need to mask communication between your use
 
 The workflow to create a call is:
 
-``` sequence_diagram
+```sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -163,7 +163,7 @@ The following call:
 * [Maps phone numbers to real numbers](#map-phone-numbers)
 * [Sends an confirmation SMS](#send-confirmation-sms)
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 89
 to_line: 103
@@ -173,7 +173,7 @@ to_line: 103
 
 When your application users supply their phone numbers use Number Insight to ensure that they are valid. You can also see which country the phone numbers are registered in:
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 104
 to_line: 114
@@ -183,7 +183,7 @@ to_line: 114
 
 Once you are sure that the phone numbers are valid, map each real number to a [virtual number](#provision-virtual-voice-numbers) and save the call:
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 115
 to_line: 149
@@ -195,7 +195,7 @@ In a private communication system, when one user contacts another, the caller ca
 
 Send an SMS to notify each conversation participant of the virtual number they need to call:
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 150
 to_line: 171
@@ -209,7 +209,7 @@ In this use case each user has received the virtual number in an SMS. In other s
 
 When Nexmo receives an inbound call to your virtual number it makes a request to the webhook endpoint you set when you [created a Voice application](#create-a-voice-application).
 
-``` sequence_diagram
+```sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -233,7 +233,9 @@ app.get('/proxy-call', function(req, res) {
 
 ## Reverse map real phone numbers to virtual numbers
 
-``` sequence_diagram
+XXX:
+
+```sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -251,7 +253,7 @@ The call direction can be identified as:
 * The `from` number is UserA real number and the `to` number is UserB virtual number
 * The `from` number is UserB real number and the `to` number is UserA virtual number
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 172
 to_line: 206
@@ -263,7 +265,7 @@ With the number looking performed all that's left to do is proxy the call.
 
 Proxy the call to the phone number the virtual number is associated with. The `from` number is always the virtual number, the `to` is a real phone number.
 
-``` sequence_diagram
+```sequence_diagram
 Participant App
 Participant Nexmo
 Participant UserA
@@ -278,7 +280,7 @@ Note over UserA,UserB:UserA has called\nUserB. But UserA\ndoes not have\n the re
 
 In order to do this, create an [NCCO (Nexmo Call Control Object)](/voice/voice-api/ncco-reference). This NCCO uses a `talk` action to read out some text. When the `talk` has completed, a `connect` action forwards the call to a real number.
 
-``` code
+```code
 source: '_code/voice_proxy.js'
 from_line: 6
 to_line: 25
