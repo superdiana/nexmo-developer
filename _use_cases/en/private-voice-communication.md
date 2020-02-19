@@ -8,7 +8,7 @@ languages:
 
 # Private voice communication
 
-Sometimes you want two parties to be able to call each other without revealing their actual phone numbers.
+Sometimes you want two users to be able to call each other without revealing their private phone numbers.
 
 For example, if you are operating a ride sharing service, then you want your users to be able to speak to each other to coordinate pick-up times and locations. But you don't want to give out your customers' phone numbers - after all, you have an obligation to protect their privacy. And you don't want them to be able to arrange ride shares directly without using your service because that means lost revenue for your business.
 
@@ -16,24 +16,26 @@ Using Nexmo's APIs, you can provide each participant in a call with a temporary 
 
 You can download the source code from our [GitHub repo](https://github.com/Nexmo/node-voice-proxy).
 
-## In this tutorial
+## In this use case
 
-This tutorial is based on the [Private Voice Communication use case](https://www.nexmo.com/use-cases/private-voice-communication/). It teaches you how to build a voice proxy using Nexmo's [Node.js REST API client library](https://github.com/Nexmo/nexmo-node), using virtual numbers to hide the real phone numbers of the participants.
-
-To build the application, you perform the following steps:
-
-* [Create a Voice API application](#create-a-voice-api-application) - create and configure a Voice API application
-* [Provision virtual numbers](#provision-virtual-voice-numbers) - rent virtual numbers to mask your callers' real numbers
-* [Create a Call](#create-a-call) - create a Call between two users, validate their phone numbers and determine the country the phone number is registered in using Number Insight
-* [Handle inbound calls](#handle-inbound-calls) - configure your webhook endpoint to handle incoming voice calls, find the phone number it is associated with and return the NCCO to control the Call
-* [Proxy the Call](#proxy-the-call) - instruct Nexmo to make a private Call to a phone number
+This use case shows you how to implement the idea described in [Private Voice Communication use case](https://www.nexmo.com/use-cases/private-voice-communication/). It teaches you how to build a voice proxy using Nexmo's [Node Server SDK](https://github.com/Nexmo/nexmo-node), using virtual numbers to hide the real phone numbers of the participants.
 
 ## Prerequisites
 
-In order to work through this tutorial you need:
+In order to work through this use case you need:
 
 * A [Nexmo account](https://dashboard.nexmo.com/sign-up)
 * The [Nexmo CLI](https://github.com/nexmo/nexmo-cli) installed and configured
+
+## Steps
+
+To build the application, you perform the following steps:
+
+1. [Create a Voice API application](#create-a-voice-api-application) - create and configure a Voice API application.
+2. [Provision virtual numbers](#provision-virtual-voice-numbers) - rent virtual numbers to mask your callers' real numbers.
+3. [Create a Call](#create-a-call) - create a Call between two users, validate their phone numbers, and determine the country the phone number is registered in using Number Insight
+4. [Handle inbound calls](#handle-inbound-calls) - configure your webhook endpoint to handle incoming voice calls, find the phone number it is associated with, and return the NCCO to control the call
+5. [Proxy the Call](#proxy-the-call) - instruct Nexmo to make a private call to a phone number
 
 ## Create a Voice API application
 
@@ -138,7 +140,7 @@ You now have the virtual numbers you need to mask communication between your use
 
 ## Create a Call
 
-The workflow to create a Call is:
+The workflow to create a call is:
 
 ``` sequence_diagram
 Participant App
@@ -201,7 +203,7 @@ to_line: 171
 
 The users cannot SMS each other. To enable this functionality you need to setup [Private SMS communication](/tutorials/private-sms-communication).
 
-In this tutorial each user has received the virtual number in an SMS. In other systems this could be supplied using email, in-app notifications or a predefined number.
+In this tutorial each user has received the virtual number in an SMS. In other systems this could be supplied using email, in-app notifications, or a predefined number.
 
 ## Handle inbound calls
 
@@ -217,7 +219,7 @@ UserA->Nexmo: Calls virtual number
 Nexmo->App:Inbound Call(from, to)
 ```
 
-Extract `to` and `from` from the inbound webhook and pass them on to the voice proxy business logic.
+Extract `to` and `from` from the inbound webhook and pass them on to the voice proxy business logic:
 
 ``` javascript
 app.get('/proxy-call', function(req, res) {
@@ -282,7 +284,7 @@ from_line: 6
 to_line: 25
 ```
 
-> **Note**: take a look at the [NCCO reference](/voice/guides/ncco-reference) for more information.
+> **NOTE**: take a look at the [NCCO reference](/voice/guides/ncco-reference) for more information.
 
 The NCCO is returned to Nexmo by the web server.
 
@@ -299,3 +301,8 @@ app.get('/proxy-call', function(req, res) {
 ## Conclusion
 
 You have learned how to build a voice proxy for private communication. You provisioned and configured phone numbers, performed number insight, mapped real numbers to virtual numbers to ensure anonymity, handled an inbound call and proxied that call to another user.
+
+## Further information
+
+* [Voice API](/voice/voice-api/overview)
+* [NCCO reference](/voice/voice-api/ncco-reference)
