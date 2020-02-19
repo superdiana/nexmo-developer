@@ -201,9 +201,9 @@ from_line: 150
 to_line: 171
 ```
 
-The users cannot SMS each other. To enable this functionality you need to setup [Private SMS communication](/tutorials/private-sms-communication).
+The users cannot SMS each other. To enable this functionality you need to setup [Private SMS communication](/use-cases/private-sms-communication).
 
-In this tutorial each user has received the virtual number in an SMS. In other systems this could be supplied using email, in-app notifications, or a predefined number.
+In this use case each user has received the virtual number in an SMS. In other systems this could be supplied using email, in-app notifications, or a predefined number.
 
 ## Handle inbound calls
 
@@ -276,15 +276,13 @@ Nexmo->UserB: Call
 Note over UserA,UserB:UserA has called\nUserB. But UserA\ndoes not have\n the real number\nof UserB, nor\n vice versa.
 ```
 
-In order to do this, build up an NCCO (Nexmo Call Control Object). This NCCO uses a `talk` action to read out some text. When the `talk` has completed, a `connect` action forwards the Call to a real number.
+In order to do this, create an [NCCO (Nexmo Call Control Object)](/voice/voice-api/ncco-reference). This NCCO uses a `talk` action to read out some text. When the `talk` has completed, a `connect` action forwards the call to a real number.
 
 ``` code
 source: '_code/voice_proxy.js'
 from_line: 6
 to_line: 25
 ```
-
-> **NOTE**: take a look at the [NCCO reference](/voice/guides/ncco-reference) for more information.
 
 The NCCO is returned to Nexmo by the web server.
 
