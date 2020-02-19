@@ -31,14 +31,36 @@ RSpec.describe 'Markdown', type: :request do
     end
 
     context 'requesting a document in a language it is not available' do
-      it 'redirects to the english version' do
+      it 'sets the canonical url to the default locale' do
+        allow(File).to receive(:read).and_call_original
         expect(DocFinder).to receive(:find).and_raise(DocFinder::MissingDoc)
-        expect(DocFinder).to receive(:find)
-          .and_return(DocFinder::Doc.new(path: 'path/to/doc', available_languages: ['en']))
+        expect(DocFinder).to receive(:find).and_return(DocFinder::Doc.new(path: 'path/to/doc', available_languages: ['en']))
+        expect(File).to receive(:read).with('path/to/doc').and_return('markdown content')
+        allow(DocFinder).to receive(:find).and_call_original
 
-        get '/cn/messaging/sms/overview'
+        get '/cn/messages/overview'
 
-        expect(response).to redirect_to('/en/messaging/sms/overview')
+        expect(response).to have_http_status(:ok)
+        res = Capybara::Node::Simple.new(response.body)
+        link = res.find("link[rel='canonical']", visible: false)
+        expect(link[:href]).to eq("http://#{request.host}/messages/overview")
+      end
+    end
+
+    context 'requesting a document in a language that is available and different from the default one' do
+      it 'sets the canonical url to the default locale' do
+        allow(File).to receive(:read).and_call_original
+        expect(DocFinder).to receive(:find).and_raise(DocFinder::MissingDoc)
+        expect(DocFinder).to receive(:find).and_return(DocFinder::Doc.new(path: 'path/to/doc', available_languages: ['cn', 'en']))
+        expect(File).to receive(:read).with('path/to/doc').and_return('markdown content')
+        allow(DocFinder).to receive(:find).and_call_original
+
+        get '/cn/messages/overview'
+
+        expect(response).to have_http_status(:ok)
+        res = Capybara::Node::Simple.new(response.body)
+        link = res.find("link[rel='canonical']", visible: false)
+        expect(link[:href]).to eq("http://#{request.host}/cn/messages/overview")
       end
     end
 

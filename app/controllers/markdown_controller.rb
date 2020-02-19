@@ -9,10 +9,9 @@ class MarkdownController < ApplicationController
     if path_is_folder?
       @frontmatter, @content = content_from_folder
     else
-      redirect_to_default_locale! && return
-
       @document_path = document.path
       @frontmatter, @content = content_from_file
+      set_canonical_url
     end
 
     @sidenav = Sidenav.new(
@@ -125,17 +124,12 @@ class MarkdownController < ApplicationController
     [frontmatter, content]
   end
 
-  def redirect_to_default_locale!
-    return if params[:namespace] || !params[:locale] || document.available_languages.include?(params[:locale])
-
-    redirect_to url_for(
-      controller: :markdown,
-      action: :show,
-      only_path: true,
-      locale: I18n.default_locale,
-      document: params[:document],
-      product: params[:product]
-    )
+  def set_canonical_url
+    if params[:namespace] || !params[:locale] || document.available_languages.include?(params[:locale])
+      @canonical_url = canonical_url
+    else
+      @canonical_url = "#{canonical_base}#{canonical_path.sub("#{params[:locale]}/", '')}"
+    end
   end
 
   def check_redirects
