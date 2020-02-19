@@ -240,8 +240,8 @@ Participant App
 Participant Nexmo
 Participant UserA
 Participant UserB
-UserA->Nexmo:
-Nexmo->App:
+UserA->Nexmo: 
+Nexmo->App: 
 Note right of App:Find the real number for UserB
 App->App:Number mapping lookup
 ```
@@ -270,8 +270,8 @@ Participant App
 Participant Nexmo
 Participant UserA
 Participant UserB
-UserA->Nexmo:
-Nexmo->App:
+UserA->Nexmo: 
+Nexmo->App: 
 App->Nexmo:Connect (proxy)
 Note right of App:Proxy Inbound\ncall to UserB's\nreal number
 Nexmo->UserB: Call
