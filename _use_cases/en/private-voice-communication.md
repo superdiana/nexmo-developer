@@ -298,7 +298,7 @@ app.get('/proxy-call', function(req, res) {
 
 ## Conclusion
 
-You have learned how to build a voice proxy for private communication. You provisioned and configured phone numbers, performed number insight, mapped real numbers to virtual numbers to ensure anonymity, handled an inbound call and proxied that call to another user.
+You have learned how to build a voice proxy for private communication. You provisioned and configured phone numbers, performed number insight, mapped real numbers to virtual numbers to ensure anonymity, handled an inbound call and proxied the call to another user.
 
 ## Further information
 
