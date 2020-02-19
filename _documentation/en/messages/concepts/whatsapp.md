@@ -16,7 +16,7 @@ The advantage of WhatsApp is that the identifier of users on the platform is the
 
 ## Important WhatsApp rules
 
-If your customer initiates messaging with you, you will not be charged for any messages (including MTMs) that you send back to the customer, for up to 24 hours following the last message that your customer sent you. This 24 hour period is known as the Customer Care Window. Any additional message you send to that customer beyond the Customer Care Window must be an MTM, for which you will be charged.
+If your customer initiates messaging with you, WhatsApp will not charge you for any MTMs (Template Messages) that you send back to the customer, for up to 24 hours following the last message that your customer sent you. This 24 hour period is known as the Customer Care Window. Any additional message you send to that customer beyond the Customer Care Window must be an MTM, for which you will be charged. The Nexmo Usage fee for every outbound message applies regardless of the customer care window. There are no charges for inbound messages. Further pricing information is available on the [WhatsApp Product](https://www.nexmo.com/products/messages/whatsapp) Page.
 
 > **IMPORTANT**: The WhatsApp Business Solution may not be used to send any messages to or receive messages from the following countries or regions: Crimea, Cuba, Iran, North Korea, and Syria.
 
@@ -57,7 +57,7 @@ The parameters are an array. The first value being `{{1}}` in the MTM.
 
 Below is an example API call:
 
-```
+``` shell
 curl -X POST \
   https://api.nexmo.com/beta/messages \
   -H 'Authorization: Bearer' $JWT \
@@ -94,9 +94,16 @@ curl -X POST \
         "locale": "en-GB"
       }
    }
-}
-'
+}'
 ```
+
+## WhatsApp deterministic language policy
+
+> **NOTE:** From January 2020 the *deterministic* language policy will be the default and the *fallback* language policy will be deprecated.
+
+When a message template is sent with the deterministic language policy, the receiving device will query its cache for a *language pack* for the language and locale specified in the message. If not available in the cache, the device will query the server for the required language pack. With the deterministic language policy the target device language and locale settings are ignored. If the language pack specified for the message is not available an error will be logged.
+
+Further information is available in the [WhatsApp documentation](https://developers.facebook.com/docs/whatsapp/message-templates/sending/#language).
 
 ## Further information
 
@@ -104,6 +111,7 @@ curl -X POST \
 
 WhatsApp developer documentation:
 
+* [WhatsApp Developer documentation](https://developers.facebook.com/docs/whatsapp)
 * [Text Message](https://developers.facebook.com/docs/whatsapp/api/messages/text)
 * [Media Message](https://developers.facebook.com/docs/whatsapp/api/messages/media)
 * [Message Template](https://developers.facebook.com/docs/whatsapp/api/messages/message-templates)

@@ -1,7 +1,7 @@
 class Concept
   include ActiveModel::Model
 
-  ORIGIN = '_documentation'.freeze
+  ORIGIN = "#{Rails.configuration.docs_base_path}/_documentation".freeze
 
   FILES = [
     Dir.glob("#{ORIGIN}/#{I18n.default_locale}/**/guides/**/*.md"),
@@ -19,6 +19,7 @@ class Concept
     end
 
     raise "Could not find concepts: #{names.join(', ')}" unless names.empty?
+
     matches
   end
 

@@ -8,8 +8,8 @@ class CodeFilter < Banzai::Filter
         config = config['config'].split('.').inject(configs) { |h, k| h[k] }
       end
 
-      code = File.read("#{Rails.root}/#{config['source']}")
-      language = File.extname("#{Rails.root}/#{config['source']}")[1..-1]
+      code = File.read("#{Rails.configuration.docs_base_path}/#{config['source']}")
+      language = File.extname("#{Rails.configuration.docs_base_path}/#{config['source']}")[1..-1]
       lexer = language_to_lexer(language)
 
       total_lines = code.lines.count
@@ -47,6 +47,7 @@ class CodeFilter < Banzai::Filter
   def language_to_lexer(language)
     language = language_to_lexer_name(language)
     return Rouge::Lexers::PHP.new({ start_inline: true }) if language == 'php'
+
     Rouge::Lexer.find(language.downcase) || Rouge::Lexer.find('text')
   end
 

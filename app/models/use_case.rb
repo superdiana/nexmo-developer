@@ -8,6 +8,7 @@ class UseCase
 
   def path
     return external_link if external_link
+
     path = document_path.relative_path_from(UseCase.origin).sub("#{I18n.locale}/", '')
     "/use-cases/#{path}".gsub('.md', '')
   end
@@ -28,6 +29,7 @@ class UseCase
     return 'Dispatch' if product == 'dispatch'
     return 'Client SDK' if product == 'client-sdk'
     return 'Subaccounts' if product == 'account/subaccounts'
+
     product.camelcase
   end
 
@@ -48,7 +50,7 @@ class UseCase
   end
 
   def self.origin
-    Pathname.new("#{Rails.root}/_use_cases")
+    Pathname.new("#{Rails.configuration.docs_base_path}/_use_cases")
   end
 
   def self.all
@@ -64,7 +66,7 @@ class UseCase
         products: frontmatter['products'].split(',').map(&:strip),
         languages: frontmatter['languages'] || [],
         document_path: document_path,
-        root: '_use_cases',
+        root: origin.to_s,
       })
     end
   end

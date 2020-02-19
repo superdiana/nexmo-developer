@@ -7,6 +7,64 @@ navigation_weight: 0
 # Release Notes
 
 
+## 2.1.0 - 2020-01-31
+
+### Added
+
+- `NXMPushPayload` for custom push notifications.
+
+```
+ if (NXNClient.shared isNexmoPushWithUserInfo:pushInfo]){
+ 	NXMPushPayload *pushPayload = [myNXNClient processNexmoPushPayload:pushInfo];
+ 	if (!pushPayload){
+    	// "Not a Nexmo push!!"
+    	return;
+ 	};
+
+	if (pushPayload.template == NXMPushTemplateCustom) {
+		// Got custom push
+		pushPayload.customData // your customData
+	}
+ }
+```
+
+---
+
+## 2.0.0 - 2020-01-15
+
+### Added
+- `NXMHelper` with `descriptionForEventType:` method.
+- `NXMConversation`'s `getEvents:` method replaced by `getEventsPage:`, `getEventsPageWithSize:order:completionHandler:`, `getEventsPageWithSize:order:eventType:completionHandler:`.
+
+```
+[myNXMConversation getEventsPagePageWithSize:15
+                                       order:NXMPageOrderDesc
+                                   eventType:nil
+                           completionHandler:^(NSError * _Nullable error, NXMEventsPage * _Nullable page) {
+                               if (error || !page) {
+                                   // handle error...
+                                   return;
+                               }
+
+                               // use page...
+                           }];
+```
+
+- `NXMConversationsPage`'s `nextPage:` and `previousPage:` completion handlers are now non-null.
+
+### Fixed
+- Calling `conversation.getEvents` returned a `NXMMemberEvent` with the field `member` set to `nil`.
+
+---
+
+## 1.2.3 - 2019-12-17
+
+### Fixed.
+- `conversation.getEvents` returned some `NXMEvent`s containing a nil `fromMember`
+- Added descriptive `userInfo` for `NXMError`s.
+
+---
+
 ## 1.2.2 - 2019-12-12
 
 ### Fixed
@@ -18,7 +76,6 @@ navigation_weight: 0
 - Added build architectures: `armv7` and `armv7s`.
 
 ---
-
 
 ## 1.2.1 - 2019-12-05
 ### Added
