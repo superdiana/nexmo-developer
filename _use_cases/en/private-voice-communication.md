@@ -27,16 +27,25 @@ In order to work through this use case you need:
 * A [Nexmo account](https://dashboard.nexmo.com/sign-up)
 * The [Nexmo CLI](https://github.com/nexmo/nexmo-cli) installed and configured
 
+## Code repository
+
+There is a [GitHub repository containing the code](https://github.com/Nexmo/node-voice-proxy).
+
 ## Steps
 
 To build the application, you perform the following steps:
 
-1. [Create a Voice API application](#create-a-voice-api-application) - create and configure a Voice API application.
-2. [Create the web application](#create-the-web-application) - create the web application.
-3. [Provision virtual numbers](#provision-virtual-voice-numbers) - rent virtual numbers to mask your callers' real numbers.
-4. [Create a Call](#create-a-call) - create a Call between two users, validate their phone numbers, and determine the country the phone number is registered in using Number Insight.
-5. [Handle inbound calls](#handle-inbound-calls) - configure your webhook endpoint to handle incoming voice calls, find the phone number it is associated with, and return the NCCO to control the call.
-6. [Proxy the Call](#proxy-the-call) - instruct Nexmo to make a private call to a phone number.
+1. [Create a configuration file](#configuration)
+2. [Create a Voice API application](#create-a-voice-api-application) - create and configure a Voice API application.
+3. [Create the web application](#create-the-web-application) - create the web application.
+4. [Provision virtual numbers](#provision-virtual-voice-numbers) - rent virtual numbers to mask your callers' real numbers.
+5. [Create a Call](#create-a-call) - create a Call between two users, validate their phone numbers, and determine the country the phone number is registered in using Number Insight.
+6. [Handle inbound calls](#handle-inbound-calls) - configure your webhook endpoint to handle incoming voice calls, find the phone number it is associated with, and return the NCCO to control the call.
+7. [Proxy the Call](#proxy-the-call) - instruct Nexmo to make a private call to a phone number.
+
+## Configuration
+
+You need to create `.env` file containing configuration. Instructions on how to do that are containing in the [GitHub Readme](https://github.com/Nexmo/node-voice-proxy#configuration). As you work through this use case you can populate your configuration file with the required values for variables such as API key, API secret, Application ID, debug mode, and provisioned numbers.
 
 ## Create a Voice API application
 
@@ -47,7 +56,7 @@ You can create a Voice API Application with the Nexmo CLI. You must provide a na
 Replace the domain name in the following Nexmo CLI command with your ngrok domain name and run it in your project's root directory:
 
 ``` shell
-nexmo app:create "voice-proxy" --capabilities=voice --voice-answer-url=https://example.com/webhooks/answer --voice-event-url=https://example.com/webhooks/event --keyfile=private.key
+nexmo app:create "voice-proxy" --capabilities=voice --voice-answer-url=https://example.com/proxy-call --voice-event-url=https://example.com/event --keyfile=private.key
 ```
 
 This command downloads a file called `private.key` that contains authentication information and returns a unique application ID. Make a note of this ID because you'll need it in subsequent steps.
@@ -305,3 +314,4 @@ You have learned how to build a voice proxy for private communication. You provi
 
 * [Voice API](/voice/voice-api/overview)
 * [NCCO reference](/voice/voice-api/ncco-reference)
+* [GitHub repo](https://github.com/Nexmo/node-voice-proxy)
