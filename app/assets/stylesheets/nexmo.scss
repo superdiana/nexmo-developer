@@ -1,8 +1,8 @@
-@import "../volta/scss/lib/reset";
-@import "../volta/scss/lib/mediaqueries";
-@import "../volta/scss/lib/variables";
-@import "../volta/scss/lib/type";
-@import "../volta/scss/lib/grid";
+//@import "../volta/scss/lib/reset";
+//@import "../volta/scss/lib/mediaqueries";
+//@import "../volta/scss/lib/variables";
+//@import "../volta/scss/lib/type";
+//@import "../volta/scss/lib/grid";
 
 $blue-light: $blue;
 $pink: #E6547B;
@@ -58,32 +58,32 @@ $golden-ratio: 1.618;
 
 $font-family: 'Lato', sans-serif;
 
-@import "../volta/scss/components/buttons";
-@import "../volta/scss/components/tabs";
-@import "../volta/scss/components/side-navigation/side-nav--structure";
-@import "../volta/scss/components/side-navigation/side-nav--rounded";
-@import "../volta/scss/components/side-navigation/side-nav--light";
-@import "../volta/scss/components/card";
-@import "../volta/scss/components/badge";
-@import "../volta/scss/components/color-classes";
-@import "../volta/scss/components/boxes";
-@import "../volta/scss/components/form-elements";
-@import "../volta/scss/components/spinner";
-@import "../volta/scss/components/tables";
-@import "../volta/scss/components/callouts";
-@import "../volta/scss/components/flash-messages";
-@import "../volta/scss/components/tabs";
-@import "../volta/scss/components/lists";
-@import "../volta/scss/components/accordions";
-@import "../volta/scss/components/tooltips";
-@import "../volta/scss/components/dropdowns";
-@import "../volta/scss/components/modals";
-@import "../volta/scss/components/empties";
-
-@import "../volta/scss/layout/article";
-@import "../volta/scss/layout/utils";
-
-@import "../volta/scss/templates/volta-templates";
+//@import "../volta/scss/components/buttons";
+//@import "../volta/scss/components/tabs";
+//@import "../volta/scss/components/side-navigation/side-nav--structure";
+//@import "../volta/scss/components/side-navigation/side-nav--rounded";
+//@import "../volta/scss/components/side-navigation/side-nav--light";
+//@import "../volta/scss/components/card";
+//@import "../volta/scss/components/badge";
+//@import "../volta/scss/components/color-classes";
+//@import "../volta/scss/components/boxes";
+//@import "../volta/scss/components/form-elements";
+//@import "../volta/scss/components/spinner";
+//@import "../volta/scss/components/tables";
+//@import "../volta/scss/components/callouts";
+//@import "../volta/scss/components/flash-messages";
+//@import "../volta/scss/components/tabs";
+//@import "../volta/scss/components/lists";
+//@import "../volta/scss/components/accordions";
+//@import "../volta/scss/components/tooltips";
+//@import "../volta/scss/components/dropdowns";
+//@import "../volta/scss/components/modals";
+//@import "../volta/scss/components/empties";
+//
+//@import "../volta/scss/layout/article";
+//@import "../volta/scss/layout/utils";
+//
+//@import "../volta/scss/templates/volta-templates";
 
 .Vlt-sidenav {
 	display: inline-flex; // Temporary
