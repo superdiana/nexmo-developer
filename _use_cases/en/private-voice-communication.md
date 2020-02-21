@@ -8,7 +8,7 @@ languages:
 
 # Private voice communication
 
-This use case shows you how to implement the idea described in [Private Voice Communication use case](https://www.nexmo.com/use-cases/private-voice-communication/). It teaches you how to build a voice proxy using Nexmo's [Node Server SDK](https://github.com/Nexmo/nexmo-node), using virtual numbers to hide the real phone numbers of the participants.
+This use case shows you how to implement the idea described in [Private Voice Communication use case](https://www.nexmo.com/use-cases/private-voice-communication/). It teaches you how to build a voice proxy using Nexmo's [Node Server SDK](https://github.com/Nexmo/nexmo-node), using virtual numbers to hide the real phone numbers of the participants. Full source code is also available in our [GitHub repo](https://github.com/Nexmo/node-voice-proxy).
 
 ## Overview
 
