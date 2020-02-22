@@ -87,7 +87,7 @@
     ],
     "moduleDirectories": [
       "node_modules",
-      "app/javascript",
+      "app/webpacker/javascript",
       "spec"
     ],
     "verbose": true,
