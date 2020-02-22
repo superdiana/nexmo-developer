@@ -12,25 +12,25 @@ import '@babel/polyfill'
 import '../stylesheets/application'
 
 // XXX: hack for Volta, unfortunately it doesn't provide modules :(
-import Volta from "../volta/volta.js"
+import Volta from "../javascript/volta/volta.js"
 
 import Vue from 'vue/dist/vue.esm'
 
 import { TweenLite, CSSPlugin } from 'gsap'
-import GithubCards from '../github_cards'
-import VoltaTabbedExamples from '../volta_tabbed_examples'
-import Format from '../format'
-import Scroll from '../scroll'
-import Spotlight from '../spotlight'
-import Notices from '../notices'
-import Feedback from '../components/feedback/Feedback.vue'
-import JwtGenerator from '../components/jwt_generator/JwtGenerator.vue'
-import Search from '../components/search/Search.vue'
-import Concatenation from '../components/concatenation/Concatenation.vue'
-import APIStatus from '../api_status'
-import CodeSnippetEvents from '../code_snippet_events'
-import Navigation from '../navigation'
-import Careers from '../careers'
+import GithubCards from '../javascript/github_cards'
+import VoltaTabbedExamples from '../javascript/volta_tabbed_examples'
+import Format from '../javascript/format'
+import Scroll from '../javascript/scroll'
+import Spotlight from '../javascript/spotlight'
+import Notices from '../javascript/notices'
+import Feedback from '../javascript/components/feedback/Feedback.vue'
+import JwtGenerator from '../javascript/components/jwt_generator/JwtGenerator.vue'
+import Search from '../javascript/components/search/Search.vue'
+import Concatenation from '../javascript/components/concatenation/Concatenation.vue'
+import APIStatus from '../javascript/api_status'
+import CodeSnippetEvents from '../javascript/code_snippet_events'
+import Navigation from '../javascript/navigation'
+import Careers from '../javascript/careers'
 
 
 $(document).ready(function() {
