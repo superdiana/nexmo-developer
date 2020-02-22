@@ -13,6 +13,7 @@
     "@babel/plugin-syntax-import-meta": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@rails/webpacker": "^4.0.2",
+    "@vonagevolta/volta2": "^0.0.13",
     "algoliasearch": "^3.24.9",
     "autoprefixer": "^7.1.2",
     "babel-loader": "^8.0.0",
@@ -93,7 +94,8 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "vue"
+      "vue",
+      "woff2"
     ],
     "transform": {
       "^.+\\.js$": "babel-jest",

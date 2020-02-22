@@ -9,6 +9,11 @@
 
 import '@babel/polyfill'
 
+import '../stylesheets/application'
+
+// XXX: hack for Volta, unfortunately it doesn't provide modules :(
+import Volta from "../volta/volta.js"
+
 import Vue from 'vue/dist/vue.esm'
 
 import { TweenLite, CSSPlugin } from 'gsap'
@@ -26,6 +31,7 @@ import APIStatus from '../api_status'
 import CodeSnippetEvents from '../code_snippet_events'
 import Navigation from '../navigation'
 import Careers from '../careers'
+
 
 $(document).ready(function() {
   Scroll()

@@ -11,27 +11,27 @@
 }
 
 #community-events {
-    width: 100%;
+  width: 100%;
 
-	h3 {
-		color: $blue-dark;
-		margin-bottom: $unit1;
+  h3 {
+    color: $blue-dark;
+    margin-bottom: $unit1;
 
-		&:hover {
-			color: $blue-darker;
-		}
-	}
+    &:hover {
+      color: $blue-darker;
+    }
+  }
 
-	svg {
-		margin-right: $unit0;
-	}
+  svg {
+    margin-right: $unit0;
+  }
 
-	.community-event__date {
-		border-top: 1px solid $grey-light;
-		border-bottom: 1px solid $grey-light;
-		padding: $unit1 0;
-		margin-bottom: $unit1;
-	}
+  .community-event__date {
+    border-top: 1px solid $grey-light;
+    border-bottom: 1px solid $grey-light;
+    padding: $unit1 0;
+    margin-bottom: $unit1;
+  }
 }
 
 .Nxd-map-buttons {

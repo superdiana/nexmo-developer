@@ -69,7 +69,6 @@
 
   <link rel="canonical" href="<%= canonical_url %>">
 
-  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag 'application' %>
 
 
@@ -84,6 +83,8 @@
   <% end %>
 
   <%= javascript_packs_with_chunks_tag 'application', defer: true %>
+  <%= stylesheet_pack_tag 'application' %>
+
   <%= javascript_include_tag 'https://www.google.com/recaptcha/api.js', async: true, defer: true %>
 
   <% if ENV['ALLOW_ROBOTS'].nil? || ENV['ALLOW_ROBOTS'] != 'true' %>

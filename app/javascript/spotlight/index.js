@@ -1,7 +1,7 @@
+import Volta from "../volta/volta.js"
+
 export default () => {
   $(document).ready(function() {
-    Volta.flash.init();
-
     $(document).on('ajax:success', '#spotlight-form', function(event, response) {
       Volta.flash.show('success');
       event.target.reset();
