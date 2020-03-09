@@ -6,6 +6,13 @@ navigation_weight: 0
 
 # Release Notes
 
+## Version 6.0.8 - February 28, 2020
+
+### Fixes
+
+- Fix duplicated webrtc offer sent during IP calling
+- Fix Safari `WebRTC` dependency
+
 ## Version 6.0.7 - January 16, 2020
 
 ### Fixes
